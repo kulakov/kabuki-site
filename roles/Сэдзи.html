@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../logo.png">
+<title>Сэдзи</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+<style>*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#080806;--text:#d4c5a9;--accent:#c49a6c;--dim:#666;--toho-red:#8b1a1a}
+body{background:var(--bg);color:var(--text);font-family:"Cormorant Garamond",Georgia,serif;min-height:100vh}
+.header{width:100%;background:linear-gradient(to bottom,var(--toho-red) 0%,#5a1010 100%);border-bottom:2px solid #3a0808;padding:.8rem 2rem;display:flex;align-items:center;justify-content:space-between}
+.toho-logo{font-family:"Noto Serif JP",serif;font-size:.9rem}.toho-logo a{color:inherit;text-decoration:none}
+.header-nav{display:flex;gap:1.5rem}.header-nav a{font-size:.7rem;color:#f0d4a8;text-decoration:none;text-transform:uppercase;letter-spacing:.15em;opacity:.7;transition:opacity .2s}.header-nav a:hover{opacity:1}.header-nav a.active{opacity:1;border-bottom:1px solid #f0d4a8;padding-bottom:2px}
+.content{max-width:700px;margin:0 auto;padding:2rem 2rem 4rem}
+.back{display:inline-block;margin-bottom:1.5rem;color:var(--dim);text-decoration:none;font-size:.85rem}.back:hover{color:var(--accent)}
+.portrait{display:block;max-width:280px;border-radius:0;border:1px solid #222;margin:0 auto 1.5rem}
+h1{font-size:1.8rem;font-weight:400;text-align:center;color:var(--accent);margin-bottom:.3rem}
+.archetype{text-align:center;font-style:italic;color:var(--dim);margin-bottom:1.5rem;font-size:1.1rem}
+.fields{list-style:none;margin-bottom:1.5rem;border-top:1px solid #1a1a18;border-bottom:1px solid #1a1a18;padding:1rem 0}.fields li{padding:.3rem 0;font-size:1rem}.fields strong{color:var(--dim)}
+.section{margin-bottom:1.5rem}.section h2{font-size:.75rem;text-transform:uppercase;letter-spacing:.15em;color:var(--dim);margin-bottom:.5rem}.section p{font-size:1rem;line-height:1.7}
+.disclaimer{font-style:italic;color:var(--dim);font-size:.9rem;margin-top:2rem;text-align:center}
+@media(max-width:480px){.header{flex-direction:column;gap:.5rem}.header-nav{gap:1rem}.header-nav a{font-size:.6rem}}
+.nav-arrows{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+.nav-arrows a{color:var(--dim);text-decoration:none;font-size:.85rem;transition:color .2s;display:flex;align-items:center;gap:6px}
+.nav-arrows a:hover{color:var(--accent)}
+.nav-arrows .arrow{font-size:1.2rem}
+</style></head><body>
+<header class="header"><div class="toho-logo"><a href="../index.html">東宝株式会社</a></div>
+<nav class="header-nav"><a href="../index.html">Игра</a><a href="../rules.html">Правила</a><a href="../roles.html" class="active">Персонажи</a><a href="../venue.html">База</a><a href="../news.html">Новости</a></nav></header>
+<div class="content">
+<a class="back" href="../roles.html">&larr; Все персонажи</a>
+<div class="nav-arrows">
+  <a href="Косуга-но-Камэ.html" id="prev"><span class="arrow">&larr;</span> Косуга но Камэ</a>
+  <a href="Тётушка-Ёсими.html" id="next">Тётушка Ёсими <span class="arrow">&rarr;</span></a>
+</div>
+<img class="portrait" src="../portraits/sedzi.jpg" alt="Сэдзи" />
+<h1>Сэдзи</h1>
+<p class="archetype">Правая рука Хромого лиса</p>
+<ul class="fields"><li><strong>Источник:</strong> Кимоно и Ваза</li><li><strong>Пол:</strong> м</li><li><strong>Состояние:</strong> Жив</li><li><strong>Сословие:</strong> Контрабандист</li><li><strong>Локация:</strong> Лагерь ронинов</li><li><strong>Роль в похоронах:</strong> Носить гроб</li><li><strong>Ведущий путь:</strong> Обсуждается</li></ul>
+<div class="section"><h2>Что здесь интересно играть</h2><p>Расследование без полномочий и уклонение от закона</p></div>
+<div class="section"><h2>Во что играет</h2><p>В торговые переговоры, контрабанду</p></div>
+<div class="section"><h2>Из первоисточника</h2><p>КИМОНО И ВАЗА (Рабочая_2.md). Лейтенант-переговорщик Хромого Лиса. Торгуется с Ёсими по ценам на контрабанду: синдзицу-гами (бумага правды — ложь проявляется кровью на снегу), лунная зола (для обработки волокна кодзо), даси-но-мото (бульонная основа с магическими свойствами с северных островов), лунный шёлк. Ворчливый, прагматичный, подчиняется приказам. &quot;Старые привычки могут принести беду.&quot; Предупреждает о проблемах на речных переправах.</p></div>
+
+<p class="disclaimer">Это публичная карточка. Полная версия доступна мастерам.</p>
+
+
+</div>
+<script>
+document.addEventListener('keydown',function(e){
+if(e.key==='ArrowLeft')document.getElementById('prev').click();
+if(e.key==='ArrowRight')document.getElementById('next').click();
+});
+</script>
+</body></html>

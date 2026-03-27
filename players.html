@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="logo.png">
+    <title>Три могилы в Нидомура — Игра на Восточном Экспрессе</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #080806;
+            --card-bg: #0e0e0c;
+            --text: #d4c5a9;
+            --accent: #c49a6c;
+            --dim: #666;
+            --toho-red: #8b1a1a;
+            --border: #1a1a18;
+            --dolg: #cd5c5c;
+            --strakh: #888;
+            --golod: #d4c5a9;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            min-height: 100vh;
+        }
+
+        /* Header band with nav */
+        .toho-header {
+            width: 100%;
+            background: linear-gradient(to bottom, var(--toho-red) 0%, #5a1010 100%);
+            border-bottom: 2px solid #3a0808;
+            padding: 0.8rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .toho-header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(to right, transparent 10%, #d4a574 30%, #f0d4a8 50%, #d4a574 70%, transparent 90%);
+        }
+
+        .toho-logo {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #f0d4a8;
+            letter-spacing: 0.3em;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .header-nav a {
+            font-size: 0.7rem;
+            color: #f0d4a8;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .header-nav a:hover { opacity: 1; }
+        .header-nav a.active { opacity: 1; border-bottom: 1px solid #f0d4a8; padding-bottom: 2px; }
+        .header-nav a.dim { opacity: 0.5; }
+
+        @media (max-width: 480px) {
+            .toho-header { flex-direction: column; gap: 0.5rem; padding: 0.6rem 1rem; }
+            .header-nav { gap: 1rem; }
+            .header-nav a { font-size: 0.6rem; }
+            .toho-logo { font-size: 0.9rem; }
+        }
+
+        /* Main */
+        .main {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 3rem 2rem 4rem;
+        }
+
+        /* Back link */
+        .back {
+            display: inline-block;
+            font-size: 0.75rem;
+            color: var(--accent);
+            font-family: 'Courier New', monospace;
+            text-decoration: none;
+            letter-spacing: 0.1em;
+            margin-bottom: 2rem;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+        .back:hover { opacity: 1; }
+
+        /* Title */
+        .page-title {
+            font-size: 2.4rem;
+            font-weight: 600;
+            text-align: center;
+            line-height: 1.2;
+            margin-bottom: 0.4rem;
+        }
+
+        .page-subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            color: var(--dim);
+            font-style: italic;
+            margin-bottom: 2.5rem;
+        }
+
+        .separator {
+            width: 60px;
+            height: 1px;
+            background: var(--accent);
+            margin: 0 auto 2.5rem;
+            opacity: 0.5;
+        }
+
+        /* Section */
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 0.7rem;
+            color: var(--accent);
+            font-family: 'Courier New', monospace;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: 1.2rem;
+            padding-bottom: 0.4rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* Prose */
+        .prose {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text);
+        }
+
+        .prose p {
+            margin-bottom: 1rem;
+        }
+
+        .prose strong {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .prose em {
+            color: #888;
+        }
+
+        /* Lede / intro block */
+        .lede {
+            font-size: 1.2rem;
+            line-height: 1.7;
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+            color: #b0a080;
+        }
+
+        /* Three paths table */
+        .paths-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        .paths-table th {
+            font-size: 0.65rem;
+            color: var(--accent);
+            font-family: 'Courier New', monospace;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            text-align: left;
+            padding: 8px 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .paths-table td {
+            padding: 10px 12px;
+            font-size: 0.95rem;
+            border-bottom: 1px solid #111;
+            vertical-align: top;
+        }
+
+        .paths-table .path-name {
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .path-dolg { color: var(--dolg); }
+        .path-strakh { color: var(--strakh); }
+        .path-golod { color: var(--golod); }
+
+        .paths-table .question {
+            font-style: italic;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        /* Safety block */
+        .safety-block {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 1.5rem 2rem;
+            margin: 1.5rem 0;
+        }
+
+        .safety-row {
+            display: flex;
+            gap: 1rem;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid #111;
+            font-size: 0.95rem;
+        }
+
+        .safety-row:last-child { border-bottom: none; }
+
+        .safety-signal {
+            font-weight: 600;
+            color: var(--accent);
+            min-width: 120px;
+            flex-shrink: 0;
+        }
+
+        .safety-desc {
+            color: #999;
+        }
+
+        /* Rules list */
+        .rules-list {
+            list-style: none;
+            margin: 1rem 0;
+        }
+
+        .rules-list li {
+            padding: 0.5rem 0;
+            padding-left: 1.2rem;
+            position: relative;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .rules-list li::before {
+            content: '\2014';
+            position: absolute;
+            left: 0;
+            color: var(--dim);
+        }
+
+        /* Actions */
+        .actions-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .action-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 1rem 1.2rem;
+            text-align: center;
+        }
+
+        .action-name {
+            font-weight: 600;
+            color: var(--accent);
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .action-desc {
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        /* Red flags */
+        .red-flags {
+            background: #120808;
+            border: 1px solid #2a1010;
+            padding: 1.2rem 1.5rem;
+            margin: 1.5rem 0;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .red-flags strong {
+            color: var(--dolg);
+        }
+
+        /* Films link block */
+        .films-link {
+            display: block;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 1.5rem 2rem;
+            text-decoration: none;
+            color: var(--text);
+            transition: border-color 0.3s;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .films-link:hover { border-color: var(--accent); }
+
+        .films-link .label {
+            font-size: 0.7rem;
+            color: var(--dim);
+            font-family: 'Courier New', monospace;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 0.3rem;
+        }
+
+        .films-link .title {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .films-link .cta {
+            font-size: 0.7rem;
+            color: var(--accent);
+            font-family: 'Courier New', monospace;
+            letter-spacing: 0.1em;
+            margin-top: 0.6rem;
+            opacity: 0.7;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid var(--border);
+            font-size: 0.7rem;
+            color: #444;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 0.1em;
+        }
+
+        /* Grain */
+        .grain {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-size: 256px 256px;
+        }
+
+        /* Cinematic divider */
+        .cine-divider {
+            width: 100%;
+            height: 180px;
+            margin: 2.5rem 0;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(212, 197, 169, 0.5);
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .main { padding: 2rem 1rem 3rem; }
+            .page-title { font-size: 1.8rem; }
+            .actions-grid { grid-template-columns: 1fr; }
+            .paths-table { font-size: 0.85rem; }
+            .cine-divider { height: 120px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<header class="toho-header">
+    <div class="toho-logo"><a href="index.html" style="color:inherit;text-decoration:none;">東宝株式会社</a></div>
+    <nav class="header-nav">
+        <a href="index.html">Игра</a>
+        <a href="rules.html">Правила</a>
+        <a href="roles.html">Персонажи</a>
+        <a href="venue.html">База</a>
+        <a href="news.html">Новости</a>
+    </nav>
+</header>
+
+<main class="main">
+
+    <a class="back" href="index.html">&larr; Игра</a>
+
+    <div class="cine-divider" style="background-image: url('img/confrontation.jpg'); height: 300px; margin-bottom: 2rem; border: 1px solid rgba(212, 197, 169, 0.5);"></div>
+
+    <div class="page-title">Три могилы в Нидомура</div>
+    <div class="page-subtitle">Мини-игра на Восточном Экспрессе &middot; 27 февраля &mdash; 1 марта 2026</div>
+
+    <div class="separator"></div>
+
+    <!-- АНОНС -->
+    <section class="section">
+        <div class="section-title">О чём игра</div>
+
+        <div class="lede">В горной деревне Нидомура за двадцать лет умерли трое. Следствие каждый раз заходило в тупик. Свидетели противоречили друг другу. Мертвецы не упокоились.</div>
+
+        <div class="prose">
+            <p>Следователь, отравленный на пороге храма. Ронин, найденный с колотыми ранами на околице. Мальчишка, назвавшийся самураем и получивший пулю в бою, в котором ему не нужно было участвовать.</p>
+
+            <p>Кабинетная игра-расследование в формате японского театра. Три дела о неупокоенных мертвецах. Каждое дело разыгрывается в трёх версиях -- глазами <strong>Долга</strong>, <strong>Страха</strong> и <strong>Голода</strong>. Зрители голосуют за самую драматичную версию. Она определяет, как мертвец запомнен.</p>
+
+            <p>Вы -- режиссёры, игроки на сцене и зрители. Режиссёр задаёт рамку сцены и произносит свою версию событий. На сцене вы играете от лица одного пути внутри персонажа. Зрители голосуют.</p>
+
+            <p><em>Хорошая игра -- когда зал замирает перед голосованием, потому что все три версии убедительны.</em></p>
+        </div>
+    </section>
+
+    <div class="cine-divider" style="background-image: url('img/fields.jpg'); height: 240px"></div>
+
+    <!-- ТОН -->
+    <section class="section">
+        <div class="section-title">Тон и тематика</div>
+        <div class="prose">
+            <p>Куросава. Акутагава. &laquo;Расёмон&raquo;, &laquo;Семь самураев&raquo;, &laquo;Телохранитель&raquo;. Серьёзная драма, не боевик. Тишина важнее крика. Импровизация в жёстких рамках: события обязательны, трактовка свободна. Правильных ответов нет -- есть только версии, которые запомнят.</p>
+
+            <p>Кроспол: персонажи другого пола -- это нормально для японского театра.</p>
+        </div>
+
+        <div class="red-flags">
+            <strong>Красные флаги:</strong> убийства (описательно, не физически), отравление, насилие над женщиной (упоминается в показаниях, не разыгрывается), гибель ребёнка (одно из дел), предательство близких, манипуляция, ложь, позор и потеря статуса. Всё проходит через призму японского театра -- дистанция есть, но темы тяжёлые.
+        </div>
+    </section>
+
+    <!-- ТРИ ПУТИ -->
+    <section class="section">
+        <div class="section-title">Три осколка души</div>
+        <div class="prose">
+            <p>Один персонаж раскладывается на три осколка: Долг, Страх, Голод. Разные игроки играют от лица разных осколков. Ты не играешь персонажа целиком -- ты говоришь от лица одного осколка внутри него.</p>
+        </div>
+        <table class="paths-table">
+            <thead>
+                <tr>
+                    <th>Путь</th>
+                    <th>Светлый полюс</th>
+                    <th>Тёмный полюс</th>
+                    <th>Ключевой вопрос</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="path-name path-dolg">Долг</td>
+                    <td>Верность, клятва, честь слова</td>
+                    <td>Фанатизм, слепое подчинение</td>
+                    <td class="question">&laquo;Должен ли я выполнить обещание, даже если это разрушит всё?&raquo;</td>
+                </tr>
+                <tr>
+                    <td class="path-name path-strakh">Страх</td>
+                    <td>Достоинство, статус, признание</td>
+                    <td>Стыд, позор, потеря лица</td>
+                    <td class="question">&laquo;Мой статус -- мой смысл жизни, или я так боюсь опозориться, что лучше умереть?&raquo;</td>
+                </tr>
+                <tr>
+                    <td class="path-name path-golod">Голод</td>
+                    <td>Забота, защита близких</td>
+                    <td>Контроль, удушающая любовь</td>
+                    <td class="question">&laquo;Забочусь ли я о них -- или пожираю их жизни?&raquo;</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <div class="cine-divider" style="background-image: url('img/graves.jpg')"></div>
+
+    <!-- ПРАВИЛА НА СЦЕНЕ -->
+    <section class="section">
+        <div class="section-title">Если ты на сцене</div>
+        <ul class="rules-list">
+            <li>Когда выходишь на сцену одним из осколков -- <strong>повяжи ленту заметно</strong>: <span class="path-dolg">красная -- Долг</span>, <span class="path-strakh">чёрная -- Страх</span>, <span class="path-golod">белая -- Голод</span></li>
+            <li>На сцене одновременно <strong>не больше 5 человек</strong> (идеал 2-3)</li>
+            <li>Говори <strong>1-2 фразы</strong> за раз. Можешь говорить несколько раз за сцену</li>
+            <li>Не перебивай. Пока один говорит -- остальные молчат</li>
+            <li><strong>Рука на плечо</strong> другому игроку того же персонажа = &laquo;уступи мне слово&raquo;</li>
+            <li><strong>Монолог в сторону:</strong> повернись спиной к сцене, лицом к залу, 1-2 фразы. Это внутренний голос</li>
+        </ul>
+    </section>
+
+    <!-- ДЕЙСТВИЯ ОСКОЛКА -->
+    <section class="section">
+        <div class="section-title">Три действия осколка на сцене</div>
+        <div class="prose"><p>Не обязательно каждую сцену. Но если момент пришёл:</p></div>
+        <div class="actions-grid">
+            <div class="action-card">
+                <div class="action-name">Сломаться</div>
+                <div class="action-desc">Путь прекращается</div>
+            </div>
+            <div class="action-card">
+                <div class="action-name">Перейти в руки другого</div>
+                <div class="action-desc">Отдать себя другому персонажу</div>
+            </div>
+            <div class="action-card">
+                <div class="action-name">Шаг по пути</div>
+                <div class="action-desc">Максимально яркое проявление</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- РЕЖИССЁР -->
+    <section class="section">
+        <div class="section-title">Если ты режиссёр</div>
+        <div class="prose">
+            <p>Ты получаешь листочек с подсказками. На сцену не выходишь -- ты задаёшь рамку и отпускаешь. Во время сцены не управляешь осколками.</p>
+            <p>Перед сценой объяви: какой вопрос разбираем, что происходит, кого вызываешь, настроение.</p>
+            <p>Твои инструменты: <strong>удар барабана</strong> -- все замолкают. <strong>&laquo;Конец сцены&raquo;</strong> -- сцена завершена.</p>
+        </div>
+    </section>
+
+    <!-- ЗРИТЕЛЬ -->
+    <section class="section">
+        <div class="section-title">Если ты зритель</div>
+        <div class="prose">
+            <p>Во время сцены можешь <strong>встать на поле пути</strong> -- получишь спотлайт: скажи 1-2 фразы.</p>
+            <p>После трёх сцен -- <strong>голосуй</strong>. Встань на поле самой драматичной версии. Голосуй не за &laquo;правильную&raquo; версию. Голосуй за самую сильную как драму.</p>
+        </div>
+    </section>
+
+    <div class="cine-divider" style="background-image: url('img/fire.jpg')"></div>
+
+    <!-- БЕЗОПАСНОСТЬ -->
+    <section class="section">
+        <div class="section-title">Безопасность</div>
+        <div class="prose">
+            <p>Мы используем механики безопасности. Они позволяют играть смелее, потому что каждый знает, что может остановиться.</p>
+        </div>
+        <div class="safety-block">
+            <div class="safety-row">
+                <div class="safety-signal">Стоп</div>
+                <div class="safety-desc">Раскрытая ладонь вперёд. Немедленно прекрати делать то, что ты делаешь. Это небезопасно мне по жизни.</div>
+            </div>
+            <div class="safety-row">
+                <div class="safety-signal">Вот так и не больше</div>
+                <div class="safety-desc">Ладонь развёрнута к полу. Игра продолжается мягче.</div>
+            </div>
+            <div class="safety-row">
+                <div class="safety-signal">Усиль</div>
+                <div class="safety-desc">Палец вверх партнёру. Можно давить сильнее, я готов.</div>
+            </div>
+            <div class="safety-row">
+                <div class="safety-signal">Тихий выход</div>
+                <div class="safety-desc">Ладонь козырьком, взгляд вниз, уход. Не комментировать. Если кто-то вышел -- не спрашивайте почему.</div>
+            </div>
+        </div>
+        <div class="prose"><p><em>Если видите чужой сигнал -- реагируйте. Это не слабость -- это профессионализм.</em></p></div>
+    </section>
+
+    <!-- ВАЖНОЕ -->
+    <section class="section">
+        <div class="section-title">Важное</div>
+        <ul class="rules-list">
+            <li>Вызывайся из зала, когда зовут</li>
+            <li>Не бойся импровизировать -- события обязательны, трактовка свободная</li>
+            <li>Обстоятельства дела вывешиваются на видное место -- к ним можно вернуться в любой момент</li>
+            <li>Ты можешь быть и режиссёром, и осколком, и зрителем -- в разных делах</li>
+        </ul>
+    </section>
+
+    <div class="cine-divider" style="background-image: url('img/escape.jpg')"></div>
+
+    <!-- ПОДГОТОВКА -->
+    <section class="section">
+        <div class="section-title">Подготовка</div>
+        <div class="prose">
+            <p>10 игроков. Около 3,5 часов. Опыт ролевых игр не обязателен -- нужна только готовность выйти на сцену.</p>
+            <p>Перед игрой вы получите конверт с вашими материалами: ленты трёх цветов (красная, чёрная, белая) и краткие правила.</p>
+            <p>Игра основана на трёх фильмах Акиры Куросавы. Смотреть их заранее не обязательно -- но если хотите войти в атмосферу, мы сделали краткие пересказы в формате диафильмов:</p>
+        </div>
+
+        <a class="films-link" href="index.html">
+            <div class="label">Kurosawa Diafilms</div>
+            <div class="title">Расёмон &middot; Ёдзимбо &middot; Семь самураев</div>
+            <div class="cta">Смотреть диафильмы &rarr;</div>
+        </a>
+    </section>
+
+    <!-- МАСТЕРА -->
+    <section class="section">
+        <div class="section-title">Мастерская группа</div>
+        <div class="prose">
+            <p><strong>Мини-игра &laquo;Три могилы&raquo;:</strong> Яна Позднякова, Андрей Леноран Салик, Алексей Lance Кулаков, Евгения Дейдра Панасова</p>
+            <p><strong>Большая игра &laquo;Невидимый монах&raquo;:</strong> София Чихе Блинская, Ксения Инуки, Антон Тор Страхов</p>
+        </div>
+    </section>
+
+</main>
+
+<div style="text-align:center; padding:2rem;">
+    <a href="heroes.html" style="display:inline-block; font-size:0.8rem; color:#f0d4a8; font-family:'Courier New',monospace; letter-spacing:0.15em; text-transform:uppercase; text-decoration:none; border:1px solid #8b1a1a; padding:0.6rem 1.8rem; background:rgba(139,26,26,0.08);">
+        Герои &mdash; Все персонажи &rarr;
+    </a>
+</div>
+
+<footer class="footer">
+    Восточный Экспресс &middot; 27 февраля &mdash; 1 марта 2026
+</footer>
+
+</body>
+</html>

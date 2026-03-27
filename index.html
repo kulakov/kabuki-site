@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="logo.png">
+    <title>Невидимый монах -- Долг, страх и голод</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #080806;
+            --card-bg: #0e0e0c;
+            --text: #d4c5a9;
+            --accent: #c49a6c;
+            --dim: #666;
+            --toho-red: #8b1a1a;
+            --border: #1a1a18;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .toho-header {
+            width: 100%;
+            background: linear-gradient(to bottom, var(--toho-red) 0%, #5a1010 100%);
+            border-bottom: 2px solid #3a0808;
+            padding: 0.8rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .toho-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(to right, transparent 10%, #d4a574 30%, #f0d4a8 50%, #d4a574 70%, transparent 90%);
+        }
+
+        .toho-brand {
+            display: flex;
+            align-items: baseline;
+            gap: 0.8rem;
+        }
+
+        .toho-logo {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #f0d4a8;
+            letter-spacing: 0.3em;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .header-nav a {
+            font-size: 0.7rem;
+            color: #f0d4a8;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .header-nav a:hover { opacity: 1; }
+        .header-nav a.active { opacity: 1; border-bottom: 1px solid #f0d4a8; padding-bottom: 2px; }
+
+        .main {
+            max-width: 860px;
+            width: 100%;
+            padding: 3rem 2rem 4rem;
+        }
+
+        /* Hero section */
+        .hero {
+            text-align: center;
+            padding: 3rem 0 2rem;
+        }
+
+        .hero__logo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            display: block;
+        }
+
+        .hero__title {
+            font-size: 3.2rem;
+            font-weight: 600;
+            color: #f0d4a8;
+            letter-spacing: 0.15em;
+            line-height: 1.1;
+        }
+
+        .hero__subtitle {
+            font-size: 1.4rem;
+            color: var(--accent);
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        .hero__tagline {
+            font-size: 1.1rem;
+            color: #888;
+            margin-top: 1.2rem;
+            line-height: 1.5;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .separator {
+            width: 60px;
+            height: 1px;
+            background: var(--accent);
+            margin: 2rem auto;
+            opacity: 0.5;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        .section__title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            letter-spacing: 0.05em;
+        }
+
+        .section__text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text);
+        }
+
+        .section__text p {
+            margin-bottom: 1rem;
+        }
+
+        .section__text strong {
+            color: var(--accent);
+        }
+
+        .data-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+        }
+
+        .data-card p {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 0.8rem;
+        }
+
+        .data-card p:last-child { margin-bottom: 0; }
+        .data-card strong { color: var(--accent); }
+
+        .layer-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 1.8rem 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .layer-card__number {
+            font-size: 0.7rem;
+            color: var(--accent);
+            font-family: 'Courier New', monospace;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .layer-card__title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.3rem;
+        }
+
+        .layer-card__subtitle {
+            font-size: 1rem;
+            color: var(--dim);
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+
+        .layer-card__text {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: var(--text);
+        }
+
+        .layer-card__text p {
+            margin-bottom: 0.8rem;
+        }
+
+        .layer-card__text p:last-child { margin-bottom: 0; }
+
+        .goal-block {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--accent);
+            padding: 1.5rem 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .goal-block__label {
+            font-size: 0.7rem;
+            color: var(--accent);
+            font-family: 'Courier New', monospace;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .goal-block__text {
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .goal-block__text p {
+            margin-bottom: 0.8rem;
+        }
+
+        .goal-block__text p:last-child { margin-bottom: 0; }
+
+        .cta-section {
+            text-align: center;
+            margin: 3rem 0 2rem;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 0.9rem 2.2rem;
+            transition: all 0.3s;
+            background: var(--toho-red);
+            color: #f0d4a8;
+            border: 1px solid #a52020;
+        }
+
+        .cta-btn:hover { background: #a52020; }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .section-header__title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text);
+            letter-spacing: 0.1em;
+        }
+
+        .section-header__sub {
+            font-size: 0.85rem;
+            color: #888;
+            margin-top: 0.4rem;
+            font-style: italic;
+        }
+
+        .films {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .film-card {
+            display: flex;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            text-decoration: none;
+            color: var(--text);
+            transition: border-color 0.4s, transform 0.3s;
+            overflow: hidden;
+        }
+
+        .film-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .film-card__poster {
+            width: 280px;
+            min-height: 200px;
+            flex-shrink: 0;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .film-card__poster::after {
+            content: '';
+            position: absolute;
+            top: 0; right: 0; bottom: 0;
+            width: 60px;
+            background: linear-gradient(to right, transparent, var(--card-bg));
+        }
+
+        .film-card__body {
+            padding: 2rem 2.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .film-card__year {
+            font-size: 0.7rem;
+            color: var(--dim);
+            font-family: 'Courier New', monospace;
+            letter-spacing: 0.15em;
+            margin-bottom: 0.4rem;
+        }
+
+        .film-card__title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--text);
+            letter-spacing: 0.08em;
+            line-height: 1.2;
+        }
+
+        .film-card__kanji {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 1rem;
+            color: var(--dim);
+            margin-top: 0.2rem;
+            letter-spacing: 0.2em;
+        }
+
+        .film-card__desc {
+            font-size: 0.95rem;
+            color: #888;
+            margin-top: 0.8rem;
+            line-height: 1.6;
+            max-width: 420px;
+        }
+
+        .film-card__cta {
+            font-size: 0.7rem;
+            color: var(--accent);
+            font-family: 'Courier New', monospace;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-top: 1.2rem;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        .film-card:hover .film-card__cta { opacity: 1; }
+
+        .footer {
+            text-align: center;
+            padding: 3rem 2rem 2rem;
+            border-top: 1px solid var(--border);
+            width: 100%;
+            max-width: 860px;
+        }
+
+        .footer__text {
+            font-size: 0.75rem;
+            color: #444;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 0.1em;
+            line-height: 1.8;
+        }
+
+        .footer__text a {
+            color: #555;
+            text-decoration: none;
+        }
+
+        .footer__text a:hover { color: var(--accent); }
+
+        .grain {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-size: 256px 256px;
+        }
+
+        blockquote {
+            border-left: 3px solid var(--accent);
+            padding-left: 1.5rem;
+            margin: 1.5rem 0;
+            color: #888;
+            font-style: italic;
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 768px) {
+            .film-card { flex-direction: column; }
+            .film-card__poster { width: 100%; min-height: 160px; }
+            .film-card__poster::after {
+                top: auto; right: 0; bottom: 0; left: 0;
+                width: 100%; height: 40px;
+                background: linear-gradient(to bottom, transparent, var(--card-bg));
+            }
+            .film-card__body { padding: 1.2rem 1.5rem 1.5rem; }
+            .hero__title { font-size: 2.4rem; }
+            .film-card__title { font-size: 1.4rem; }
+        }
+
+        @media (max-width: 480px) {
+            .main { padding: 2rem 1rem 3rem; }
+            .toho-header { flex-direction: column; gap: 0.5rem; padding: 0.6rem 1rem; }
+            .header-nav { gap: 1rem; flex-wrap: wrap; justify-content: center; }
+            .header-nav a { font-size: 0.6rem; }
+            .toho-logo { font-size: 0.9rem; }
+            .hero__title { font-size: 2rem; }
+            .layer-card, .goal-block, .data-card { padding: 1.2rem 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<header class="toho-header">
+    <div class="toho-brand">
+        <div class="toho-logo">東宝株式会社</div>
+    </div>
+    <nav class="header-nav">
+        <a href="index.html" class="active">Игра</a>
+        <a href="rules.html">Правила</a>
+        <a href="roles.html">Персонажи</a>
+        <a href="venue.html">База</a>
+        <a href="news.html">Новости</a>
+    </nav>
+</header>
+
+<main class="main">
+
+    <!-- Hero -->
+    <div class="hero">
+        <img class="hero__logo" src="logo.png" alt="Невидимый монах">
+        <div class="hero__title">Невидимый монах</div>
+        <div class="hero__subtitle">Долг, страх и голод</div>
+        <div class="hero__tagline">Игра о том, как герои и боги формируют друг друга через смерть и перерождение.</div>
+    </div>
+
+    <div class="separator"></div>
+
+    <!-- Main description -->
+    <div class="section">
+        <div class="section__text">
+            <p>Вы играете душу, проживающую несколько жизней. Вы умрёте и переродитесь. Это игра, где герои и боги соперничают за то, каким будет новый мир. Боги формируют судьбы мира из осколков душ. Души сопротивляются и ищут свой путь. Боги лепят героев из душ, герои меняют богов и вместе с ними мир.</p>
+        </div>
+    </div>
+
+    <!-- Format block -->
+    <div class="data-card">
+        <p><strong>Гибридная игра:</strong> На игре будет до 40 игроков на полигоне и до 20 игроков онлайн (боги и духи). Связь через видеокамеры (в особых местах) и голоса духов в наушниках (у всех игроков на полигоне).</p>
+        <p><strong>Дата и Место:</strong> 1 &mdash; 3 мая 2026, Сербия.</p>
+        <p><strong>Команда OMG:</strong> Lance, Lenoran, Тор Страхов, Дейдра, Инуки, Чихе, Яна Позднякова.</p>
+    </div>
+
+    <!-- Что вы делаете -->
+    <div class="section">
+        <div class="section__title">Что вы делаете</div>
+        <div class="section__text">
+            <p>Деревня Нидомура расположена у врат мёртвых &mdash; одного из входов в Дзигоку. Среди духов и знающих людей она известна как &laquo;место, где хоронят великие души&raquo;. Эти врата рядом с префектурой Мёкан. Здесь не сеют рис и не ловят рыбу &mdash; здесь по всем правилам хоронят мёртвых. По крайней мере так задумано, ведь сюда свозят особые случаи смерти со всей Японии: клятвопреступников, неправедно казнённых, подменышей, проклятых. Но так же и подвижников, героев, великих правителей &mdash; всех неупокоенных, чья смерть требует расследования мёкан, прежде чем двигаться дальше.</p>
+            <p>Можно играть и великого героя и обычного крестьянина, но не жизнь в обычной деревне: мы играем про необычные и великие души, которые проходят череду рождений. Каждая жизнь &mdash; это этап в становлении души. Каждая смерть &mdash; подведение итогов этого этапа. Каждая душа пройдет через перерождение и воплотится в новое тело, со старыми кармическими долгами и новой судьбой.</p>
+        </div>
+    </div>
+
+    <!-- Three layers -->
+    <div class="section">
+        <div class="layer-card">
+            <div class="layer-card__number">Слой 1</div>
+            <div class="layer-card__title">МИСТЕРИЯ</div>
+            <div class="layer-card__subtitle">Становление души</div>
+            <div class="layer-card__text">
+                <p>Когда вы умираете, вы проходите многоэтапный процесс похорон. Похороны для души &mdash; это осознание жизни. Монахи задают вам вопросы через сутры. Могильщики копают вашу могилу, и вы видите, как глубока яма. Резчик спрашивает: какие слова вырезать на камне?</p>
+                <p>Вы осознаёте свою жизнь. Вы прощаетесь с прошлым. Вы понимаете, кем стали. Это ваша работа как духа.</p>
+            </div>
+        </div>
+
+        <div class="layer-card">
+            <div class="layer-card__number">Слой 2</div>
+            <div class="layer-card__title">ДЕТЕКТИВ</div>
+            <div class="layer-card__subtitle">Играете в интриги и контрабанду</div>
+            <div class="layer-card__text">
+                <p>Здесь не хоронят простые случаи. Каждый кого здесь похоронят попадет на суд мекан. Но в этой деревне умеют повлиять на то, что будет за вратами смерти. Для этого нужно успеть разобраться с ее земными делами и раздать кармические долги. Или подделать мандаты, документы и обстоятельства, так чтоб судейские не нашли концов. В общем &mdash; каждый здесь пытается закончить дела (свои или предков), отдать долги, уйти на тот свет не с пустыми руками.</p>
+                <p>Пока вы живы (или застряли между смертями), вы участвуете в борьбе кланов. Якудза торгуют обрядами. Контрабандисты подделывают печати смерти, переписывая судьбы. Следователи раскрывают преступления. Чиновники принимают постановления.</p>
+                <p>Это попытка взломать игру богов. Боги формируют судьбы из осколков душ &mdash; но вы крадёте осколки, подделываете их, торгуете ими. Все для того, чтобы в следующей жизни получить нужную вам (или тем для кого стараетесь) судьбу. И при этом, конкурируете с другими сторон за влияние на сюжет мира.</p>
+            </div>
+        </div>
+
+        <div class="layer-card">
+            <div class="layer-card__number">Слой 3</div>
+            <div class="layer-card__title">КАБУКИ</div>
+            <div class="layer-card__subtitle">Разыгрываете судьбы на сцене</div>
+            <div class="layer-card__text">
+                <p>В ключевые моменты герои выходят на сцену перед богами. Каждый кто выйдет на сцену получит полное внимание богов и смертных. Кабуки &mdash; это острый, но регламентированный ритуалом, конфликт где стороны требуют друг от друга невозможного. Его результаты меняют судьбу героев. И глядя на их игру боги устанавливают новые правила мира.</p>
+                <p>В конфликте на сцене стороны требуют друг у друга невозможного &mdash; того, что можно отдать лишь ценой огромной утраты. Но и победа и поражение неизбежно изменят путь героя.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Механика осколков души -->
+    <div class="section">
+        <div class="section__title">Механика осколков души</div>
+        <div class="section__text">
+            <p>Душа каждого расколота на три пути: путь долга, путь страха, и путь голода. Один осколок у вашего персонажа. Остальные &mdash; в руках других игроков: богов и смертных. Держатель осколка управляет частью чужой души. Его требования обязательны &mdash; но их можно выполнить по-своему, сопротивляясь в рамках правил.</p>
+            <p><strong>Так устроена сансара: каждый вращает колесо страданий другого.</strong></p>
+        </div>
+    </div>
+
+    <!-- Goals -->
+    <div class="section">
+        <div class="goal-block">
+            <div class="goal-block__label">Цель героев (полигон)</div>
+            <div class="goal-block__text">
+                <p>Стать собой, найти свой путь &mdash; сопротивляясь закону небес или используя игру богов. Вы выигрываете, когда трансформация вашей души повлияла на мир. Не важно, согласились вы с богами или восстали против них. Важно, что ваша душа прошла путь и изменили себя и реальность.</p>
+            </div>
+        </div>
+
+        <div class="goal-block">
+            <div class="goal-block__label">Цель богов (онлайн)</div>
+            <div class="goal-block__text">
+                <p>Воспитать героя, из которого родится новый мир. Но герои не пешки &mdash; они соперники и союзники. Вы предлагаете судьбы, они импровизируют. Вы осознаёте себя, глядя на их выборы. Вы меняетесь под их взглядами. Вы выигрываете, если из судьбы героя родился ваш мир &mdash; но герой должен сам пройти свой путь.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Atmosphere -->
+    <div class="section">
+        <div class="section__title">Атмосфера</div>
+        <div class="section__text">
+            <p><strong>Референсы:</strong> Мрачный минимализм Куросавы (&laquo;Расёмон&raquo;, &laquo;Семь самураев&raquo;). Акутагава. Достоверная бюрократия духов в мифической Японии. &laquo;Невидимый монах&raquo; &mdash; детектив про коллизии небесной бюрократии в маленькой деревне.</p>
+            <p><strong>Чувства:</strong> Драма невозможного выбора. Ярость против судьбы. Тяжесть кармического долга. Озарение от осознания пути. Отчаяние перед голодной смертью близких и нежность заботы о них. Гордость за то, что можешь прокормить семью. Ужас потери статуса и торжество обретения положения. Паника перед разоблачением и триумф успешного обмана.</p>
+            <blockquote>Типичная сцена: Три человека у тела. Каждый помнит случившееся по-своему &mdash; разбойник видит ярость, самурай честь, жена самурая страх. Все лгут. Все правы. Каждый защищает свою версию. Мир каждого рушится под весом правды.</blockquote>
+            <p>Серьёзная драма с сильным уклоном в трагедию. Мрачно, но с проблесками надежды.</p>
+        </div>
+    </div>
+
+    <!-- Themes -->
+    <div class="section">
+        <div class="section__title">Темы и границы</div>
+        <div class="section__text">
+            <p><strong>О чём:</strong> Трансформация через смерть. Сопротивление судьбе vs принятие её. Как смертные и боги формируют друг друга.</p>
+            <p><strong>Смерть:</strong> Вы играете не за отдельное воплощение, а за всю историю души, в нескольких рождениях. Вы живете, умираете, проходите мистерию похорон, перерождаетесь. Так крутится колесо сансары.</p>
+            <p><strong>PvP:</strong> Через осколки душ и интриги между кланами. Без физического насилия. Это торг влиянием, не боевка.</p>
+            <p><strong>Герои vs Боги:</strong> Боги предлагают судьбы, герои живут следуя им или сопротивляясь. Герои показывают идут своим путем, а боги ищут в деяниях смертных способ изменить законы мира.</p>
+            <p><strong>Потеря агентности:</strong> Другие игроки (и боги) держат осколки вашей души и предлагают вам сюжеты. Вы можете согласиться или сопротивляться. Это не лишение прав &mdash; это игра влияния.</p>
+        </div>
+    </div>
+
+    <!-- Why play -->
+    <div class="section">
+        <div class="section__title">Зачем играть</div>
+        <div class="section__text">
+            <p>Это не игра о том, чтобы победить зло или спасти мир.</p>
+            <p>Это игра о том, как герои и боги формируют друг друга.</p>
+            <p>Вы умрёте. Боги предложат судьбу. Но вы можете восстать, принять или найти третий путь. К концу станет ясно: какой мир родился из этого противостояния? Кто кого изменил сильнее?</p>
+        </div>
+    </div>
+
+    <!-- References -->
+    <div class="section">
+        <div class="section__text">
+            <p><strong>Источники:</strong> Куросава (&laquo;Расёмон&raquo;, &laquo;Семь самураев&raquo;, &laquo;Ран&raquo;). Рассказ &laquo;Невидимый Монах&raquo; Алексея Кулакова.</p>
+        </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-section">
+        <a class="cta-btn" href="https://forms.gle/Wxjcgdcy2eYtCjNL6" target="_blank">Заявиться на игру</a>
+    </div>
+
+
+</main>
+
+<footer class="footer">
+    <div class="footer__text">
+        LARP &laquo;Невидимый монах&raquo; &middot; 2026<br>
+        <a href="https://t.me/Invisiblemonk2026" style="color: var(--accent);">Telegram-канал игры @Invisiblemonk2026</a>
+    </div>
+</footer>
+
+</body>
+</html>

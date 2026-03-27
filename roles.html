@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="logo.png">
+<title>Персонажи — Невидимый монах</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root { --bg: #080806; --card-bg: #0e0e0c; --text: #d4c5a9; --accent: #c49a6c; --dim: #666; --toho-red: #8b1a1a; }
+body { background: var(--bg); color: var(--text); font-family: "Cormorant Garamond", Georgia, serif; min-height: 100vh; }
+.grain { position: fixed; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; z-index: 50; opacity: 0.03; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); background-size: 256px 256px; }
+.header { width: 100%; background: linear-gradient(to bottom, var(--toho-red) 0%, #5a1010 100%); border-bottom: 2px solid #3a0808; padding: 0.8rem 2rem; display: flex; align-items: center; justify-content: space-between; }
+.toho-logo { font-family: "Noto Serif JP", serif; font-size: 0.9rem; }
+.toho-logo a { color: inherit; text-decoration: none; }
+.header-nav { display: flex; gap: 1.5rem; }
+.header-nav a { font-size: 0.7rem; color: #f0d4a8; text-decoration: none; text-transform: uppercase; letter-spacing: 0.15em; opacity: 0.7; transition: opacity 0.2s; }
+.header-nav a:hover { opacity: 1; }
+.header-nav a.active { opacity: 1; border-bottom: 1px solid #f0d4a8; padding-bottom: 2px; }
+.content { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+h1 { font-size: 2.2rem; font-weight: 400; text-align: center; margin-bottom: 0.5rem; color: var(--accent); }
+.subtitle { text-align: center; color: var(--dim); font-size: 1.1rem; margin-bottom: 1.5rem; font-style: italic; }
+.filters { text-align: center; margin-bottom: 1.5rem; }
+.filter-btn { background: transparent; border: 1px solid #333; color: var(--dim); padding: 6px 16px; margin: 0 4px; border-radius: 4px; cursor: pointer; font-family: inherit; font-size: 0.9rem; transition: all 0.2s; }
+.filter-btn:hover { border-color: var(--accent); color: var(--text); }
+.filter-btn.active { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 20px; }
+.card { text-align: center; transition: transform 0.2s; }
+.card:hover { transform: translateY(-4px); }
+.card a { text-decoration: none; color: var(--text); display: block; }
+.card img { width: 140px; height: 140px; object-fit: cover; border-radius: 0; border: 1px solid #222; filter: grayscale(30%); transition: filter 0.2s, border-color 0.2s; }
+.card:hover img { filter: grayscale(0%); border-color: var(--accent); }
+.card .name { font-size: 0.9rem; margin-top: 8px; line-height: 1.3; }
+.card .archetype { font-size: 0.9rem; color: var(--dim); margin-top: 2px; font-style: italic; }
+.card .badge { display: inline-block; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; padding: 2px 8px; margin-top: 4px; border: 1px solid var(--toho-red); color: var(--toho-red); }
+.card .status-reserved { display: inline-block; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.12em; padding: 2px 10px; margin-top: 5px; border: 1px solid #8b6914; color: #c49a2c; background: rgba(139,105,20,0.1); }
+.footer { text-align: center; padding: 2rem; color: var(--dim); font-size: 0.85rem; border-top: 1px solid #1a1a18; margin-top: 3rem; }
+@media (max-width: 480px) { .header { flex-direction: column; gap: 0.5rem; padding: 0.6rem 1rem; } .header-nav { gap: 1rem; } .header-nav a { font-size: 0.6rem; } }
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<header class="header">
+    <div class="toho-logo"><a href="index.html">東宝株式会社</a></div>
+    <nav class="header-nav">
+        <a href="index.html">Игра</a>
+        <a href="rules.html">Правила</a>
+        <a href="roles.html" class="active">Персонажи</a>
+        <a href="venue.html">База</a>
+        <a href="news.html">Новости</a>
+    </nav>
+</header>
+<div class="content">
+    <h1>Персонажи</h1>
+    <div class="filters">
+        <button class="filter-btn active" onclick="filterGender('all')">Все (36)</button>
+        <button class="filter-btn" onclick="filterGender('m')">Мужские (19)</button>
+        <button class="filter-btn" onclick="filterGender('u')">Универсальные (8)</button>
+        <button class="filter-btn" onclick="filterGender('f')">Женские (9)</button>
+    </div>
+    <div class="grid">
+        <div class="card" data-gender="m">
+            <a href="roles/Кикутё.html">
+                <img src="portraits/kikuchiyo.jpg" alt="Кикутё" loading="lazy" />
+                <div class="name">Кикутё</div>
+                <div class="archetype">Юрей Крестьянина, хотел быть самураем</div>
+            </a>
+        </div>
+        <div class="card" data-gender="m">
+            <a href="roles/Камбэй-Симада.html">
+                <img src="portraits/kambei.jpg" alt="Камбэй Симада" loading="lazy" />
+                <div class="name">Камбэй Симада</div>
+                <div class="archetype">Мёртвый самурай-полководец</div>
+            </a>
+        </div>
+        <div class="card" data-gender="f">
+            <a href="roles/Шиори.html">
+                <img src="portraits/wife_rikiti.jpg" alt="Шиори, жена Рикити" loading="lazy" />
+                <div class="name">Шиори, жена Рикити</div>
+                <div class="archetype">Сгоревшая жена крестьянина</div>
+            </a>
+        </div>
+        <div class="card" data-gender="m">
+            <a href="roles/Рикити.html">
+                <img src="portraits/rikiti.jpg" alt="Рикити, муж Шиори" loading="lazy" />
+                <div class="name">Рикити, муж Шиори</div>
+                <div class="archetype">Уважаемый крестьянин</div>
+            </a>
+        </div>
+        <div class="card" data-gender="f">
+            <a href="roles/Сино.html">
+                <img src="portraits/shino.jpg" alt="Сино, дочь Мандзо, жена Кацусиро" loading="lazy" />
+                <div class="name">Сино, дочь Мандзо, жена Кацусиро</div>
+                <div class="archetype">Жена, на которой держится семья</div>
+            </a>
+        </div>
+        <div class="card" data-gender="m">
+            <a href="roles/Ситиродзи-Ито.html">
+                <img src="portraits/shichiroji.jpg" alt="Ситиродзи Ито" loading="lazy" />
+                <div class="name">Ситиродзи Ито</div>
+                <div class="archetype">Самурай-стратег</div>
+                <div class="status-reserved">забронировано</div>
+            </a>
+        </div>
+        <div class="card" data-gender="m">
+            <a href="roles/Хансукэ.html">
+                <img src="portraits/hansuke.jpg" alt="Хансукэ" loading="lazy" />
+                <div class="name">Хансукэ</div>
+                <div class="archetype">Страж для порядка</div>
+            </a>
+        </div>
+        <div class="card" data-gender="f">
+            <a href="roles/Орин-Сэйбэй.html">
+                <img src="portraits/orin.jpg" alt="Орин Сэйбэй, вдова Сэйбэя, мать Ёитиро" loading="lazy" />
+                <div class="name">Орин Сэйбэй, вдова Сэйбэя, мать Ёитиро</div>
+                <div class="archetype">Серый кардинал</div>
+            </a>
+        </div>
+        <div class="card" data-gender="u">
+            <a href="roles/Годзо.html">
+                <img src="portraits/gonji.jpg" alt="Годзо, трактирщик" loading="lazy" />
+                <div class="name">Годзо, трактирщик</div>
+                <div class="archetype">Суетливый трактирщик</div>
+            </a>
+        </div>
+        <div class="card" data-gender="m">
+            <a href="roles/Гробовщик-Окэя.html">
+                <img src="portraits/coffinmaker.jpg" alt="Гробовщик Окэя" loading="lazy" />
+                <div class="name">Гробовщик Окэя</div>
+                <div class="archetype">Гробовщик в маленьком городе</div>
+            </a>
+        </div>
+        <div class="card" data-gender="f">
+            <a href="roles/Нуи.html">
+                <img src="portraits/nui.jpg" alt="Нуи, жена Ёхэя" loading="lazy" />
+                <div class="name">Нуи, жена Ёхэя</div>
+                <div class="archetype">Поднявшаяся при дворе крестьянка</div>
+                <div class="status-reserved">забронировано</div>
+            </a>
+        </div>
+        <div class="card" data-gender="m">
+            <a href="roles/Ёитиро-Сэйбэй.html">
+                <img src="portraits/seibei.jpg" alt="Ёитиро Сэйбэй, сын Орин Сэйбэй" loading="lazy" />
+                <div class="name">Ёитиро Сэйбэй, сын Орин Сэйбэй</div>
+                <div class="archetype">Номинальный глава якудза</div>
+            </a>
+        </div>
+        <div class="card" data-gender="m">
+            <a href="roles/Ёхэй.html">
+                <img src="portraits/yokei.jpg" alt="Ёхэй, муж Нуи" loading="lazy" />
+                <div class="name">Ёхэй, муж Нуи</div>
+                <div class="archetype">Крестьянин-людоман, вдовец</div>
+            </a>
+        </div>
+        <div class="card" data-gender="u">
+            <a href="roles/Хромой-Лис.html">
+                <img src="portraits/lame_fox.jpg" alt="Хромой Лис" loading="lazy" />
+                <div class="name">Хромой Лис</div>
+                <div class="archetype">Пришлый главарь контрабандистов</div>
+            </a>
+        </div>
+        <div class="card" data-gender="m">
+            <a href="roles/Таро.html">
+                <img src="portraits/taro.jpg" alt="Таро" loading="lazy" />
+                <div class="name">Таро</div>
+                <div class="archetype">Кабан-оборотень на службе Мёкан</div>
+            </a>
+        </div>
+        <div class="card" data-gender="m">
+            <a href="roles/Танака-Хобан.html">
+                <img src="portraits/father_takahana.jpg" alt="Танака Хобан, Отец Такаханы" loading="lazy" />
+                <div class="name">Танака Хобан, Отец Такаханы</div>
+                <div class="archetype">Призрак легиста-идеалиста</div>
+            </a>
+        </div>
+        <div class="card" data-gender="u">
+            <a href="roles/Серая-Цапля.html">
+                <img src="portraits/grey_heron.jpg" alt="Серая Цапля, Акиро Нидзё" loading="lazy" />
+                <div class="name">Серая Цапля, Акиро Нидзё</div>
+                <div class="archetype">Падший придворный с имперским мандатом</div>
+            </a>
+        </div>
+        <div class="card" data-gender="m">
+            <a href="roles/Райдзин.html">
+                <img src="portraits/raidzin.jpg" alt="Райдзин" loading="lazy" />
+                <div class="name">Райдзин</div>
+                <div class="archetype">Петух-оборотень на службе Цукидзи</div>
+            </a>
+        </div>
+        <div class="card" data-gender="u">
+            <a href="roles/Косуга-но-Камэ.html">
+                <img src="portraits/kosuga.jpg" alt="Косуга-но Камэ" loading="lazy" />
+                <div class="name">Косуга-но Камэ</div>
+                <div class="archetype">Даймё Цукидзи</div>
+            </a>
+        </div>
+        <div class="card" data-gender="m">
+            <a href="roles/Сэдзи.html">
+                <img src="portraits/sedzi.jpg" alt="Сэдзи" loading="lazy" />
+                <div class="name">Сэдзи</div>
+                <div class="archetype">Правая рука</div>
+            </a>
+        </div>
+        <div class="card" data-gender="f">
+            <a href="roles/Тётушка-Ёсими.html">
+                <img src="portraits/yoshimi.jpg" alt="Тётушка Ёсими, вдова старосты Гисаку" loading="lazy" />
+                <div class="name">Тётушка Ёсими, вдова старосты Гисаку</div>
+                <div class="archetype">Глава общины</div>
+            </a>
+        </div>
+        <div class="card" data-gender="m">
+            <a href="roles/Кацусиро-Окамото.html">
+                <img src="portraits/katsushiro.jpg" alt="Кацусиро Окамото, муж Сино" loading="lazy" />
+                <div class="name">Кацусиро Окамото, муж Сино</div>
+                <div class="archetype">Самурай, выбравший путь крестьянина</div>
+            </a>
+        </div>
+        <div class="card" data-gender="f">
+            <a href="roles/Масако-Канадзава.html">
+                <img src="portraits/masago.jpg" alt="Масако Канадзава, вдова Такэхиро" loading="lazy" />
+                <div class="name">Масако Канадзава, вдова Такэхиро</div>
+                <div class="archetype">Благородная вдова самурая</div>
+            </a>
+        </div>
+        <div class="card" data-gender="m">
+            <a href="roles/Такэхиро-Канадзава.html">
+                <img src="portraits/takehiro.jpg" alt="Такэхиро Канадзава" loading="lazy" />
+                <div class="name">Такэхиро Канадзава</div>
+                <div class="archetype">Призрак высокомерного самурая</div>
+            </a>
+        </div>
+        <div class="card" data-gender="m">
+            <a href="roles/Дзинпати.html">
+                <img src="portraits/dzinpati.jpg" alt="Дзинпати, торговец" loading="lazy" />
+                <div class="name">Дзинпати, торговец</div>
+                <div class="archetype">Торговец, ведущий дела с каждым в деревне</div>
+            </a>
+        </div>
+        <div class="card" data-gender="f">
+            <a href="roles/Медиум-Кагэ.html">
+                <img src="portraits/medium.jpg" alt="Медиум Кагэ" loading="lazy" />
+                <div class="name">Медиум Кагэ</div>
+                <div class="archetype">Голос богов</div>
+                <div class="badge">Забронировано</div>
+            </a>
+        </div>
+        <div class="card" data-gender="m">
+            <a href="roles/Дровосек-Кагэн.html">
+                <img src="portraits/woodcutter.jpg" alt="Дровосек Кагэн, приёмный отец Кикутё" loading="lazy" />
+                <div class="name">Дровосек Кагэн, приёмный отец Кикутё</div>
+                <div class="archetype">Сострадательный бедняк</div>
+            </a>
+        </div>
+        <div class="card" data-gender="m">
+            <a href="roles/Монах-Кэйсин.html">
+                <img src="portraits/priest.jpg" alt="Монах Кэйсин" loading="lazy" />
+                <div class="name">Монах Кэйсин</div>
+                <div class="archetype">Искренний странствующий монах</div>
+            </a>
+        </div>
+        <div class="card" data-gender="u">
+            <a href="roles/Медиум-Киетака.html">
+                <img src="portraits/yorimasi.jpg" alt="Медиум Киетака Ямабуси" loading="lazy" />
+                <div class="name">Медиум Киетака Ямабуси</div>
+                <div class="archetype">Фанатичный чиновник-медиум</div>
+            </a>
+        </div>
+        <div class="card" data-gender="m">
+            <a href="roles/Тадаёси-Инаба.html">
+                <img src="portraits/ushitora.jpg" alt="Тадаёси Инаба" loading="lazy" />
+                <div class="name">Тадаёси Инаба</div>
+                <div class="archetype">Номер два в банде</div>
+            </a>
+        </div>
+        <div class="card" data-gender="u">
+            <a href="roles/Матакичи.html">
+                <img src="portraits/bandit.jpg" alt="Матакичи" loading="lazy" />
+                <div class="name">Матакичи</div>
+                <div class="archetype">Отец солдатам</div>
+            </a>
+        </div>
+        <div class="card" data-gender="u">
+            <a href="roles/Хэйдзи.html">
+                <img src="portraits/bandit_chief.jpg" alt="Хэйдзи" loading="lazy" />
+                <div class="name">Хэйдзи</div>
+                <div class="archetype">Блудный сын</div>
+            </a>
+        </div>
+        <div class="card" data-gender="u">
+            <a href="roles/Кривляка.html">
+                <img src="portraits/kyoami.jpg" alt="Кривляка" loading="lazy" />
+                <div class="name">Кривляка</div>
+                <div class="archetype">Верный слуга сумасшедшего господина</div>
+                <div class="badge">Забронировано</div>
+            </a>
+        </div>
+        <div class="card" data-gender="m">
+            <a href="roles/Старик-бродяга.html">
+                <img src="portraits/hidetora.jpg" alt="Старик бродяга" loading="lazy" />
+                <div class="name">Старик бродяга</div>
+                <div class="archetype">Полусумасшедший старик в обносках</div>
+                <div class="badge">Забронировано</div>
+            </a>
+        </div>
+        <div class="card" data-gender="f">
+            <a href="roles/Садако-Нидзё.html">
+                <img src="portraits/sadako.jpg" alt="Садако Нидзё, наложница даймё" loading="lazy" />
+                <div class="name">Садако Нидзё, наложница даймё</div>
+                <div class="archetype">Верная наложница</div>
+            </a>
+        </div>
+        <div class="card" data-gender="f">
+            <a href="roles/Митико-Окамото.html">
+                <img src="portraits/mitiko.jpg" alt="Митико Окамото" loading="lazy" />
+                <div class="name">Митико Окамото</div>
+                <div class="archetype">Изящная интриганка</div>
+            </a>
+        </div>
+    </div>
+</div>
+<div class="footer">LARP &laquo;Невидимый монах&raquo; &middot; 1 &mdash; 3 мая 2026, Сербия</div>
+<script>
+function filterGender(g) {
+    document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+    event.target.classList.add('active');
+    document.querySelectorAll('.card').forEach(function(card) {
+        if (g === 'all' || card.getAttribute('data-gender') === g) {
+            card.style.display = '';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+}
+</script>
+</body>
+</html>

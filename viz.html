@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="logo.png">
+<title>Три могилы в деревне Нидомура -- Визуализации</title>
+<style>
+  .gate-overlay {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: #1a1a1a; z-index: 9999;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 16px;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+  }
+  .gate-overlay.hidden { display: none; }
+  .gate-title { color: #c4a35a; font-size: 20px; letter-spacing: 2px; text-transform: uppercase; }
+  .gate-input { background: #222; border: 1px solid #444; color: #e0e0e0; padding: 12px 20px; font-size: 16px; border-radius: 6px; width: 260px; text-align: center; outline: none; }
+  .gate-input:focus { border-color: #c4a35a; }
+  .gate-input.error { border-color: #8b0000; animation: shake 0.3s; }
+  .gate-btn { background: #c4a35a; color: #1a1a1a; border: none; padding: 10px 32px; font-size: 14px; cursor: pointer; border-radius: 6px; letter-spacing: 1px; text-transform: uppercase; }
+  .gate-btn:hover { background: #d4b36a; }
+  @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
+  .content-hidden { display: none; }
+</style>
+<style>
+  :root {
+    --bg: #1a1a1a;
+    --bg-card: #222;
+    --bg-card-alt: #2a2a2a;
+    --bg-scene: #333;
+    --text: #e0e0e0;
+    --text-dim: #999;
+    --text-muted: #666;
+    --accent: #c4a35a;
+    --border: #444;
+    --border-light: #333;
+    --dolg-bg: linear-gradient(135deg, #3d1111, #2a0a0a);
+    --dolg-border: #8b0000;
+    --dolg-text: #cd5c5c;
+    --dolg-marker: #8b0000;
+    --strakh-bg: linear-gradient(135deg, #1a1a1a, #111);
+    --strakh-border: #444;
+    --strakh-text: #888;
+    --strakh-marker: #555;
+    --golod-bg: linear-gradient(135deg, #2a2a2a, #1f1f1f);
+    --golod-border: #888;
+    --golod-text: #ddd;
+    --golod-marker: #999;
+    --hall-bg: #222;
+    --matrix-footer-bg: #2a1a0a;
+    --matrix-last-row: #1a2a1a;
+    --matrix-last-text: #8fbc8f;
+    --proc-version: #5a7a5a;
+    --proc-version-text: #8fbc8f;
+    --vote-border: #8b0000;
+    --vote-text: #cd5c5c;
+  }
+
+  .light-theme {
+    --bg: #f5f3ee;
+    --bg-card: #fff;
+    --bg-card-alt: #f9f7f2;
+    --bg-scene: #eee;
+    --text: #2a2a2a;
+    --text-dim: #666;
+    --text-muted: #999;
+    --accent: #8b6914;
+    --border: #d0c8b8;
+    --border-light: #e0d8c8;
+    --dolg-bg: linear-gradient(135deg, #fff0f0, #ffe8e8);
+    --dolg-border: #c44;
+    --dolg-text: #a03030;
+    --dolg-marker: #c44;
+    --strakh-bg: linear-gradient(135deg, #f0f0f0, #e8e8e8);
+    --strakh-border: #aaa;
+    --strakh-text: #555;
+    --strakh-marker: #888;
+    --golod-bg: linear-gradient(135deg, #f8f8f8, #f0f0f0);
+    --golod-border: #888;
+    --golod-text: #333;
+    --golod-marker: #666;
+    --hall-bg: #fff;
+    --matrix-footer-bg: #fdf6eb;
+    --matrix-last-row: #f0f8f0;
+    --matrix-last-text: #2a6a2a;
+    --proc-version: #4a8a4a;
+    --proc-version-text: #2a6a2a;
+    --vote-border: #c44;
+    --vote-text: #a03030;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); padding: 40px; transition: background 0.3s, color 0.3s; }
+  h1 { text-align: center; font-size: 28px; margin-bottom: 8px; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); }
+  .subtitle { text-align: center; font-size: 14px; color: var(--text-dim); margin-bottom: 48px; }
+  h2 { font-size: 20px; margin-bottom: 24px; color: var(--accent); border-bottom: 1px solid var(--border-light); padding-bottom: 8px; }
+  .section { margin-bottom: 64px; page-break-inside: avoid; }
+
+  /* Theme toggle */
+  .theme-toggle { position: fixed; top: 16px; right: 16px; z-index: 100; background: var(--bg-card); border: 1px solid var(--border); border-radius: 24px; padding: 8px 16px; cursor: pointer; font-size: 13px; color: var(--text); transition: all 0.3s; display: flex; align-items: center; gap: 6px; }
+  .theme-toggle:hover { border-color: var(--accent); }
+  .theme-toggle svg { width: 16px; height: 16px; fill: none; stroke: var(--accent); stroke-width: 2; }
+
+  /* Nav */
+  .nav { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 48px; }
+  .nav a { font-size: 12px; color: var(--text-dim); text-decoration: none; border: 1px solid var(--border); border-radius: 4px; padding: 4px 12px; transition: all 0.2s; }
+  .nav a:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* B1: Структура игры */
+  .game-flow { display: flex; align-items: center; justify-content: center; gap: 4px; flex-wrap: wrap; }
+  .flow-block { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; text-align: center; min-width: 140px; }
+  .flow-block.highlight { border-color: var(--accent); }
+  .flow-block h4 { font-size: 13px; color: var(--accent); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 1px; }
+  .flow-block p { font-size: 12px; color: var(--text-dim); }
+  .flow-arrow { font-size: 24px; color: var(--text-muted); }
+  .flow-repeat { display: flex; flex-direction: column; align-items: center; gap: 4px; border: 1px dashed var(--border); border-radius: 8px; padding: 12px; }
+  .flow-repeat-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); }
+
+  /* B2: Процедура дела */
+  .procedure { display: flex; flex-direction: column; gap: 4px; align-items: center; }
+  .proc-step { background: var(--bg-card-alt); border: 1px solid var(--border); border-radius: 6px; padding: 12px 24px; text-align: center; min-width: 280px; font-size: 14px; }
+  .proc-step.master { border-color: var(--accent); color: var(--accent); }
+  .proc-step.director { border-color: #8b4513; color: #d4a574; }
+  .proc-step.scene { border-color: var(--text-muted); background: var(--bg-scene); }
+  .proc-step.version { border-color: var(--proc-version); color: var(--proc-version-text); }
+  .proc-step.vote { border-color: var(--vote-border); color: var(--vote-text); }
+  .proc-arrow { color: var(--text-muted); font-size: 20px; line-height: 1; }
+  .proc-group { display: flex; flex-direction: column; gap: 4px; align-items: center; border: 1px dashed var(--border); border-radius: 8px; padding: 16px; margin: 4px 0; }
+  .proc-group-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 4px; }
+
+  /* B3: Триптих */
+  .triptych { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .card { border-radius: 8px; padding: 20px; min-height: 320px; }
+  .card-dolg { background: var(--dolg-bg); border: 2px solid var(--dolg-border); }
+  .card-strakh { background: var(--strakh-bg); border: 2px solid var(--strakh-border); }
+  .card-golod { background: var(--golod-bg); border: 2px solid var(--golod-border); }
+  .card h3 { font-size: 16px; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; }
+  .card-dolg h3 { color: var(--dolg-text); }
+  .card-strakh h3 { color: var(--strakh-text); }
+  .card-golod h3 { color: var(--golod-text); }
+  .card-field { margin-bottom: 10px; }
+  .card-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); }
+  .card-value { font-size: 14px; margin-top: 2px; }
+  .card-question { font-style: italic; font-size: 13px; color: var(--text-dim); margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-light); }
+
+  /* B4: Матрица меча */
+  .matrix { width: 100%; border-collapse: collapse; }
+  .matrix th, .matrix td { border: 1px solid var(--border); padding: 12px 16px; text-align: left; font-size: 13px; }
+  .matrix th { background: var(--bg-card-alt); color: var(--accent); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; font-size: 11px; }
+  .matrix td { background: var(--bg-card); vertical-align: top; }
+  .matrix tr:last-child td { background: var(--matrix-last-row); color: var(--matrix-last-text); font-style: italic; }
+  .matrix .path-dolg { color: var(--dolg-text); }
+  .matrix .path-strakh { color: var(--strakh-text); }
+  .matrix .path-golod { color: var(--golod-text); }
+  .matrix-footer { background: var(--matrix-footer-bg); border: 2px solid var(--accent); border-radius: 8px; padding: 20px; margin-top: 16px; text-align: center; }
+  .matrix-footer strong { color: var(--accent); font-size: 16px; }
+  .matrix-footer p { color: var(--text-dim); font-size: 13px; margin-top: 8px; }
+
+  /* B5: Карточка дела */
+  .case-cards { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+  .case-card { background: var(--bg-card); border: 2px solid var(--accent); border-radius: 8px; padding: 24px; }
+  .case-header { text-align: center; border-bottom: 2px solid var(--accent); padding-bottom: 12px; margin-bottom: 16px; }
+  .case-header h3 { color: var(--accent); font-size: 16px; letter-spacing: 2px; text-transform: uppercase; }
+  .case-header .case-subtitle { color: var(--text-dim); font-size: 12px; margin-top: 4px; }
+  .case-section { margin-bottom: 16px; }
+  .case-section h4 { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); margin-bottom: 8px; }
+  .case-fact { display: flex; gap: 8px; margin-bottom: 6px; font-size: 12px; line-height: 1.5; }
+  .case-num { color: var(--text-muted); min-width: 18px; text-align: right; flex-shrink: 0; }
+  .case-question { display: flex; gap: 8px; margin-bottom: 6px; font-size: 12px; line-height: 1.5; }
+  .case-checkbox { color: var(--text-muted); flex-shrink: 0; }
+  .case-persons-list { margin-top: 8px; }
+  .person-line { font-size: 12px; margin-bottom: 4px; }
+  .person-line strong { color: var(--accent); }
+
+  /* B6: План зала */
+  .hall { position: relative; width: 100%; max-width: 600px; height: 400px; background: var(--hall-bg); border: 2px solid var(--border); border-radius: 12px; margin: 0 auto; }
+  .hall-label { position: absolute; top: 8px; left: 50%; transform: translateX(-50%); font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); }
+  .zone { position: absolute; width: 160px; height: 140px; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .zone-dolg { left: 20px; top: 60px; background: rgba(139, 0, 0, 0.15); border: 2px solid var(--dolg-border); }
+  .zone-strakh { left: 220px; top: 60px; background: rgba(100, 100, 100, 0.15); border: 2px solid var(--strakh-border); }
+  .zone-golod { left: 420px; top: 60px; background: rgba(200, 200, 200, 0.1); border: 2px solid var(--golod-border); }
+  .zone h4 { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
+  .zone-dolg h4 { color: var(--dolg-text); }
+  .zone-strakh h4 { color: var(--strakh-text); }
+  .zone-golod h4 { color: var(--golod-text); }
+  .zone .director-marker { width: 24px; height: 24px; border-radius: 50%; margin-top: 8px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: bold; }
+  .zone-dolg .director-marker { background: var(--dolg-marker); color: #fff; }
+  .zone-strakh .director-marker { background: var(--strakh-marker); color: #fff; }
+  .zone-golod .director-marker { background: var(--golod-marker); color: var(--bg); }
+  .zone-desc { font-size: 11px; color: var(--text-muted); margin-top: 6px; text-align: center; }
+  .audience-area { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); text-align: center; }
+  .audience-dots { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; max-width: 300px; margin-bottom: 8px; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--border); }
+  .dot.moving-dolg { background: var(--dolg-border); }
+  .dot.moving-strakh { background: var(--strakh-border); }
+  .dot.moving-golod { background: var(--golod-marker); }
+  .audience-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+  .hall-arrows { position: absolute; top: 220px; left: 50%; transform: translateX(-50%); display: flex; gap: 40px; }
+  .hall-arrow { font-size: 24px; color: var(--border); }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .triptych, .case-cards { grid-template-columns: 1fr; }
+    .game-flow { flex-direction: column; }
+    body { padding: 20px; }
+  }
+
+  @media print {
+    body { background: white; color: black; }
+    .theme-toggle, .nav { display: none; }
+    .section { page-break-after: always; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Password gate -->
+<div class="gate-overlay" id="gate">
+  <div class="gate-title">Нидомура</div>
+  <input class="gate-input" id="gate-pw" type="password" placeholder="Пароль" autofocus>
+  <button class="gate-btn" onclick="checkGate()">Войти</button>
+</div>
+<script>
+function checkGate() {
+  var pw = document.getElementById('gate-pw').value;
+  if (pw === 'nidomura2026') {
+    document.getElementById('gate').classList.add('hidden');
+    document.getElementById('main-content').classList.remove('content-hidden');
+    sessionStorage.setItem('nido-auth', '1');
+  } else {
+    document.getElementById('gate-pw').classList.add('error');
+    setTimeout(function(){ document.getElementById('gate-pw').classList.remove('error'); }, 400);
+  }
+}
+document.getElementById('gate-pw').addEventListener('keydown', function(e) { if (e.key === 'Enter') checkGate(); });
+if (sessionStorage.getItem('nido-auth') === '1') {
+  document.getElementById('gate').classList.add('hidden');
+} else {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('main-content').classList.add('content-hidden');
+  });
+}
+</script>
+
+<div id="main-content">
+
+<!-- Theme toggle -->
+<button class="theme-toggle" onclick="document.body.classList.toggle('light-theme'); this.querySelector('.toggle-label').textContent = document.body.classList.contains('light-theme') ? 'Dark' : 'Light'">
+  <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+  <span class="toggle-label">Light</span>
+</button>
+
+<h1>Три могилы в деревне Нидомура</h1>
+<div class="subtitle">Визуализации для мастерской группы</div>
+
+<!-- Navigation -->
+<div class="nav">
+  <a href="#overview">В1. Структура</a>
+  <a href="#proc">В2. Процедура</a>
+  <a href="#trip-1">В3a. Следователь</a>
+  <a href="#trip-2">В3b. Наёмник</a>
+  <a href="#trip-3">В3c. Седьмой</a>
+  <a href="#matrix">В4. Матрица меча</a>
+  <a href="#cards">В5. Карточки дел</a>
+  <a href="#hall">В6. План зала</a>
+</div>
+
+<!-- В1: Структура игры -->
+<div class="section" id="overview">
+<h2>В1. Структура игры (~3,5 часа)</h2>
+<div class="game-flow">
+  <div class="flow-block highlight">
+    <h4>Пролог</h4>
+    <p>Туториал: младенец<br>у ворот Расёмон</p>
+  </div>
+  <span class="flow-arrow">&#8594;</span>
+  <div class="flow-repeat">
+    <div class="flow-repeat-label">x3 дела</div>
+    <div style="display:flex; gap:8px; align-items:center;">
+      <div class="flow-block">
+        <h4>Дело 1</h4>
+        <p>Следователь<br>(Расёмон)</p>
+      </div>
+      <span class="flow-arrow">&#8594;</span>
+      <div class="flow-block">
+        <h4>Дело 2</h4>
+        <p>Наёмник<br>(Ёдзимбо)</p>
+      </div>
+      <span class="flow-arrow">&#8594;</span>
+      <div class="flow-block">
+        <h4>Дело 3</h4>
+        <p>Седьмой<br>(7 самураев)</p>
+      </div>
+    </div>
+  </div>
+  <span class="flow-arrow">&#8594;</span>
+  <div class="flow-block highlight">
+    <h4>Финал</h4>
+    <p>Мастер от лица<br>меча-божества</p>
+  </div>
+</div>
+</div>
+
+<!-- В2: Процедура одного дела -->
+<div class="section" id="proc">
+<h2>В2. Процедура одного дела</h2>
+<div class="procedure">
+  <div class="proc-step master">Мастер зачитывает факты + открытые вопросы</div>
+  <div class="proc-arrow">&#8595;</div>
+
+  <div class="proc-group">
+    <div class="proc-group-label">x3 (повторяется для каждого режиссёра)</div>
+    <div class="proc-step director">Режиссёр произносит формулу объявления</div>
+    <div class="proc-arrow">&#8595;</div>
+    <div class="proc-step director">Стоп-кадр (расставляет осколков в позы)</div>
+    <div class="proc-arrow">&#8595;</div>
+    <div class="proc-step scene">СЦЕНА (осколки играют, режиссёр смотрит)</div>
+    <div class="proc-arrow">&#8595;</div>
+    <div class="proc-step version">Режиссёр произносит ВЕРСИЮ (ответы на все вопросы)</div>
+  </div>
+
+  <div class="proc-arrow">&#8595;</div>
+  <div class="proc-step">Зрители на полях путей получают спотлайт (1-2 фразы)</div>
+  <div class="proc-arrow">&#8595;</div>
+  <div class="proc-step master">Мастер зачитывает наследие</div>
+  <div class="proc-arrow">&#8595;</div>
+  <div class="proc-step vote">ГОЛОСОВАНИЕ: встать на поле самой драматичной версии</div>
+  <div class="proc-arrow">&#8595;</div>
+  <div class="proc-step master">Мастер объявляет итог дела</div>
+</div>
+</div>
+
+<!-- В3a: Триптих -- Следователь Хаяси -->
+<div class="section" id="trip-1">
+<h2>В3a. Три версии дела следователя</h2>
+<div class="triptych">
+  <div class="card card-dolg">
+    <h3>Долг</h3>
+    <div class="card-field">
+      <div class="card-label">Режиссёр</div>
+      <div class="card-value">Осколок Долга Дзинпати</div>
+    </div>
+    <div class="card-field">
+      <div class="card-label">Мотив</div>
+      <div class="card-value">Долг перед деревней. Дзинпати уничтожил содержимое свитка, чтобы защитить промысел</div>
+    </div>
+    <div class="card-field">
+      <div class="card-label">Кто отравил Хаяси?</div>
+      <div class="card-value">Масаго -- сама, по своему решению. Хаяси узнал слишком много</div>
+    </div>
+    <div class="card-field">
+      <div class="card-label">Что в свитке?</div>
+      <div class="card-value">Правда о могильнике и промысле. Содержимое уничтожено</div>
+    </div>
+    <div class="card-question">&laquo;Должен ли я выполнить обещание, даже если это разрушит всё?&raquo;</div>
+  </div>
+
+  <div class="card card-strakh">
+    <h3>Страх</h3>
+    <div class="card-field">
+      <div class="card-label">Режиссёр</div>
+      <div class="card-value">Осколок Страха Масаго</div>
+    </div>
+    <div class="card-field">
+      <div class="card-label">Мотив</div>
+      <div class="card-value">Страх разоблачения. Масаго боялась, что Хаяси раскроет позорную правду о Канадзаве</div>
+    </div>
+    <div class="card-field">
+      <div class="card-label">Кто отравил Хаяси?</div>
+      <div class="card-value">Масаго -- из страха потерять статус вдовы и лицо</div>
+    </div>
+    <div class="card-field">
+      <div class="card-label">Что в свитке?</div>
+      <div class="card-value">Масаго инсценировала ограбление. Забрала деньги и меч</div>
+    </div>
+    <div class="card-question">&laquo;Мой статус -- мой смысл жизни, или я так боюсь опозориться, что лучше умереть?&raquo;</div>
+  </div>
+
+  <div class="card card-golod">
+    <h3>Голод</h3>
+    <div class="card-field">
+      <div class="card-label">Режиссёр</div>
+      <div class="card-value">Осколок Голода Дзинпати</div>
+    </div>
+    <div class="card-field">
+      <div class="card-label">Мотив</div>
+      <div class="card-value">Голод по заботе. Дзинпати кормил деревню контрабандой. Хаяси угрожал промыслу</div>
+    </div>
+    <div class="card-field">
+      <div class="card-label">Кто отравил Хаяси?</div>
+      <div class="card-value">Деревня убрала угрозу. Дзинпати спрятал меч</div>
+    </div>
+    <div class="card-field">
+      <div class="card-label">Что в свитке?</div>
+      <div class="card-value">Деньги потрачены на деревню. Мир стоит на крови</div>
+    </div>
+    <div class="card-question">&laquo;Забочусь ли я о них -- или пожираю их жизни?&raquo;</div>
+  </div>
+</div>
+</div>
+
+<!-- В3b: Триптих -- Наёмник Кодзума -->
+<div class="section" id="trip-2">
+<h2>В3b. Три версии дела наёмника</h2>
+<div class="triptych">
+  <div class="card card-dolg">
+    <h3>Долг</h3>
+    <div class="card-field">
+      <div class="card-label">Режиссёр</div>
+      <div class="card-value">Осколок Долга Годзо</div>
+    </div>
+    <div class="card-field">
+      <div class="card-label">Мотив</div>
+      <div class="card-value">Клятва спасти деревню. Годзо вооружил Кодзуму мечом и взял слово</div>
+    </div>
+    <div class="card-field">
+      <div class="card-label">Кто убил Кодзуму?</div>
+      <div class="card-value">Погиб в бою, выполняя клятву до конца</div>
+    </div>
+    <div class="card-field">
+      <div class="card-label">Почему молчит Годзо?</div>
+      <div class="card-value">Его просьба привела ко всем смертям. Молчит из чести</div>
+    </div>
+    <div class="card-question">&laquo;Должен ли я выполнить обещание, даже если это разрушит всё?&raquo;</div>
+  </div>
+
+  <div class="card card-strakh">
+    <h3>Страх</h3>
+    <div class="card-field">
+      <div class="card-label">Режиссёр</div>
+      <div class="card-value">Осколок Страха Кодзумы</div>
+    </div>
+    <div class="card-field">
+      <div class="card-label">Мотив</div>
+      <div class="card-value">Бежал от позора. Ронин без хозяина, без имени, без будущего</div>
+    </div>
+    <div class="card-field">
+      <div class="card-label">Кто убил Кодзуму?</div>
+      <div class="card-value">Позволил себя убить -- не нашёл причины сопротивляться</div>
+    </div>
+    <div class="card-field">
+      <div class="card-label">Почему молчит Годзо?</div>
+      <div class="card-value">Видел, как Кодзума прятал золото. Боится разоблачения</div>
+    </div>
+    <div class="card-question">&laquo;Мой статус -- мой смысл жизни, или я так боюсь, что стыдная правда выйдет на свет?&raquo;</div>
+  </div>
+
+  <div class="card card-golod">
+    <h3>Голод</h3>
+    <div class="card-field">
+      <div class="card-label">Режиссёр</div>
+      <div class="card-value">Осколок Голода Нуи</div>
+    </div>
+    <div class="card-field">
+      <div class="card-label">Мотив</div>
+      <div class="card-value">Голод по привязанности. Нуи нуждалась в Кодзуме -- и поглотила его</div>
+    </div>
+    <div class="card-field">
+      <div class="card-label">Кто убил Кодзуму?</div>
+      <div class="card-value">Перестал сопротивляться -- отдал себя тем, кого &laquo;защищал&raquo;</div>
+    </div>
+    <div class="card-field">
+      <div class="card-label">Почему молчит Годзо?</div>
+      <div class="card-value">Кормил чудовище: давал Кодзуме деньги, еду, кров -- и меч</div>
+    </div>
+    <div class="card-question">&laquo;Забочусь ли я о них -- или пожираю их жизни?&raquo;</div>
+  </div>
+</div>
+</div>
+
+<!-- В3c: Триптих -- Седьмой / Кикутё -->
+<div class="section" id="trip-3">
+<h2>В3c. Три версии дела Седьмого</h2>
+<div class="triptych">
+  <div class="card card-dolg">
+    <h3>Долг</h3>
+    <div class="card-field">
+      <div class="card-label">Режиссёр</div>
+      <div class="card-value">Осколок Долга Рикити</div>
+    </div>
+    <div class="card-field">
+      <div class="card-label">Чей сын Кикутё?</div>
+      <div class="card-value">Сын Нуи и Ёхэя -- своего крестьянина. Живое напоминание о коллективной вине</div>
+    </div>
+    <div class="card-field">
+      <div class="card-label">Зачем Камбэй забрал меч?</div>
+      <div class="card-value">Чтобы деревня не &laquo;кормила следующего дурака&raquo;</div>
+    </div>
+    <div class="card-field">
+      <div class="card-label">Что знал Рикити?</div>
+      <div class="card-value">Знал, чей сын Кикутё. Молчал, потому что в мура молчат</div>
+    </div>
+    <div class="card-question">&laquo;Должен ли я выполнить обещание, даже если это разрушит всё?&raquo;</div>
+  </div>
+
+  <div class="card card-strakh">
+    <h3>Страх</h3>
+    <div class="card-field">
+      <div class="card-label">Режиссёр</div>
+      <div class="card-value">Осколок Страха Камбэя</div>
+    </div>
+    <div class="card-field">
+      <div class="card-label">Чей сын Кикутё?</div>
+      <div class="card-value">Сын Нуи и Сэридзавы -- наследник уничтоженного клана</div>
+    </div>
+    <div class="card-field">
+      <div class="card-label">Зачем Камбэй забрал меч?</div>
+      <div class="card-value">Убрать доказательство того, что статус -- фикция</div>
+    </div>
+    <div class="card-field">
+      <div class="card-label">Что знал Рикити?</div>
+      <div class="card-value">Узнал лицо Сэридзавы в Кикутё. Боялся, что правда разрушит всё</div>
+    </div>
+    <div class="card-question">&laquo;Мой статус -- мой смысл жизни, или я так боюсь, что правда выйдет на свет?&raquo;</div>
+  </div>
+
+  <div class="card card-golod">
+    <h3>Голод</h3>
+    <div class="card-field">
+      <div class="card-label">Режиссёр</div>
+      <div class="card-value">Осколок Голода Камбэя</div>
+    </div>
+    <div class="card-field">
+      <div class="card-label">Чей сын Кикутё?</div>
+      <div class="card-value">Сын Нуи и Кодзумы -- ронина-чужака из Дела 2. Дыра в системе</div>
+    </div>
+    <div class="card-field">
+      <div class="card-label">Зачем Камбэй забрал меч?</div>
+      <div class="card-value">Из заботы -- или из страха, что меч найдёт нового голодного</div>
+    </div>
+    <div class="card-field">
+      <div class="card-label">Что знал Рикити?</div>
+      <div class="card-value">Видел в Кикутё лицо Кодзумы. Деревня снова выбросила своего</div>
+    </div>
+    <div class="card-question">&laquo;Забочусь ли я о них -- или пожираю их жизни?&raquo;</div>
+  </div>
+</div>
+</div>
+
+<!-- В4: Матрица меч-божество -->
+<div class="section" id="matrix">
+<h2>В4. Меч как божество -- что узнал меч</h2>
+<table class="matrix">
+  <thead>
+    <tr>
+      <th style="width:120px;"></th>
+      <th>Дело 1: Следователь</th>
+      <th>Дело 2: Наёмник</th>
+      <th>Дело 3: Кикутё</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="path-dolg" style="font-weight:600;">Долг</td>
+      <td>Меч узнал: можно ли умереть за правду, которая погубит невинных?</td>
+      <td>Меч узнал: клятва, данная мечом -- освобождает или приковывает?</td>
+      <td>Меч узнал: делает ли оружие воином -- или воин делает оружие?</td>
+    </tr>
+    <tr>
+      <td class="path-strakh" style="font-weight:600;">Страх</td>
+      <td>Меч узнал: страх разоблачения -- защита или тюрьма?</td>
+      <td>Меч узнал: бегство от позора -- путь к свободе или к гибели?</td>
+      <td>Меч узнал: чужая душа в руках -- дар или проклятие?</td>
+    </tr>
+    <tr>
+      <td class="path-golod" style="font-weight:600;">Голод</td>
+      <td>Меч узнал: забота о деревне -- кормит или пожирает?</td>
+      <td>Меч узнал: привязанность, которая убивает -- это любовь?</td>
+      <td>Меч узнал: голод по принадлежности -- находит ли дом?</td>
+    </tr>
+  </tbody>
+</table>
+<div class="matrix-footer">
+  <strong>Мастер встаёт от имени меча:</strong>
+  <p>&laquo;Я вас услышал. Вот что я понял о Долге, Страхе и Голоде за двадцать лет в руках людей.&raquo;</p>
+</div>
+</div>
+
+<!-- В5: Карточки всех трёх дел -->
+<div class="section" id="cards">
+<h2>В5. Карточки дел</h2>
+<div class="case-cards">
+
+  <!-- Дело 1: Следователь -->
+  <div class="case-card">
+    <div class="case-header">
+      <h3>Дело 1: Следователь</h3>
+      <div class="case-subtitle">Двадцать лет назад</div>
+    </div>
+    <div class="case-section">
+      <h4>Установленные факты</h4>
+      <div class="case-fact"><span class="case-num">1.</span> Хаяси провёл в деревне три дня</div>
+      <div class="case-fact"><span class="case-num">2.</span> Найден мёртвым на пороге храма</div>
+      <div class="case-fact"><span class="case-num">3.</span> Причина смерти -- яд</div>
+      <div class="case-fact"><span class="case-num">4.</span> Свиток пуст: содержимое вынуто</div>
+      <div class="case-fact"><span class="case-num">5.</span> Казённые деньги исчезли</div>
+      <div class="case-fact"><span class="case-num">6.</span> Меч привезён из префектуры -- исчез</div>
+      <div class="case-fact"><span class="case-num">7.</span> Настоятель: пришёл в волнении</div>
+      <div class="case-fact"><span class="case-num">8.</span> Масаго -- вдова, осталась в деревне</div>
+      <div class="case-fact"><span class="case-num">9.</span> После разговора с Масаго побледнел</div>
+      <div class="case-fact"><span class="case-num">10.</span> Вернулся торговец Дзинпати</div>
+      <div class="case-fact"><span class="case-num">11.</span> Дзинпати привёз редкие товары</div>
+      <div class="case-fact"><span class="case-num">12.</span> Старый документ с печатью, 20 лет</div>
+    </div>
+    <div class="case-section">
+      <h4>Открытые вопросы</h4>
+      <div class="case-question"><span class="case-checkbox">&square;</span> Кто отравил Хаяси?</div>
+      <div class="case-question"><span class="case-checkbox">&square;</span> Что в свитке?</div>
+      <div class="case-question"><span class="case-checkbox">&square;</span> Куда деньги и меч?</div>
+      <div class="case-question"><span class="case-checkbox">&square;</span> Что узнал Хаяси?</div>
+      <div class="case-question"><span class="case-checkbox">&square;</span> Что рассказала Масаго?</div>
+      <div class="case-question"><span class="case-checkbox">&square;</span> Зачем вернулся Дзинпати?</div>
+      <div class="case-question"><span class="case-checkbox">&square;</span> Что за документ?</div>
+    </div>
+    <div class="case-section">
+      <h4>Действующие лица</h4>
+      <div class="case-persons-list">
+        <div class="person-line"><strong>Хаяси</strong> -- мёртвый следователь</div>
+        <div class="person-line"><strong>Масаго</strong> -- вдова самурая</div>
+        <div class="person-line"><strong>Дзинпати</strong> -- торговец-контрабандист</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Дело 2: Наёмник -->
+  <div class="case-card">
+    <div class="case-header">
+      <h3>Дело 2: Наёмник</h3>
+      <div class="case-subtitle">Месяц назад</div>
+    </div>
+    <div class="case-section">
+      <h4>Установленные факты</h4>
+      <div class="case-fact"><span class="case-num">1.</span> Кодзума нанялся к Усидзима</div>
+      <div class="case-fact"><span class="case-num">2.</span> Через 3 дня перешёл к Сэридзава</div>
+      <div class="case-fact"><span class="case-num">3.</span> Годзо кормил Кодзуму</div>
+      <div class="case-fact"><span class="case-num">4.</span> Нуи -- наложница Сэридзавы, проиграна Ёхэем</div>
+      <div class="case-fact"><span class="case-num">5.</span> Кодзума избит, спрятан в бочках</div>
+      <div class="case-fact"><span class="case-num">6.</span> Оба клана уничтожены</div>
+      <div class="case-fact"><span class="case-num">7.</span> Кодзума мёртв, меч рядом, не в руке</div>
+      <div class="case-fact"><span class="case-num">8.</span> Золото пропало</div>
+      <div class="case-fact"><span class="case-num">9.</span> Нуи исчезла</div>
+      <div class="case-fact"><span class="case-num">10.</span> Нуи носила широкие одежды</div>
+      <div class="case-fact"><span class="case-num">11.</span> Годзо жив, молчит</div>
+    </div>
+    <div class="case-section">
+      <h4>Открытые вопросы</h4>
+      <div class="case-question"><span class="case-checkbox">&square;</span> Кто убил Кодзуму?</div>
+      <div class="case-question"><span class="case-checkbox">&square;</span> Где золото?</div>
+      <div class="case-question"><span class="case-checkbox">&square;</span> Где Нуи?</div>
+      <div class="case-question"><span class="case-checkbox">&square;</span> Почему Годзо молчит?</div>
+      <div class="case-question"><span class="case-checkbox">&square;</span> Зачем Кодзума пришёл в деревню?</div>
+    </div>
+    <div class="case-section">
+      <h4>Действующие лица</h4>
+      <div class="case-persons-list">
+        <div class="person-line"><strong>Кодзума</strong> -- мёртвый ронин</div>
+        <div class="person-line"><strong>Годзо</strong> -- трактирщик, молчит</div>
+        <div class="person-line"><strong>Нуи</strong> -- наложница, исчезла</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Дело 3: Седьмой -->
+  <div class="case-card">
+    <div class="case-header">
+      <h3>Дело 3: Седьмой</h3>
+      <div class="case-subtitle">Недавно</div>
+    </div>
+    <div class="case-section">
+      <h4>Установленные факты</h4>
+      <div class="case-fact"><span class="case-num">1.</span> Камбэй нанял 6, Кикутё навязался сам</div>
+      <div class="case-fact"><span class="case-num">2.</span> Кикутё не самурай</div>
+      <div class="case-fact"><span class="case-num">3.</span> Жена Рикити бросилась в огонь</div>
+      <div class="case-fact"><span class="case-num">4.</span> Кикутё нашёл тайник с оружием</div>
+      <div class="case-fact"><span class="case-num">5.</span> В тайнике -- меч необычной работы</div>
+      <div class="case-fact"><span class="case-num">6.</span> Кикутё взял меч, дрался только им</div>
+      <div class="case-fact"><span class="case-num">7.</span> После меча -- изменился, стал командовать</div>
+      <div class="case-fact"><span class="case-num">8.</span> Убил главаря, получил пулю, умер</div>
+      <div class="case-fact"><span class="case-num">9.</span> Главарь кричал: &laquo;Отдайте!&raquo;</div>
+      <div class="case-fact"><span class="case-num">10.</span> Меч рядом с телом, не в руке</div>
+      <div class="case-fact"><span class="case-num">11.</span> Камбэй забрал меч и ушёл</div>
+      <div class="case-fact"><span class="case-num">12.</span> Рикити не пришёл на похороны</div>
+      <div class="case-fact"><span class="case-num">13.</span> Камбэй сказал Рикити: &laquo;...ты знал&raquo;</div>
+      <div class="case-fact"><span class="case-num">14.</span> Ёхэй побледнел, увидев Кикутё</div>
+      <div class="case-fact"><span class="case-num">15.</span> Деревня вернулась к жизни за 3 дня</div>
+    </div>
+    <div class="case-section">
+      <h4>Открытые вопросы</h4>
+      <div class="case-question"><span class="case-checkbox">&square;</span> Откуда мастерство Кикутё?</div>
+      <div class="case-question"><span class="case-checkbox">&square;</span> Зачем Камбэй забрал меч?</div>
+      <div class="case-question"><span class="case-checkbox">&square;</span> Что значит &laquo;ты знал&raquo;?</div>
+      <div class="case-question"><span class="case-checkbox">&square;</span> Почему Рикити не на похоронах?</div>
+      <div class="case-question"><span class="case-checkbox">&square;</span> Откуда в тайнике этот меч?</div>
+      <div class="case-question"><span class="case-checkbox">&square;</span> Кем был Кикутё?</div>
+      <div class="case-question"><span class="case-checkbox">&square;</span> Что прятала деревня?</div>
+      <div class="case-question"><span class="case-checkbox">&square;</span> Чей сын Кикутё?</div>
+    </div>
+    <div class="case-section">
+      <h4>Действующие лица</h4>
+      <div class="case-persons-list">
+        <div class="person-line"><strong>Кикутё</strong> -- мёртвый воин</div>
+        <div class="person-line"><strong>Камбэй</strong> -- командир, ушёл</div>
+        <div class="person-line"><strong>Рикити</strong> -- крестьянин, что-то знает</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- В6: План зала для голосования -->
+<div class="section" id="hall">
+<h2>В6. План зала для голосования</h2>
+<div class="hall">
+  <div class="hall-label">Сцена</div>
+
+  <div class="zone zone-dolg">
+    <h4>Долг</h4>
+    <div class="director-marker">P</div>
+    <div class="zone-desc">Режиссёр Долга<br>стоит на поле</div>
+  </div>
+
+  <div class="zone zone-strakh">
+    <h4>Страх</h4>
+    <div class="director-marker">P</div>
+    <div class="zone-desc">Режиссёр Страха<br>стоит на поле</div>
+  </div>
+
+  <div class="zone zone-golod">
+    <h4>Голод</h4>
+    <div class="director-marker">P</div>
+    <div class="zone-desc">Режиссёр Голода<br>стоит на поле</div>
+  </div>
+
+  <div class="hall-arrows">
+    <span class="hall-arrow">&#8593;</span>
+    <span class="hall-arrow">&#8593;</span>
+    <span class="hall-arrow">&#8593;</span>
+  </div>
+
+  <div class="audience-area">
+    <div class="audience-dots">
+      <div class="dot moving-dolg"></div>
+      <div class="dot moving-dolg"></div>
+      <div class="dot moving-strakh"></div>
+      <div class="dot"></div>
+      <div class="dot moving-golod"></div>
+      <div class="dot moving-dolg"></div>
+      <div class="dot"></div>
+      <div class="dot moving-strakh"></div>
+      <div class="dot moving-golod"></div>
+      <div class="dot moving-dolg"></div>
+      <div class="dot moving-strakh"></div>
+      <div class="dot"></div>
+    </div>
+    <div class="audience-label">Зрители встают на поле самой драматичной версии</div>
+  </div>
+</div>
+</div>
+
+</div><!-- /main-content -->
+</body>
+</html>

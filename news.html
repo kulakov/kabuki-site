@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="logo.png">
+    <title>Невидимый монах — Новости</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #080806;
+            --card-bg: #0e0e0c;
+            --text: #d4c5a9;
+            --accent: #c49a6c;
+            --dim: #666;
+            --toho-red: #8b1a1a;
+            --border: #1a1a18;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            min-height: 100vh;
+        }
+
+        .toho-header {
+            width: 100%;
+            background: linear-gradient(to bottom, var(--toho-red) 0%, #5a1010 100%);
+            border-bottom: 2px solid #3a0808;
+            padding: 0.8rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .toho-header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(to right, transparent 10%, #d4a574 30%, #f0d4a8 50%, #d4a574 70%, transparent 90%);
+        }
+
+        .toho-logo {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #f0d4a8;
+            letter-spacing: 0.3em;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .header-nav a {
+            font-size: 0.7rem;
+            color: #f0d4a8;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .header-nav a:hover { opacity: 1; }
+        .header-nav a.active { opacity: 1; border-bottom: 1px solid #f0d4a8; padding-bottom: 2px; }
+        .header-nav a.dim { opacity: 0.5; }
+
+        @media (max-width: 480px) {
+            .toho-header { flex-direction: column; gap: 0.5rem; padding: 0.6rem 1rem; }
+            .header-nav { gap: 1rem; }
+            .header-nav a { font-size: 0.6rem; }
+            .toho-logo { font-size: 0.9rem; }
+        }
+
+        .main {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 3rem 2rem 4rem;
+        }
+
+        .back {
+            display: inline-block;
+            font-size: 0.75rem;
+            color: var(--accent);
+            font-family: 'Courier New', monospace;
+            text-decoration: none;
+            letter-spacing: 0.1em;
+            margin-bottom: 2rem;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        .back:hover { opacity: 1; }
+
+        .page-title {
+            font-size: 2.4rem;
+            font-weight: 600;
+            text-align: center;
+            line-height: 1.2;
+            margin-bottom: 0.4rem;
+        }
+
+        .page-subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            color: var(--dim);
+            font-style: italic;
+            margin-bottom: 2.5rem;
+        }
+
+        .separator {
+            width: 60px;
+            height: 1px;
+            background: var(--accent);
+            margin: 0 auto 2.5rem;
+            opacity: 0.5;
+        }
+
+        /* Telegram banner */
+        .tg-banner {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 1.2rem 1.5rem;
+            margin-bottom: 3rem;
+            text-decoration: none;
+            color: var(--text);
+            transition: border-color 0.3s;
+        }
+
+        .tg-banner:hover { border-color: var(--accent); }
+
+        .tg-banner__icon {
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0;
+        }
+
+        .tg-banner__text {
+            flex: 1;
+        }
+
+        .tg-banner__title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 0.2rem;
+        }
+
+        .tg-banner__desc {
+            font-size: 0.95rem;
+            color: #888;
+            line-height: 1.4;
+        }
+
+        .tg-banner__cta {
+            font-size: 0.65rem;
+            color: var(--accent);
+            font-family: 'Courier New', monospace;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        /* Post */
+        .post {
+            margin-bottom: 3.5rem;
+            padding-bottom: 3.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .post:last-child {
+            border-bottom: none;
+        }
+
+        .post__date {
+            font-size: 0.8rem;
+            color: var(--dim);
+            font-family: 'Courier New', monospace;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .post__img {
+            width: 100%;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border);
+        }
+
+        .post__title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .post__body {
+            font-size: 1.15rem;
+            line-height: 1.8;
+            color: var(--text);
+        }
+
+        .post__body p {
+            margin-bottom: 1rem;
+        }
+
+        .post__body strong {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .post__body em {
+            color: #888;
+        }
+
+        .post__body a {
+            color: var(--accent);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(196, 154, 108, 0.3);
+            transition: border-color 0.3s;
+        }
+
+        .post__body a:hover {
+            border-color: var(--accent);
+        }
+
+        .post__body ul {
+            list-style: none;
+            margin: 1rem 0;
+        }
+
+        .post__body ul li {
+            padding: 0.3rem 0 0.3rem 1.2rem;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        .post__body ul li::before {
+            content: '\2014';
+            position: absolute;
+            left: 0;
+            color: var(--dim);
+        }
+
+        .post__body blockquote {
+            border-left: 3px solid var(--accent);
+            padding-left: 1.5rem;
+            margin: 1rem 0;
+            color: #888;
+            font-style: italic;
+        }
+
+        .post__body h3 {
+            font-size: 1.2rem;
+            color: var(--accent);
+            margin: 1.5rem 0 0.8rem;
+            font-weight: 600;
+        }
+
+        .post__body hr {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 1.5rem 0;
+        }
+
+        .post__link {
+            display: inline-block;
+            font-size: 0.85rem;
+            font-family: 'Courier New', monospace;
+            color: var(--accent);
+            text-decoration: none;
+            letter-spacing: 0.1em;
+            margin-top: 1rem;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        .post__link:hover { opacity: 1; }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid var(--border);
+            font-size: 0.7rem;
+            color: #444;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 0.1em;
+        }
+
+        /* Grain */
+        .grain {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-size: 256px 256px;
+        }
+
+        @media (max-width: 600px) {
+            .main { padding: 2rem 1rem 3rem; }
+            .page-title { font-size: 1.8rem; }
+            .post__title { font-size: 1.4rem; }
+            .post__body { font-size: 1.05rem; }
+            .tg-banner { flex-direction: column; text-align: center; gap: 0.8rem; }
+            .tg-banner__cta { margin-top: 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<header class="toho-header">
+    <div class="toho-logo"><a href="index.html" style="color:inherit;text-decoration:none;">東宝株式会社</a></div>
+    <nav class="header-nav">
+        <a href="index.html">Игра</a>
+        <a href="rules.html">Правила</a>
+        <a href="roles.html">Персонажи</a>
+        <a href="venue.html">База</a>
+        <a href="news.html" class="active">Новости</a>
+    </nav>
+</header>
+
+<main class="main">
+
+    <a class="back" href="index.html">&larr; Игра</a>
+
+    <h1 class="page-title">Новости</h1>
+    <div class="page-subtitle">Канал игры @Invisiblemonk2026</div>
+    <div class="separator"></div>
+
+    <!-- Telegram banner -->
+    <a class="tg-banner" href="https://t.me/Invisiblemonk2026" target="_blank" rel="noopener">
+        <svg class="tg-banner__icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="20" cy="20" r="20" fill="#2AABEE"/>
+            <path d="M9.5 19.8l16.8-6.8c.8-.3 3.4-1.4 3.4-1.4s1.2-.5 1.1.7c0 .5-.4 3.2-.8 6.2l-1.2 8.4s-.1 1.2-1.1 1.4c-1 .2-2.6-.8-2.8-1-.2-.2-4-2.6-5.4-3.8-.4-.3-.8-.7.1-1.3 1.9-1.7 4.2-3.9 5.6-5.3.6-.6 1.3-2-.1-1.4l-7.5 5.1s-.9.6-2.6.1L11 20s-1.3-.4.5-1z" fill="#fff"/>
+        </svg>
+        <div class="tg-banner__text">
+            <div class="tg-banner__title">Telegram-канал игры</div>
+            <div class="tg-banner__desc">Все анонсы, правила, орг-детали. Подписывайтесь.</div>
+        </div>
+        <div class="tg-banner__cta">@Invisiblemonk2026 &rarr;</div>
+    </a>
+
+    <!-- POST: Venue details — 25 Mar 2026 -->
+    <article class="post">
+        <div class="post__date">25 марта 2026</div>
+        <h2 class="post__title">База и оргдетали</h2>
+        <div class="post__body">
+            <p>Договорились с базой! Этно-усадьба <a href="https://rajskikonaci.com/en/home/">Rajski Konaci</a> в Шумадийских холмах, 2 часа от Белграда. Взнос 200 EUR. Подробности на странице Базы.</p>
+        </div>
+        <a class="post__link" href="venue.html">Подробности &rarr;</a>
+    </article>
+
+    <!-- POST: Rules update — 25 Mar 2026 -->
+    <article class="post">
+        <div class="post__date">25 марта 2026</div>
+        <h2 class="post__title">Правила: Три пути и Мандат</h2>
+        <div class="post__body">
+            <p>Опубликованы правила осколков души и мандатов.</p>
+        </div>
+        <a class="post__link" href="paths.html">Три пути &rarr;</a>
+        <a class="post__link" href="mandate.html" style="margin-left: 1.5rem;">Мандат &rarr;</a>
+    </article>
+
+    <!-- POST: Base announcement — 13 Feb 2026 -->
+    <article class="post">
+        <div class="post__date">13 февраля 2026</div>
+        <h2 class="post__title">Мы договорились с базой!</h2>
+        <div class="post__body">
+            <p><strong>Даты:</strong> 1 &mdash; 3 мая 2026.<br>
+            Заезд на базу &mdash; 1 мая, предварительное время &mdash; 12:00. Точнее скажем ближе к делу.</p>
+
+            <p><strong>База:</strong> Мы едем на этно-усадьбу <a href="https://rajskikonaci.com/en/home/">Rajski Konaci</a> в Шумадийских холмах &mdash; это примерно 2 часа от Белграда. <a href="https://maps.app.goo.gl/6t43ofQJ9EyMGkWE6">Google Maps</a>. (Те, кто был на &laquo;Оплоте&raquo; &mdash; вы эту базу знаете).</p>
+
+            <ul>
+                <li>Семейная усадьба в холмах, пологие, покрытые густым лесом, с чистыми ручьями и горным воздухом.</li>
+                <li>Живем в домиках. В каждом &mdash; душ, туалет, постельное бельё, полотенца. В одном из домиков даже сауна. Террасы с панорамным видом на холмы &mdash; идеально для того, чтобы сидеть вечером и осознавать кармические долги предков.</li>
+            </ul>
+
+            <h3>Взнос</h3>
+            <ul>
+                <li><strong>200 EUR</strong> &mdash; при оплате заранее. Включает проживание и питание.</li>
+                <li><strong>230 EUR</strong> &mdash; если платите на месте, на базе.</li>
+            </ul>
+
+            <h3>Еда</h3>
+            <p>Кормят по-сербски. Хозяева готовят из своих продуктов &mdash; тут философия slow food, всё домашнее и местное. Магазинов рядом с базой нет, так что если вам нужно что-то сверх сербского питания &mdash; берите с собой.<br>
+            Посуда на базе есть, но современная. Если хотите упороться по антуражу &mdash; упоритесь, мы не настаиваем.</p>
+
+            <h3>Трансфер</h3>
+            <p>Трансфер от Белграда до базы будет. Оплачивается отдельно. Детали уточняем и сообщим позже.<br>
+            Если едете на машине &mdash; парковка есть, но не прямо у базы. Машину нужно будет отогнать на 500-1000 метров.</p>
+
+            <h3>Что взять с собой</h3>
+            <ul>
+                <li><strong>Репеллент!</strong> И тот, который на себя, и тот, который в розетку. Весенняя Сербия &mdash; это не только холмы и ручьи, но и комары.</li>
+                <li><strong>Тёплые вещи.</strong> На улице мы будем проводить много времени, а за сербскую погоду в начале мая мы не ручаемся. Плащи, тёплые слои, обувесушилки &mdash; всё пригодится.</li>
+                <li><strong>Фонари.</strong> Если везёте &mdash; везите фонари, а не фонарики. Антуражные. Не направленные.</li>
+                <li><strong>3 предмета для осколков души</strong> &mdash; долг, страх, голод. Не обязательно строго аутентичные, но в японской эстетике. Эти предметы могут перейти в чужие руки, сломаться или потеряться &mdash; берите то, что готовы отпустить в игру. 3 предмета &mdash; на первую жизнь, больше &mdash; лучше.</li>
+                <li><strong>Кимоно / простая одежда эпохи.</strong> Минимум &mdash; простое кимоно, гэта, простые хакама. Вычурнее можно, современнее нет.</li>
+            </ul>
+
+            <p>Вопросы: задавайте в чате или пишите мастерам в личку.</p>
+        </div>
+    </article>
+
+    <!-- POST: Setting document — 29 Jan 2026 -->
+    <article class="post">
+        <div class="post__date">29 января 2026</div>
+        <img class="post__img" src="img/news-setting.jpg" alt="Сеттинг и концепция">
+        <h2 class="post__title">Сеттинг и концепция игры</h2>
+        <div class="post__body">
+            <p>Выложен полный документ с сеттингом и концепцией игры &laquo;Невидимый монах&raquo;. Время и место действия, деревня Нидомура, небесная бюрократия, референсы, эстетика и антураж &mdash; всё собрано в одном месте.</p>
+        </div>
+        <a class="post__link" href="index.html">Читать сеттинг &rarr;</a>
+    </article>
+
+    <!-- POST: Mandate rules — 14 Jan 2026 -->
+    <article class="post">
+        <div class="post__date">14 января 2026</div>
+        <img class="post__img" src="img/news-mandate.jpg" alt="Правила мандатов">
+        <h2 class="post__title">Правила мандатов</h2>
+        <div class="post__body">
+            <p>Новый блок правил посвящённый Мандатам, которые и будут определять живы вы или ушли за врата, а также будут подсказывать и показывать вам как иметь дело с осколками души.</p>
+        </div>
+        <a class="post__link" href="mandate.html">Читать правила мандатов &rarr;</a>
+    </article>
+
+    <!-- POST: New Year rules — 4 Jan 2026 -->
+    <article class="post">
+        <div class="post__date">4 января 2026</div>
+        <img class="post__img" src="img/news-paths.jpg" alt="Правила путей">
+        <h2 class="post__title">Первый блок правил: Пути и осколки души</h2>
+        <div class="post__body">
+            <p>С новейшим из годов, дорогие наши друзья!</p>
+
+            <p>Мы пришли не просто так, а с первым важным блоком правил. В этих правилах описана основная механика нашей игры посвящённая <strong>Путям</strong>, по которым следует игрок и <strong>осколкам души</strong>. Просим любить и не жаловаться! Но готовить вопросы и задавать их в чате или лично мастерам.</p>
+        </div>
+        <a class="post__link" href="paths.html">Читать правила путей &rarr;</a>
+    </article>
+
+    <!-- POST: Application form — 18 Nov 2025 -->
+    <article class="post">
+        <div class="post__date">18 ноября 2025</div>
+        <img class="post__img" src="img/news-anketa.jpg" alt="Анкета игрока">
+        <h2 class="post__title">Анкета игрока</h2>
+        <div class="post__body">
+            <p>А вот и анкета! Заполните пожалуйста её, если уверены, и особенно, если не уверены. Нам очень важно знать, кто из наших друзей хочет участвовать в игре.</p>
+        </div>
+        <a class="post__link" href="https://forms.gle/Wxjcgdcy2eYtCjNL6" target="_blank" rel="noopener">Заполнить анкету &rarr;</a>
+    </article>
+
+    <!-- POST: Full description part 1+2 — 13 Nov 2025 -->
+    <article class="post">
+        <div class="post__date">13 ноября 2025</div>
+        <img class="post__img" src="img/news-dolg1.jpg" alt="Долг, страх и голод">
+        <h2 class="post__title">Долг, страх и голод</h2>
+        <div class="post__body">
+            <p><em>Игра о том, как герои и боги формируют друг друга через смерть и перерождение.</em></p>
+
+            <hr>
+
+            <p>Вы играете душу проживающую несколько жизней. Вы умрёте и переродитесь. Это игра, где <strong>герои и боги соперничают за то, каким будет новый мир</strong>. Боги формируют судьбы мира из осколков душ. Души сопротивляются и ищут свой путь. Боги лепят героев из душ, герои меняют богов и вместе с ними мир.</p>
+
+            <p><strong>Гибридная игра:</strong> На игре будет до 40 игроков на полигоне и до 20 игроков онлайн (боги и духи). Связь через видеокамеры (в особых местах) и голоса духов в наушниках (у всех игроков на полигоне).</p>
+
+            <hr>
+
+            <h3>Что вы делаете</h3>
+
+            <p>Можно играть и великого героя и обычного крестьянина, но не жизнь в обычной деревне: мы играем про необычные и великие души, которые проходят череду рождений. Каждая жизнь &mdash; это этап в становлении души. Каждая смерть &mdash; подведение итогов этого этапа.</p>
+
+            <p>Игра идёт в трёх слоях:</p>
+
+            <p><strong>1. Мистерия</strong> &mdash; становление души.<br>
+            Когда вы умираете, вы проходите многоэтапный процесс похорон. Монахи задают вам вопросы через сутры. Могильщики копают вашу могилу, и вы видите, как глубока яма. Резчик спрашивает: какие слова вырезать на камне?</p>
+
+            <p><strong>2. Детектив</strong> &mdash; интриги и контрабанда.<br>
+            Пока вы живы, вы участвуете в борьбе кланов. Якудза торгуют обрядами. Контрабандисты подделывают печати смерти, переписывая судьбы. Следователи раскрывают преступления.</p>
+
+            <p><strong>3. Кабуки</strong> &mdash; судьбы на сцене.<br>
+            В ключевые моменты герои выходят на сцену перед богами. Кабуки &mdash; это острый, но регламентированный ритуалом, конфликт где стороны требуют друг от друга невозможного.</p>
+
+            <hr>
+
+            <p><strong>Механика осколков души:</strong> Душа каждого расколота на три пути: путь долга, путь страха, и путь голода. Один осколок у вашего персонажа. Остальные &mdash; в руках других игроков: богов и смертных. Держатель осколка управляет частью чужой души.</p>
+
+            <p><strong>Так устроена сансара: каждый вращает колесо страданий другого.</strong></p>
+
+            <hr>
+
+            <img class="post__img" src="img/news-dolg2.jpg" alt="Цель героев и богов" style="margin-top: 1.5rem;">
+
+            <p><strong>Цель героев (полигон):</strong> Стать собой, найти свой путь &mdash; сопротивляясь закону небес или используя игру богов. Вы выигрываете, когда трансформация вашей души повлияла на мир.</p>
+
+            <p><strong>Цель богов (онлайн):</strong> Воспитать героя, из которого родится новый мир. Но герои не пешки &mdash; они соперники и союзники. Вы предлагаете судьбы, они импровизируют.</p>
+
+            <hr>
+
+            <h3>Атмосфера</h3>
+            <p><strong>Референсы:</strong> Мрачный минимализм Куросавы (&laquo;Расёмон&raquo;, &laquo;Семь самураев&raquo;). Акутагава. Достоверная бюрократия духов в мифической Японии.</p>
+            <p><strong>Чувства:</strong> Драма невозможного выбора. Ярость против судьбы. Тяжесть кармического долга. Озарение от осознания пути.</p>
+
+            <blockquote>Типичная сцена: Три человека у тела. Каждый помнит случившееся по-своему &mdash; разбойник видит ярость, самурай честь, жена самурая страх. Все лгут. Все правы.</blockquote>
+
+            <hr>
+
+            <h3>Темы и границы</h3>
+            <p><strong>О чём:</strong> Трансформация через смерть. Сопротивление судьбе vs принятие её. Как смертные и боги формируют друг друга.</p>
+            <p><strong>Смерть:</strong> Вы играете не за отдельное воплощение, а за всю историю души, в нескольких рождениях.</p>
+            <p><strong>PvP:</strong> Через осколки душ и интриги между кланами. Без физического насилия. Это торг влиянием, не боёвка.</p>
+
+            <hr>
+
+            <p><strong>Это не игра о том, чтобы победить зло или спасти мир.</strong><br>
+            Это игра о том, как герои и боги формируют друг друга. Вы умрёте. Боги предложат судьбу. Но вы можете восстать, принять или найти третий путь.</p>
+
+            <p><em>Команда OMG: Lance, Lenoran, Тор Страхов, Дейдра, Инуки, Чихе, Яна Позднякова</em></p>
+        </div>
+    </article>
+
+    <!-- POST: Atmosphere — 19 Oct 2025 -->
+    <article class="post">
+        <div class="post__date">19 октября 2025</div>
+        <img class="post__img" src="img/news-nidomura.jpg" alt="Нидомура">
+        <div class="post__body">
+            <p>Прекрасна Страна Восходящего Солнца в дни цветения сакуры, особенно там, где морская волна касается берега, лаская подножия горных вершин...</p>
+
+            <p>Поражённый этой красотой путник на миг застывает полюбоваться рассветом, а затем спешит дальше по тропе, не замечая маленькую деревушку Нидомура у старой пристани там, где сходятся море и горы. Деревушка словно прячется в предрассветной дымке, и путник не мог бы сказать, не померещились ли ему врата тории, пристань у подножья горы и несколько хижин.</p>
+
+            <p>Путник спешит мимо, не ведая, что эта тихая и невзрачная на первый взгляд деревушка отчего-то привлекла внимание многих ками, а на городской площади можно запросто встретить ёкая. Не знает путник, как кипит страстями дом Сэккисе-бугё, начальника таможенной заставы &mdash; хоть вроде таможня и не работает вовсе, ведь сколько лет уже к пристани не подходят суда хотя бы в 50 коку риса...</p>
+
+            <p>Путник торопится по своим делам, оставляя позади деревушку, где на расстоянии не более дзё происходит рядом заурядное и запретное, где прямо сейчас определяется судьба этого мира...</p>
+        </div>
+    </article>
+
+    <!-- POST: Main announcement — 6 Oct 2025 -->
+    <article class="post">
+        <div class="post__date">6 октября 2025</div>
+        <img class="post__img" src="img/news-announce.jpg" alt="Невидимый монах. Долг, страх и голод.">
+        <h2 class="post__title">Невидимый монах. Долг, страх и голод.</h2>
+        <div class="post__body">
+            <p><em>Игра о том, как люди ищут свой путь, а боги лепят из них героев, меняясь под взглядами смертных.</em></p>
+
+            <p><strong>Гибридная игра:</strong> На игре будет до 40 игроков на полигоне и до 20 игроков онлайн (боги и духи). Связь через видеокамеры (в особых местах) и голоса духов в наушниках (у всех игроков на полигоне).</p>
+
+            <p><strong>Дата и место:</strong> 1 &mdash; 3 мая 2026, Сербия.</p>
+
+            <p><strong>Команда OMG:</strong> Lance, Lenoran, Тор Страхов, Дейдра, Инуки, Чихе, Яна Позднякова.</p>
+
+            <hr>
+
+            <h3>Место действия</h3>
+            <p>Мифическая Япония перед падением сегуната. Деревня Нидомура, расположенная у врат в мир мёртвых &mdash; Дзигоку.</p>
+
+            <h3>О чём эта история</h3>
+            <p>Боги существуют только когда люди им поклоняются. Люди становятся героями только когда боги придают их поступкам смысл. Мир &mdash; это кабуки, в котором боги смотрят на людей, а люди смотрят на богов. Пока они смотрят друг на друга &mdash; контрабандисты торгуют осколками душ, застрявших между мирами.</p>
+
+            <p>Боги пытаются вылепить из людей героев, воплощающих их путь: посылают им испытания и врагов. Заставляют делать выбор, определяющий судьбы. Но люди перерождаются неполными и несовершенными. Они импровизируют, ломают правила, находят неожиданные решения &mdash; и боги тоже начинают меняться.</p>
+
+            <h3>Источники</h3>
+            <p>В основе &mdash; события из фильмов Куросавы: битва семи самураев в деревне Канна, война кланов из &laquo;Ран&raquo;, убийство в воротах Расёмон. Наши персонажи &mdash; потомки участников этих событий. Карма их предков давит на них до сих пор.</p>
+
+            <p>А метафизика этого мира основана на авторском мире Алексея Кулакова и его рассказа <a href="https://ridero.ru/books/nevidimyi_monakh/">&laquo;Невидимый Монах&raquo;</a>.</p>
+        </div>
+    </article>
+
+    <div class="footer">
+        LARP &laquo;Невидимый монах&raquo; &middot; 1 &mdash; 3 мая 2026, Сербия &middot; <a href="https://t.me/Invisiblemonk2026" style="color: var(--accent); text-decoration: none;">@Invisiblemonk2026</a>
+    </div>
+
+</main>
+
+</body>
+</html>

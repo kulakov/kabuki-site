@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="logo.png">
+    <title>Мандат -- Невидимый монах</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #080806;
+            --card-bg: #0e0e0c;
+            --text: #d4c5a9;
+            --accent: #c49a6c;
+            --dim: #666;
+            --toho-red: #8b1a1a;
+            --border: #1a1a18;
+            --dolg: #cd5c5c;
+            --strakh: #888;
+            --golod: #d4c5a9;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            min-height: 100vh;
+        }
+
+        .toho-header {
+            width: 100%;
+            background: linear-gradient(to bottom, var(--toho-red) 0%, #5a1010 100%);
+            border-bottom: 2px solid #3a0808;
+            padding: 0.8rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .toho-header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(to right, transparent 10%, #d4a574 30%, #f0d4a8 50%, #d4a574 70%, transparent 90%);
+        }
+
+        .toho-logo {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #f0d4a8;
+            letter-spacing: 0.3em;
+        }
+
+        .toho-logo a { color: inherit; text-decoration: none; }
+
+        .header-nav {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .header-nav a {
+            font-size: 0.7rem;
+            color: #f0d4a8;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .header-nav a:hover { opacity: 1; }
+        .header-nav a.active { opacity: 1; border-bottom: 1px solid #f0d4a8; padding-bottom: 2px; }
+
+        .main {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 3rem 2rem 4rem;
+        }
+
+        .back {
+            display: inline-block;
+            font-size: 0.75rem;
+            color: var(--accent);
+            font-family: 'Courier New', monospace;
+            text-decoration: none;
+            letter-spacing: 0.1em;
+            margin-bottom: 2rem;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        .back:hover { opacity: 1; }
+
+        .page-title {
+            font-size: 2.4rem;
+            font-weight: 600;
+            text-align: center;
+            line-height: 1.2;
+            margin-bottom: 0.4rem;
+        }
+
+        .page-subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            color: var(--dim);
+            font-style: italic;
+            margin-bottom: 2.5rem;
+        }
+
+        .separator {
+            width: 60px;
+            height: 1px;
+            background: var(--accent);
+            margin: 0 auto 2.5rem;
+            opacity: 0.5;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        .section__title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .section__text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .section__text p {
+            margin-bottom: 1rem;
+        }
+
+        .section__text strong {
+            color: var(--accent);
+        }
+
+        .section__text ul {
+            list-style: none;
+            margin: 1rem 0;
+        }
+
+        .section__text ul li {
+            padding: 0.3rem 0 0.3rem 1.2rem;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        .section__text ul li::before {
+            content: '\2014';
+            position: absolute;
+            left: 0;
+            color: var(--dim);
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            color: var(--accent);
+            margin: 1.5rem 0 0.8rem;
+            font-weight: 600;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 1rem;
+        }
+
+        th {
+            background: rgba(196, 154, 108, 0.1);
+            color: var(--accent);
+            font-weight: 600;
+            text-align: left;
+            padding: 0.8rem 1rem;
+            border-bottom: 2px solid var(--border);
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+        }
+
+        td {
+            padding: 0.7rem 1rem;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+            line-height: 1.5;
+        }
+
+        tr:hover td {
+            background: rgba(196, 154, 108, 0.03);
+        }
+
+        .path-dolg { color: var(--dolg); font-weight: 600; }
+        .path-golod { color: var(--golod); font-weight: 600; }
+        .path-strakh { color: var(--strakh); font-weight: 600; }
+
+        .data-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 1.5rem 2rem;
+            margin: 1.5rem 0;
+        }
+
+        .data-card p {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 0.8rem;
+        }
+
+        .data-card p:last-child { margin-bottom: 0; }
+        .data-card strong { color: var(--accent); }
+
+        blockquote {
+            border-left: 3px solid var(--accent);
+            padding-left: 1.5rem;
+            margin: 1.5rem 0;
+            color: #888;
+            font-style: italic;
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .mandate-side {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 1.8rem 2rem;
+            margin: 1.5rem 0;
+        }
+
+        .mandate-side__label {
+            font-size: 0.7rem;
+            color: var(--accent);
+            font-family: 'Courier New', monospace;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: 0.8rem;
+        }
+
+        .mandate-side__text {
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .mandate-side__text p {
+            margin-bottom: 0.8rem;
+        }
+
+        .mandate-side__text p:last-child { margin-bottom: 0; }
+
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid var(--border);
+            font-size: 0.7rem;
+            color: #444;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 0.1em;
+        }
+
+        .footer a { color: var(--accent); text-decoration: none; }
+
+        .grain {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-size: 256px 256px;
+        }
+
+        @media (max-width: 480px) {
+            .toho-header { flex-direction: column; gap: 0.5rem; padding: 0.6rem 1rem; }
+            .header-nav { gap: 1rem; flex-wrap: wrap; justify-content: center; }
+            .header-nav a { font-size: 0.6rem; }
+            .toho-logo { font-size: 0.9rem; }
+            .main { padding: 2rem 1rem 3rem; }
+            .page-title { font-size: 1.8rem; }
+            table { font-size: 0.9rem; }
+            th, td { padding: 0.5rem 0.6rem; }
+            .mandate-side { padding: 1.2rem 1rem; }
+        }
+
+        @media (max-width: 600px) {
+            .table-scroll { overflow-x: auto; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<header class="toho-header">
+    <div class="toho-logo"><a href="index.html">東宝株式会社</a></div>
+    <nav class="header-nav">
+        <a href="index.html">Игра</a>
+        <a href="rules.html" class="active">Правила</a>
+        <a href="roles.html">Персонажи</a>
+        <a href="venue.html">База</a>
+        <a href="news.html">Новости</a>
+    </nav>
+</header>
+
+<main class="main">
+
+    <a class="back" href="rules.html">&larr; Правила</a>
+
+    <h1 class="page-title">Мандат</h1>
+    <div class="page-subtitle">Документ души &mdash; что вы носите с собой на игре</div>
+    <div class="separator"></div>
+
+    <!-- Что такое мандат -->
+    <div class="section">
+        <div class="section__title">Что такое мандат</div>
+        <div class="section__text">
+            <p>Мандат &mdash; это физический документ, который ваш персонаж носит с собой. Это одновременно удостоверение личности, кармическая карта и игровой инструмент.</p>
+            <p>Мандат выдаётся при рождении (входе в игру) и обновляется при перерождении. Он показывает, кто вы, какие у вас пути, и какие кармические долги висят на вашей душе.</p>
+        </div>
+    </div>
+
+    <!-- Как выглядит -->
+    <div class="section">
+        <div class="section__title">Как он выглядит в игре</div>
+        <div class="section__text">
+            <p>Мандат &mdash; это двусторонний документ на плотной бумаге, сложенный пополам.</p>
+        </div>
+
+        <img src="https://paper-attachments.dropboxusercontent.com/s_F2F9C20E1F1904123A79762E1F4377C7A35B5A6F1DC77098A03D42003CDA25BF_1768332457538_image.png" alt="Сторона жизни и смерти" style="max-width:100%;border-radius:4px;border:1px solid #222;margin:1rem 0;" />
+
+        <div class="mandate-side">
+            <div class="mandate-side__label">Сторона жизни / смерти</div>
+            <div class="mandate-side__text">
+                <p>На одной стороне &mdash; ваш статус: живы вы или мертвы. Когда вы умираете, сторона переворачивается. Все видят, что вы дух.</p>
+                <p>Живой человек носит мандат стороной жизни наружу. Дух &mdash; стороной смерти. Это визуальный маркер, который позволяет другим игрокам понять, с кем они имеют дело.</p>
+            </div>
+        </div>
+
+        <img src="https://paper-attachments.dropboxusercontent.com/s_F2F9C20E1F1904123A79762E1F4377C7A35B5A6F1DC77098A03D42003CDA25BF_1768332624446_image.png" alt="Печать владельца" style="max-width:280px;border-radius:4px;border:1px solid #222;margin:1rem 0;" />
+
+        <div class="mandate-side">
+            <div class="mandate-side__label">Сторона путей</div>
+            <img src="https://paper-attachments.dropboxusercontent.com/s_F2F9C20E1F1904123A79762E1F4377C7A35B5A6F1DC77098A03D42003CDA25BF_1768332511588_image.png" alt="Сторона пути" style="max-width:100%;border-radius:4px;border:1px solid #222;margin:1rem 0;" />
+            <div class="mandate-side__text">
+                <p>На другой стороне &mdash; три слота для осколков души: <span class="path-dolg">Долг</span>, <span class="path-golod">Голод</span>, <span class="path-strakh">Страх</span>.</p>
+                <p>Каждый слот показывает: какой осколок у вас, в каком он состоянии (спящий, активный, кризис, разрешён), и кто его держатель.</p>
+                <p>Когда держатель осколка выставляет вам требование &mdash; это записывается в мандат. Когда вы выполняете требование или отказываетесь &mdash; состояние обновляется.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Кармический долг -->
+    <div class="section">
+        <div class="section__title">Кармический долг</div>
+        <div class="section__text">
+            <p>Отдельная секция мандата &mdash; кармические долги. Это обязательства, перешедшие из прошлых жизней.</p>
+            <p>Кармический долг &mdash; это не просто запись. Это конкретное обязательство перед конкретным персонажем или богом. Долг может быть исполнен, передан другому, или списан &mdash; но для этого нужно совершить действие в игре.</p>
+            <p>Неисполненные долги утяжеляют вашу следующую жизнь. Чем больше долгов &mdash; тем тяжелее перерождение.</p>
+        </div>
+    </div>
+
+    <!-- Как получить новые слоты -->
+    <div class="section">
+        <div class="section__title">Как получить новые слоты</div>
+        <div class="section__text">
+            <p>При перерождении вы получаете новый мандат. Боги решают, какие осколки вы получите в следующей жизни &mdash; на основе того, как вы прожили предыдущую.</p>
+            <p>Контрабандисты могут подделать мандат &mdash; вписать осколок, которого у вас не было, или стереть кармический долг. Это незаконно, опасно и дорого. Но иногда &mdash; единственный выход.</p>
+        </div>
+    </div>
+
+    <!-- Таблицы трёх путей -->
+    <div class="section">
+        <div class="section__title">Примеры требований по путям</div>
+
+        <h3><span class="path-dolg">Путь Долга</span></h3>
+        <div class="table-scroll">
+        <table>
+            <thead>
+                <tr>
+                    <th>Состояние</th>
+                    <th>Пример требования</th>
+                    <th>Что происходит при невыполнении</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Активный</td>
+                    <td>&laquo;Защити семью Канадзава от позора&raquo;</td>
+                    <td>Семья теряет статус, вы теряете их доверие</td>
+                </tr>
+                <tr>
+                    <td>Кризис</td>
+                    <td>&laquo;Отдай своего сына в залог за долг клана&raquo;</td>
+                    <td>Клан отвернётся, вы станете изгоем</td>
+                </tr>
+                <tr>
+                    <td>Разрешён</td>
+                    <td>Долг исполнен: семья в безопасности</td>
+                    <td>&mdash;</td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+
+        <h3><span class="path-golod">Путь Голода</span></h3>
+        <div class="table-scroll">
+        <table>
+            <thead>
+                <tr>
+                    <th>Состояние</th>
+                    <th>Пример требования</th>
+                    <th>Что происходит при невыполнении</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Активный</td>
+                    <td>&laquo;Найди рис для деревни до конца дня&raquo;</td>
+                    <td>Люди голодают, начинается паника</td>
+                </tr>
+                <tr>
+                    <td>Кризис</td>
+                    <td>&laquo;Укради обрядовые товары со склада мёкан&raquo;</td>
+                    <td>Деревня вымирает, дети умирают от голода</td>
+                </tr>
+                <tr>
+                    <td>Разрешён</td>
+                    <td>Голод утолён: деревня накормлена</td>
+                    <td>&mdash;</td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+
+        <h3><span class="path-strakh">Путь Страха</span></h3>
+        <div class="table-scroll">
+        <table>
+            <thead>
+                <tr>
+                    <th>Состояние</th>
+                    <th>Пример требования</th>
+                    <th>Что происходит при невыполнении</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Активный</td>
+                    <td>&laquo;Не дай следователю узнать о подделке&raquo;</td>
+                    <td>Разоблачение, позор, арест</td>
+                </tr>
+                <tr>
+                    <td>Кризис</td>
+                    <td>&laquo;Предай союзника, или твой секрет раскроется&raquo;</td>
+                    <td>Страх сбывается: всё, что скрывали, выходит наружу</td>
+                </tr>
+                <tr>
+                    <td>Разрешён</td>
+                    <td>Страх преодолён: вы признались или приняли последствия</td>
+                    <td>&mdash;</td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+    </div>
+
+</main>
+
+<div class="footer">
+    LARP &laquo;Невидимый монах&raquo; &middot; 1 &mdash; 3 мая 2026, Сербия &middot; <a href="https://t.me/Invisiblemonk2026">@Invisiblemonk2026</a>
+</div>
+
+</body>
+</html>
