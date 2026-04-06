@@ -62,8 +62,8 @@ h1 { font-size: 2.2rem; font-weight: 400; text-align: center; margin-bottom: 0.5
     <h1>Персонажи</h1>
     <div class="filters">
         <button class="filter-btn active" onclick="filterGender('all')">Все (36)</button>
-        <button class="filter-btn" onclick="filterGender('m')">Мужские (19)</button>
-        <button class="filter-btn" onclick="filterGender('u')">Универсальные (8) <span class="gender-toggle" onclick="event.stopPropagation();toggleUniversalGender()" title="Переключить мужские/женские версии"><span id="toggle-label">М</span><span class="toggle-track" id="toggle-track"><span class="toggle-knob"></span></span><span>Ж</span></span></button>
+        <button class="filter-btn" onclick="filterGender('m')">Мужские (20)</button>
+        <button class="filter-btn" onclick="filterGender('u')">Универсальные (7) <span class="gender-toggle" onclick="event.stopPropagation();toggleUniversalGender()" title="Переключить мужские/женские версии"><span id="toggle-label">М</span><span class="toggle-track" id="toggle-track"><span class="toggle-knob"></span></span><span>Ж</span></span></button>
         <button class="filter-btn" onclick="filterGender('f')">Женские (9)</button>
     </div>
     <div class="grid">
@@ -181,11 +181,12 @@ h1 { font-size: 2.2rem; font-weight: 400; text-align: center; margin-bottom: 0.5
                 <div class="archetype">Призрак легиста-идеалиста</div>
             </a>
         </div>
-        <div class="card" data-gender="u" data-m-name="Серая Цапля, Акиро Нидзё" data-f-name="Серая Цапля, Акиро Нидзё" data-m-arch="Падший придворный с имперским мандатом" data-f-arch="Падшая придворная с имперским мандатом" data-m-img="portraits/thumbs/grey_heron.jpg" data-f-img="portraits/thumbs/grey_heron_f.jpg" data-m-href="roles/Серая-Цапля.html" data-f-href="roles/Серая-Цапля-f.html">
-            <a href="roles/Серая-Цапля-f.html">
-                <img src="portraits/thumbs/grey_heron_f.jpg" alt="Серая Цапля, Акиро Нидзё" loading="lazy" />
+        <div class="card" data-gender="m">
+            <a href="roles/Серая-Цапля.html">
+                <img src="portraits/thumbs/grey_heron.jpg" alt="Серая Цапля, Акиро Нидзё" loading="lazy" />
                 <div class="name">Серая Цапля, Акиро Нидзё</div>
-                <div class="archetype">Падшая придворная с имперским мандатом</div>
+                <div class="archetype">Падший придворный с имперским мандатом</div>
+                <div class="badge">Забронировано</div>
             </a>
         </div>
         <div class="card" data-gender="m">
