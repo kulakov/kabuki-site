@@ -62,8 +62,8 @@ h1 { font-size: 2.2rem; font-weight: 400; text-align: center; margin-bottom: 0.5
     <h1>Персонажи</h1>
     <div class="filters">
         <button class="filter-btn active" onclick="filterGender('all')">Все (36)</button>
-        <button class="filter-btn" onclick="filterGender('m')">Мужские (20)</button>
-        <button class="filter-btn" onclick="filterGender('u')">Универсальные (7) <span class="gender-toggle" onclick="event.stopPropagation();toggleUniversalGender()" title="Переключить мужские/женские версии"><span id="toggle-label">М</span><span class="toggle-track" id="toggle-track"><span class="toggle-knob"></span></span><span>Ж</span></span></button>
+        <button class="filter-btn" onclick="filterGender('m')">Мужские (21)</button>
+        <button class="filter-btn" onclick="filterGender('u')">Универсальные (6) <span class="gender-toggle" onclick="event.stopPropagation();toggleUniversalGender()" title="Переключить мужские/женские версии"><span id="toggle-label">М</span><span class="toggle-track" id="toggle-track"><span class="toggle-knob"></span></span><span>Ж</span></span></button>
         <button class="filter-btn" onclick="filterGender('f')">Женские (9)</button>
     </div>
     <div class="grid">
@@ -288,11 +288,12 @@ h1 { font-size: 2.2rem; font-weight: 400; text-align: center; margin-bottom: 0.5
                 <div class="archetype">Мать солдатам</div>
             </a>
         </div>
-        <div class="card" data-gender="u" data-m-name="Хэйдзи" data-f-name="Хэйдзи" data-m-arch="Блудный сын" data-f-arch="Блудная дочь" data-m-img="portraits/thumbs/bandit_chief.jpg" data-f-img="portraits/thumbs/bandit_chief_f.jpg" data-m-href="roles/Хэйдзи.html" data-f-href="roles/Хэйдзи-f.html">
-            <a href="roles/Хэйдзи-f.html">
-                <img src="portraits/thumbs/bandit_chief_f.jpg" alt="Хэйдзи" loading="lazy" />
+        <div class="card" data-gender="m">
+            <a href="roles/Хэйдзи.html">
+                <img src="portraits/thumbs/bandit_chief.jpg" alt="Хэйдзи" loading="lazy" />
                 <div class="name">Хэйдзи</div>
-                <div class="archetype">Блудная дочь</div>
+                <div class="archetype">Блудный сын</div>
+                <div class="badge">Забронировано</div>
             </a>
         </div>
         <div class="card" data-gender="u">
