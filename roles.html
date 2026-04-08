@@ -42,6 +42,15 @@ h1 { font-size: 2.2rem; font-weight: 400; text-align: center; margin-bottom: 0.5
 .gender-toggle .toggle-track.active { background: var(--accent); }
 .gender-toggle .toggle-knob { width: 14px; height: 14px; border-radius: 50%; background: var(--text); position: absolute; top: 2px; left: 2px; transition: left 0.2s; }
 .gender-toggle .toggle-track.active .toggle-knob { left: 20px; }
+.tag-filters { max-width: 900px; margin: 0 auto 1.5rem; padding: 1rem; border: 1px solid #1a1a18; border-radius: 4px; background: rgba(20,20,18,0.4); }
+.tag-group { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+.tag-group:last-child { margin-bottom: 0; }
+.tag-group-label { font-size: 0.7rem; color: var(--dim); text-transform: uppercase; letter-spacing: 0.1em; min-width: 80px; }
+.tag-chip { background: transparent; border: 1px solid #2a2a26; color: var(--dim); padding: 3px 10px; border-radius: 12px; cursor: pointer; font-family: inherit; font-size: 0.75rem; transition: all 0.15s; }
+.tag-chip:hover { border-color: var(--accent); color: var(--text); }
+.tag-chip.active { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+.tag-reset { background: transparent; border: 1px dashed #444; color: var(--dim); padding: 3px 10px; border-radius: 4px; cursor: pointer; font-family: inherit; font-size: 0.7rem; margin-left: auto; }
+.tag-reset:hover { color: var(--text); border-color: var(--accent); }
 .footer { text-align: center; padding: 2rem; color: var(--dim); font-size: 0.85rem; border-top: 1px solid #1a1a18; margin-top: 3rem; }
 @media (max-width: 480px) { .header { flex-direction: column; gap: 0.5rem; padding: 0.6rem 1rem; } .header-nav { gap: 1rem; } .header-nav a { font-size: 0.6rem; } }
 </style>
@@ -65,6 +74,43 @@ h1 { font-size: 2.2rem; font-weight: 400; text-align: center; margin-bottom: 0.5
         <button class="filter-btn" onclick="filterGender('m')">Мужские (21)</button>
         <button class="filter-btn" onclick="filterGender('u')">Универсальные (6) <span class="gender-toggle" onclick="event.stopPropagation();toggleUniversalGender()" title="Переключить мужские/женские версии"><span id="toggle-label">М</span><span class="toggle-track" id="toggle-track"><span class="toggle-knob"></span></span><span>Ж</span></span></button>
         <button class="filter-btn" onclick="filterGender('f')">Женские (9)</button>
+    </div>
+    <div class="tag-filters">
+        <div class="tag-group">
+            <span class="tag-group-label">Локация</span>
+            <button class="tag-chip" data-tag-type="loc" data-tag="Деревня">Деревня</button>
+            <button class="tag-chip" data-tag-type="loc" data-tag="Якудза">Якудза</button>
+            <button class="tag-chip" data-tag-type="loc" data-tag="Цукидзи">Цукидзи</button>
+            <button class="tag-chip" data-tag-type="loc" data-tag="Мёкан">Мёкан</button>
+            <button class="tag-chip" data-tag-type="loc" data-tag="Лагерь ронинов">Лагерь ронинов</button>
+            <button class="tag-chip" data-tag-type="loc" data-tag="Канцелярия">Канцелярия</button>
+            <button class="tag-chip" data-tag-type="loc" data-tag="Храм">Храм</button>
+        </div>
+        <div class="tag-group">
+            <span class="tag-group-label">Сословие</span>
+            <button class="tag-chip" data-tag-type="cls" data-tag="Крестьянин">Крестьянин</button>
+            <button class="tag-chip" data-tag-type="cls" data-tag="Самурай">Самурай</button>
+            <button class="tag-chip" data-tag-type="cls" data-tag="Чиновник">Чиновник</button>
+            <button class="tag-chip" data-tag-type="cls" data-tag="Бандит">Бандит</button>
+            <button class="tag-chip" data-tag-type="cls" data-tag="Монах">Монах</button>
+            <button class="tag-chip" data-tag-type="cls" data-tag="Контрабандист">Контрабандист</button>
+        </div>
+        <div class="tag-group">
+            <span class="tag-group-label">Путь</span>
+            <button class="tag-chip" data-tag-type="path" data-tag="Долг">Долг</button>
+            <button class="tag-chip" data-tag-type="path" data-tag="Голод">Голод</button>
+            <button class="tag-chip" data-tag-type="path" data-tag="Страх">Страх</button>
+        </div>
+        <div class="tag-group">
+            <span class="tag-group-label">Источник</span>
+            <button class="tag-chip" data-tag-type="src" data-tag="Семь самураев">Семь самураев</button>
+            <button class="tag-chip" data-tag-type="src" data-tag="Ёдзимбо">Ёдзимбо</button>
+            <button class="tag-chip" data-tag-type="src" data-tag="Расёмон">Расёмон</button>
+            <button class="tag-chip" data-tag-type="src" data-tag="Ран">Ран</button>
+            <button class="tag-chip" data-tag-type="src" data-tag="Кимоно и Ваза">Кимоно и Ваза</button>
+            <button class="tag-chip" data-tag-type="src" data-tag="Собственное">Собственное</button>
+            <button class="tag-reset" onclick="resetTagFilters()">Сбросить</button>
+        </div>
     </div>
     <div class="grid">
         <div class="card" data-gender="m">
@@ -334,21 +380,155 @@ h1 { font-size: 2.2rem; font-weight: 400; text-align: center; margin-bottom: 0.5
 </div>
 <div class="footer">LARP &laquo;Невидимый монах&raquo; &middot; 1 &mdash; 3 мая 2026, Сербия</div>
 <script>
+// Маппинг тегов по basename файла роли
+var ROLE_TAGS = {
+    'Ёитиро-Сэйбэй':    {loc:'Якудза',        cls:'Бандит',       path:'',     src:'Ёдзимбо'},
+    'Ёхэй':             {loc:'Деревня',       cls:'Крестьянин',   path:'Голод',src:'Ёдзимбо'},
+    'Годзо':            {loc:'Деревня',       cls:'Крестьянин',   path:'',     src:'Ёдзимбо'},
+    'Гробовщик-Окэя':   {loc:'Храм',          cls:'Крестьянин',   path:'',     src:'Ёдзимбо'},
+    'Дзинпати':         {loc:'Лагерь ронинов',cls:'Крестьянин',   path:'',     src:'Собственное'},
+    'Дровосек-Кагэн':   {loc:'Лагерь ронинов',cls:'Крестьянин',   path:'',     src:'Расёмон'},
+    'Камбэй-Симада':    {loc:'Лагерь ронинов',cls:'Самурай',      path:'Долг', src:'Семь самураев'},
+    'Кацусиро-Окамото': {loc:'Деревня',       cls:'Самурай',      path:'Долг', src:'Семь самураев'},
+    'Кикутё':           {loc:'Лагерь ронинов',cls:'Самурай',      path:'',     src:'Семь самураев'},
+    'Косуга-но-Камэ':   {loc:'Канцелярия',    cls:'Чиновник',     path:'',     src:'Кимоно и Ваза'},
+    'Кривляка':         {loc:'Лагерь ронинов',cls:'Крестьянин',   path:'Голод',src:'Собственное'},
+    'Масако-Канадзава': {loc:'Канцелярия',    cls:'Самурай',      path:'Страх',src:'Расёмон'},
+    'Матакичи':         {loc:'Якудза',        cls:'Бандит',       path:'',     src:'Собственное'},
+    'Медиум-Кагэ':      {loc:'Канцелярия',    cls:'Монах',        path:'',     src:'Расёмон'},
+    'Медиум-Киетака':   {loc:'Храм',          cls:'Чиновник',     path:'Страх',src:'Собственное'},
+    'Митико-Окамото':   {loc:'Канцелярия',    cls:'Чиновник',     path:'',     src:'Собственное'},
+    'Монах-Кэйсин':     {loc:'Храм',          cls:'Монах',        path:'Голод',src:'Расёмон'},
+    'Нуи':              {loc:'Деревня',       cls:'Крестьянин',   path:'',     src:'Ёдзимбо'},
+    'Орин-Сэйбэй':      {loc:'Якудза',        cls:'Бандит',       path:'Страх',src:'Ёдзимбо'},
+    'Райдзин':          {loc:'Цукидзи',       cls:'Чиновник',     path:'Страх',src:'Кимоно и Ваза'},
+    'Рикити':           {loc:'Деревня',       cls:'Крестьянин',   path:'',     src:'Семь самураев'},
+    'Садако-Нидзё':     {loc:'Канцелярия',    cls:'Чиновник',     path:'',     src:'Собственное'},
+    'Серая-Цапля':      {loc:'Канцелярия',    cls:'Чиновник',     path:'',     src:'Кимоно и Ваза'},
+    'Сино':             {loc:'Деревня',       cls:'Крестьянин',   path:'Голод',src:'Семь самураев'},
+    'Ситиродзи-Ито':    {loc:'Лагерь ронинов',cls:'Самурай',      path:'Долг', src:'Семь самураев'},
+    'Старик-бродяга':   {loc:'Лагерь ронинов',cls:'Крестьянин',   path:'Долг', src:'Собственное'},
+    'Сэдзи':            {loc:'Лагерь ронинов',cls:'Контрабандист',path:'',     src:'Кимоно и Ваза'},
+    'Тадаёси-Инаба':    {loc:'Якудза',        cls:'Самурай',      path:'',     src:'Собственное'},
+    'Такэхиро-Канадзава':{loc:'Канцелярия',   cls:'Чиновник',     path:'Страх',src:'Расёмон'},
+    'Танака-Хобан':     {loc:'Канцелярия',    cls:'Чиновник',     path:'Голод',src:'Кимоно и Ваза'},
+    'Таро':             {loc:'Мёкан',         cls:'Чиновник',     path:'Долг', src:'Кимоно и Ваза'},
+    'Тётушка-Ёсими':    {loc:'Деревня',       cls:'Крестьянин',   path:'Долг', src:'Кимоно и Ваза'},
+    'Хансукэ':          {loc:'Канцелярия',    cls:'Самурай',      path:'',     src:'Ёдзимбо'},
+    'Хромой-Лис':       {loc:'Лагерь ронинов',cls:'Контрабандист',path:'Страх',src:'Кимоно и Ваза'},
+    'Хэйдзи':           {loc:'Якудза',        cls:'Бандит',       path:'Страх',src:'Собственное'},
+    'Шиори':            {loc:'Деревня',       cls:'Крестьянин',   path:'Голод',src:'Семь самураев'}
+};
+
+// Применяем теги к карточкам по href (basename без -f и .html)
+function applyTagsToCards() {
+    document.querySelectorAll('.card').forEach(function(card) {
+        var link = card.querySelector('a');
+        if (!link) return;
+        var href = link.getAttribute('href') || '';
+        // roles/Годзо.html или roles/Годзо-f.html → Годзо
+        var match = href.match(/roles\/([^.]+?)(-f)?\.html$/);
+        if (!match) return;
+        var baseName = decodeURIComponent(match[1]);
+        var tags = ROLE_TAGS[baseName];
+        if (!tags) return;
+        if (tags.loc)  card.setAttribute('data-loc',  tags.loc);
+        if (tags.cls)  card.setAttribute('data-cls',  tags.cls);
+        if (tags.path) card.setAttribute('data-path', tags.path);
+        if (tags.src)  card.setAttribute('data-src',  tags.src);
+    });
+}
+
+// Активные фильтры
+var activeFilters = { gender: 'all', loc: '', cls: '', path: '', src: '' };
+
+function applyAllFilters() {
+    document.querySelectorAll('.card').forEach(function(card) {
+        var visible = true;
+        if (activeFilters.gender !== 'all' && card.getAttribute('data-gender') !== activeFilters.gender) visible = false;
+        if (visible && activeFilters.loc  && card.getAttribute('data-loc')  !== activeFilters.loc)  visible = false;
+        if (visible && activeFilters.cls  && card.getAttribute('data-cls')  !== activeFilters.cls)  visible = false;
+        if (visible && activeFilters.path && card.getAttribute('data-path') !== activeFilters.path) visible = false;
+        if (visible && activeFilters.src  && card.getAttribute('data-src')  !== activeFilters.src)  visible = false;
+        card.style.display = visible ? '' : 'none';
+    });
+    syncUrl();
+}
+
+function syncUrl() {
+    var params = new URLSearchParams();
+    if (activeFilters.gender !== 'all') params.set('gender', activeFilters.gender);
+    if (activeFilters.loc)  params.set('loc',  activeFilters.loc);
+    if (activeFilters.cls)  params.set('cls',  activeFilters.cls);
+    if (activeFilters.path) params.set('path', activeFilters.path);
+    if (activeFilters.src)  params.set('src',  activeFilters.src);
+    var q = params.toString();
+    var newUrl = window.location.pathname + (q ? '?' + q : '');
+    window.history.replaceState(null, '', newUrl);
+}
+
+function loadFiltersFromUrl() {
+    var params = new URLSearchParams(window.location.search);
+    if (params.has('gender')) activeFilters.gender = params.get('gender');
+    if (params.has('loc'))    activeFilters.loc    = params.get('loc');
+    if (params.has('cls'))    activeFilters.cls    = params.get('cls');
+    if (params.has('path'))   activeFilters.path   = params.get('path');
+    if (params.has('src'))    activeFilters.src    = params.get('src');
+
+    // Применяем состояние к кнопкам gender
+    document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+    var genderBtn = document.querySelector('.filter-btn[onclick*="\'' + activeFilters.gender + '\'"]');
+    if (genderBtn) genderBtn.classList.add('active');
+
+    // Применяем состояние к чипсам
+    ['loc','cls','path','src'].forEach(function(type) {
+        if (activeFilters[type]) {
+            var chip = document.querySelector('.tag-chip[data-tag-type="' + type + '"][data-tag="' + activeFilters[type] + '"]');
+            if (chip) chip.classList.add('active');
+        }
+    });
+}
+
 function filterGender(g) {
     document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
     event.target.classList.add('active');
-    document.querySelectorAll('.card').forEach(function(card) {
-        if (g === 'all' || card.getAttribute('data-gender') === g) {
-            card.style.display = '';
-        } else {
-            card.style.display = 'none';
-        }
+    activeFilters.gender = g;
+    applyAllFilters();
+}
+
+function toggleTagChip(chip) {
+    var type = chip.getAttribute('data-tag-type');
+    var tag  = chip.getAttribute('data-tag');
+    // Снимаем другие активные чипсы в той же группе
+    document.querySelectorAll('.tag-chip[data-tag-type="' + type + '"]').forEach(function(c) {
+        if (c !== chip) c.classList.remove('active');
     });
+    // Toggle на текущем
+    if (chip.classList.contains('active')) {
+        chip.classList.remove('active');
+        activeFilters[type] = '';
+    } else {
+        chip.classList.add('active');
+        activeFilters[type] = tag;
+    }
+    applyAllFilters();
+}
+
+function resetTagFilters() {
+    activeFilters.loc = activeFilters.cls = activeFilters.path = activeFilters.src = '';
+    document.querySelectorAll('.tag-chip').forEach(function(c) { c.classList.remove('active'); });
+    applyAllFilters();
 }
 
 var universalFemale = true;
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('toggle-track').classList.add('active');
+    applyTagsToCards();
+    document.querySelectorAll('.tag-chip').forEach(function(chip) {
+        chip.addEventListener('click', function() { toggleTagChip(chip); });
+    });
+    loadFiltersFromUrl();
+    applyAllFilters();
 });
 function toggleUniversalGender() {
     universalFemale = !universalFemale;
