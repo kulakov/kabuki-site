@@ -56,6 +56,7 @@ h1 { font-size: 2.2rem; font-weight: 400; text-align: center; margin-bottom: 0.5
         <a href="rules.html">Правила</a>
         <a href="roles.html">Персонажи</a>
         <a href="gods.html" class="active">Небеса</a>
+        <a href="gods-roles.html">Боги</a>
         <a href="venue.html">Орг. информация</a>
         <a href="news.html">Новости</a>
     </nav>
@@ -141,169 +142,9 @@ h1 { font-size: 2.2rem; font-weight: 400; text-align: center; margin-bottom: 0.5
         <h2 style="font-size:1.1rem; color:var(--accent); border-bottom:1px solid #1a1a18; padding-bottom:0.3rem; margin:2rem 0 0.8rem;">Коротко про игру-онлайн</h2>
         <p>В онлайн-игре чиновники небесной канцелярии добывают для своих богов силы, допрашивая одну за другой души умерших, стекающиеся сюда со всей Японии. И выковывают из них героев (новые рождения игроков на полигоне), которые изменят мир.</p>
 
-        <hr style="border:none; border-top:1px solid #1a1a18; margin:2rem 0;">
-        <h2 style="font-size:1.1rem; color:var(--accent); border-bottom:1px solid #1a1a18; padding-bottom:0.3rem; margin:2rem 0 0.8rem;">Роли богов</h2>
-    </div>
-
-    <div class="tag-filters">
-        <div class="tag-group">
-            <span class="tag-group-label">Путь</span>
-            <button class="tag-chip" data-tag-type="path" data-tag="Страх">Страх</button>
-            <button class="tag-chip" data-tag-type="path" data-tag="Долг">Долг</button>
-            <button class="tag-chip" data-tag-type="path" data-tag="Голод">Голод</button>
-            <button class="tag-chip" data-tag-type="path" data-tag="?">Потенциал</button>
-        </div>
-        <div class="tag-group">
-            <span class="tag-group-label">Состояние</span>
-            <button class="tag-chip" data-tag-type="state" data-tag="правит">Правит</button>
-            <button class="tag-chip" data-tag-type="state" data-tag="столп">Столп</button>
-            <button class="tag-chip" data-tag-type="state" data-tag="угнетён">Угнетён</button>
-            <button class="tag-chip" data-tag-type="state" data-tag="потенциал">Потенциал</button>
-            <button class="tag-reset" onclick="resetFilters()">Сбросить</button>
-        </div>
-    </div>
-    <div class="grid">
-        <div class="card" data-path="Страх" data-state="правит">
-            <img src="portraits/gods/tsukuyomi.jpg" alt="Цукиёми" loading="lazy" />
-            <div class="name">Цукиёми</div>
-            <div class="archetype">Луна, приливы, утончённость, статус по рождению</div>
-            <span class="path-tag path-fear">Страх — правит</span>
-        </div>
-        <div class="card" data-path="Долг" data-state="столп">
-            <img src="portraits/gods/fujin.jpg" alt="Фудзин" loading="lazy" />
-            <div class="name">Фудзин</div>
-            <div class="archetype">Ветер, буря, непреклонность, верность, кара</div>
-            <span class="path-tag path-duty">Долг — столп</span>
-        </div>
-        <div class="card" data-path="Голод" data-state="столп">
-            <img src="portraits/gods/shichifukujin.jpg" alt="Ситифукудзин" loading="lazy" />
-            <div class="name">Ситифукудзин</div>
-            <div class="archetype">Улов, торговля, любовь, забота, мудрость</div>
-            <span class="path-tag path-hunger">Голод — столп</span>
-        </div>
-        <div class="card" data-path="Страх" data-state="угнетён">
-            <img src="portraits/gods/ninigi.jpg" alt="Ниниги-но Микото" loading="lazy" />
-            <div class="name">Ниниги-но Микото</div>
-            <div class="archetype">Первый Император, покровительство, достоинство</div>
-            <span class="path-tag path-fear">Страх — угнетён</span>
-        </div>
-        <div class="card" data-path="Страх" data-state="угнетён">
-            <img src="portraits/gods/okuninushi.jpg" alt="Окунинуси" loading="lazy" />
-            <div class="name">Окунинуси</div>
-            <div class="archetype">Мастер земли, строительство, медицина, брак</div>
-            <span class="path-tag path-fear">Страх — угнетён</span>
-        </div>
-        <div class="card" data-path="Долг" data-state="угнетён">
-            <img src="portraits/gods/sarutahiko.jpg" alt="Сарутахико" loading="lazy" />
-            <div class="name">Сарутахико</div>
-            <div class="archetype">Путь, мастерство, наставничество, битва</div>
-            <span class="path-tag path-duty">Долг — угнетён</span>
-        </div>
-        <div class="card" data-path="Долг" data-state="угнетён">
-            <img src="portraits/gods/konohana.jpg" alt="Коноханасакуя-химэ" loading="lazy" />
-            <div class="name">Коноханасакуя-химэ</div>
-            <div class="archetype">Мимолётность жизни, верность красоте, сакура</div>
-            <span class="path-tag path-duty">Долг — угнетена</span>
-        </div>
-        <div class="card" data-path="Голод" data-state="угнетён">
-            <img src="portraits/gods/kannon.jpg" alt="Сэндзю Каннон" loading="lazy" />
-            <div class="name">Сэндзю Каннон</div>
-            <div class="archetype">Слепое сострадание, тысяча рук</div>
-            <span class="path-tag path-hunger">Голод — угнетена</span>
-        </div>
-        <div class="card" data-path="Голод" data-state="угнетён">
-            <img src="portraits/gods/toyouke.jpg" alt="Тоёукэ-Омиками" loading="lazy" />
-            <div class="name">Тоёукэ-Омиками</div>
-            <div class="archetype">Забота через дары, достойная жизнь</div>
-            <span class="path-tag path-hunger">Голод — угнетена</span>
-        </div>
-        <div class="card" data-path="?" data-state="потенциал">
-            <img src="portraits/gods/amaterasu.jpg" alt="Та что была Аматерасу" loading="lazy" />
-            <div class="name">Та что была Аматерасу</div>
-            <span class="path-tag path-potential">потенциал</span>
-        </div>
-        <div class="card" data-path="?" data-state="потенциал">
-            <img src="portraits/gods/susanoo.jpg" alt="Тот что был Сусано" loading="lazy" />
-            <div class="name">Тот что был Сусано</div>
-            <span class="path-tag path-potential">потенциал</span>
-        </div>
-        <div class="card" data-path="?" data-state="потенциал">
-            <img src="portraits/gods/izanami.jpg" alt="Та что была Идзанами" loading="lazy" />
-            <div class="name">Та что была Идзанами</div>
-            <span class="path-tag path-potential">потенциал</span>
-        </div>
-        <div class="card" data-path="?" data-state="потенциал">
-            <img src="portraits/gods/inari.jpg" alt="Та что была Инари" loading="lazy" />
-            <div class="name">Та что была Инари</div>
-            <span class="path-tag path-potential">потенциал</span>
-        </div>
-        <div class="card" data-path="?" data-state="потенциал">
-            <img src="portraits/gods/ryujin.jpg" alt="Тот что был Рюдзин" loading="lazy" />
-            <div class="name">Тот что был Рюдзин</div>
-            <span class="path-tag path-potential">потенциал</span>
-        </div>
-        <div class="card" data-path="?" data-state="потенциал">
-            <img src="portraits/gods/oyamatsumi.jpg" alt="Тот что был О-Ямацуми" loading="lazy" />
-            <div class="name">Тот что был О-Ямацуми</div>
-            <span class="path-tag path-potential">потенциал</span>
-        </div>
-        <div class="card" data-path="?" data-state="потенциал">
-            <img src="portraits/gods/hachiman.jpg" alt="Тот что был Хатиман" loading="lazy" />
-            <div class="name">Тот что был Хатиман</div>
-            <span class="path-tag path-potential">потенциал</span>
-        </div>
-        <div class="card" data-path="?" data-state="потенциал">
-            <img src="portraits/gods/uzume.jpg" alt="Та что была Амэ-но Удзумэ" loading="lazy" />
-            <div class="name">Та что была Удзумэ</div>
-            <span class="path-tag path-potential">потенциал</span>
-        </div>
-        <div class="card" data-path="?" data-state="потенциал">
-            <img src="portraits/gods/orochi.jpg" alt="Тот кто был Ямато-но Орочи" loading="lazy" />
-            <div class="name">Тот кто был Орочи</div>
-            <span class="path-tag path-potential">потенциал</span>
-        </div>
+        <p style="text-align:center; margin-top:2rem;"><a href="gods-roles.html" style="display:inline-block; padding:10px 24px; background:var(--accent); color:var(--bg); text-decoration:none; border-radius:4px; font-size:0.9rem;">Смотреть роли богов &rarr;</a></p>
     </div>
 </div>
 <div class="footer">LARP &laquo;Невидимый монах&raquo; &middot; 1 &mdash; 3 мая 2026, Сербия</div>
-<script>
-var activeFilters = { path: '', state: '' };
-function applyFilters() {
-    document.querySelectorAll('.card').forEach(function(card) {
-        var visible = true;
-        if (activeFilters.path && card.getAttribute('data-path') !== activeFilters.path) visible = false;
-        if (activeFilters.state && card.getAttribute('data-state') !== activeFilters.state) visible = false;
-        card.style.display = visible ? '' : 'none';
-    });
-    var params = new URLSearchParams();
-    if (activeFilters.path) params.set('path', activeFilters.path);
-    if (activeFilters.state) params.set('state', activeFilters.state);
-    var q = params.toString();
-    window.history.replaceState(null, '', window.location.pathname + (q ? '?' + q : ''));
-}
-function resetFilters() {
-    activeFilters.path = ''; activeFilters.state = '';
-    document.querySelectorAll('.tag-chip').forEach(function(c) { c.classList.remove('active'); });
-    applyFilters();
-}
-document.addEventListener('DOMContentLoaded', function() {
-    var params = new URLSearchParams(window.location.search);
-    if (params.has('path')) activeFilters.path = params.get('path');
-    if (params.has('state')) activeFilters.state = params.get('state');
-    document.querySelectorAll('.tag-chip').forEach(function(chip) {
-        var type = chip.getAttribute('data-tag-type');
-        var tag = chip.getAttribute('data-tag');
-        if (activeFilters[type] === tag) chip.classList.add('active');
-        chip.addEventListener('click', function() {
-            document.querySelectorAll('.tag-chip[data-tag-type="' + type + '"]').forEach(function(c) {
-                if (c !== chip) c.classList.remove('active');
-            });
-            if (chip.classList.contains('active')) { chip.classList.remove('active'); activeFilters[type] = ''; }
-            else { chip.classList.add('active'); activeFilters[type] = tag; }
-            applyFilters();
-        });
-    });
-    applyFilters();
-});
-</script>
 </body>
 </html>

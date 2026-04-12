@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="logo.png">
+<title>Роли богов — Невидимый монах</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root { --bg: #080806; --card-bg: #0e0e0c; --text: #d4c5a9; --accent: #c49a6c; --dim: #666; --toho-red: #8b1a1a; }
+body { background: var(--bg); color: var(--text); font-family: "Cormorant Garamond", Georgia, serif; min-height: 100vh; }
+.grain { position: fixed; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; z-index: 50; opacity: 0.03; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); background-size: 256px 256px; }
+.header { width: 100%; background: linear-gradient(to bottom, var(--toho-red) 0%, #5a1010 100%); border-bottom: 2px solid #3a0808; padding: 0.8rem 2rem; display: flex; align-items: center; justify-content: space-between; }
+.toho-logo { font-family: "Noto Serif JP", serif; font-size: 0.9rem; }
+.toho-logo a { color: inherit; text-decoration: none; }
+.header-nav { display: flex; gap: 1.5rem; }
+.header-nav a { font-size: 0.7rem; color: #f0d4a8; text-decoration: none; text-transform: uppercase; letter-spacing: 0.15em; opacity: 0.7; transition: opacity 0.2s; }
+.header-nav a:hover { opacity: 1; }
+.header-nav a.active { opacity: 1; border-bottom: 1px solid #f0d4a8; padding-bottom: 2px; }
+.content { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+h1 { font-size: 2.2rem; font-weight: 400; text-align: center; margin-bottom: 0.5rem; color: var(--accent); }
+.subtitle { text-align: center; color: var(--dim); font-size: 1.1rem; margin-bottom: 1.5rem; font-style: italic; }
+.tag-filters { max-width: 900px; margin: 0 auto 1.5rem; padding: 1rem; border: 1px solid #1a1a18; border-radius: 4px; background: rgba(20,20,18,0.4); }
+.tag-group { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+.tag-group:last-child { margin-bottom: 0; }
+.tag-group-label { font-size: 0.7rem; color: var(--dim); text-transform: uppercase; letter-spacing: 0.1em; min-width: 80px; }
+.tag-chip { background: transparent; border: 1px solid #2a2a26; color: var(--dim); padding: 3px 10px; border-radius: 12px; cursor: pointer; font-family: inherit; font-size: 0.75rem; transition: all 0.15s; }
+.tag-chip:hover { border-color: var(--accent); color: var(--text); }
+.tag-chip.active { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+.tag-reset { background: transparent; border: 1px dashed #444; color: var(--dim); padding: 3px 10px; border-radius: 4px; cursor: pointer; font-family: inherit; font-size: 0.7rem; margin-left: auto; }
+.tag-reset:hover { color: var(--text); border-color: var(--accent); }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 20px; }
+.card { text-align: center; transition: transform 0.2s; }
+.card:hover { transform: translateY(-4px); }
+.card img { width: 140px; height: 140px; object-fit: cover; border-radius: 50%; border: 2px solid #222; filter: grayscale(30%); transition: filter 0.2s, border-color 0.2s; }
+.card:hover img { filter: grayscale(0%); border-color: var(--accent); }
+.card .name { font-size: 0.9rem; margin-top: 8px; line-height: 1.3; }
+.card .archetype { font-size: 0.8rem; color: #a89878; margin-top: 2px; font-style: italic; }
+.card .path-tag { display: inline-block; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.1em; padding: 2px 8px; margin-top: 4px; border-radius: 2px; }
+.path-fear { background: #e8e0d0; color: #1a1a18; }
+.path-duty { background: #8b2020; color: #f0d4d4; }
+.path-hunger { background: #8b7a20; color: #f0e8c0; }
+.path-potential { background: #3a3a3a; color: #999; }
+.footer { text-align: center; padding: 2rem; color: var(--dim); font-size: 0.85rem; border-top: 1px solid #1a1a18; margin-top: 3rem; }
+@media (max-width: 480px) { .header { flex-direction: column; gap: 0.5rem; padding: 0.6rem 1rem; } .header-nav { gap: 1rem; } .header-nav a { font-size: 0.6rem; } }
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<header class="header">
+    <div class="toho-logo"><a href="index.html">東宝株式会社</a></div>
+    <nav class="header-nav">
+        <a href="index.html">Игра</a>
+        <a href="rules.html">Правила</a>
+        <a href="roles.html">Персонажи</a>
+        <a href="gods.html">Небеса</a>
+        <a href="gods-roles.html" class="active">Боги</a>
+        <a href="venue.html">Орг. информация</a>
+        <a href="news.html">Новости</a>
+    </nav>
+</header>
+<div class="content">
+    <h1>Роли богов</h1>
+    <p class="subtitle">18 божеств японского пантеона &middot; <a href="gods.html" style="color:var(--accent);">&larr; Как устроена онлайн-игра</a></p>
+    <!-- text removed, only cards below -->
+
+    <div class="tag-filters">
+        <div class="tag-group">
+            <span class="tag-group-label">Путь</span>
+            <button class="tag-chip" data-tag-type="path" data-tag="Страх">Страх</button>
+            <button class="tag-chip" data-tag-type="path" data-tag="Долг">Долг</button>
+            <button class="tag-chip" data-tag-type="path" data-tag="Голод">Голод</button>
+            <button class="tag-chip" data-tag-type="path" data-tag="?">Потенциал</button>
+        </div>
+        <div class="tag-group">
+            <span class="tag-group-label">Состояние</span>
+            <button class="tag-chip" data-tag-type="state" data-tag="правит">Правит</button>
+            <button class="tag-chip" data-tag-type="state" data-tag="столп">Столп</button>
+            <button class="tag-chip" data-tag-type="state" data-tag="угнетён">Угнетён</button>
+            <button class="tag-chip" data-tag-type="state" data-tag="потенциал">Потенциал</button>
+            <button class="tag-reset" onclick="resetFilters()">Сбросить</button>
+        </div>
+    </div>
+    <div class="grid">
+        <div class="card" data-path="Страх" data-state="правит">
+            <img src="portraits/gods/tsukuyomi.jpg" alt="Цукиёми" loading="lazy" />
+            <div class="name">Цукиёми</div>
+            <div class="archetype">Луна, приливы, утончённость, статус по рождению</div>
+            <span class="path-tag path-fear">Страх — правит</span>
+        </div>
+        <div class="card" data-path="Долг" data-state="столп">
+            <img src="portraits/gods/fujin.jpg" alt="Фудзин" loading="lazy" />
+            <div class="name">Фудзин</div>
+            <div class="archetype">Ветер, буря, непреклонность, верность, кара</div>
+            <span class="path-tag path-duty">Долг — столп</span>
+        </div>
+        <div class="card" data-path="Голод" data-state="столп">
+            <img src="portraits/gods/shichifukujin.jpg" alt="Ситифукудзин" loading="lazy" />
+            <div class="name">Ситифукудзин</div>
+            <div class="archetype">Улов, торговля, любовь, забота, мудрость</div>
+            <span class="path-tag path-hunger">Голод — столп</span>
+        </div>
+        <div class="card" data-path="Страх" data-state="угнетён">
+            <img src="portraits/gods/ninigi.jpg" alt="Ниниги-но Микото" loading="lazy" />
+            <div class="name">Ниниги-но Микото</div>
+            <div class="archetype">Первый Император, покровительство, достоинство</div>
+            <span class="path-tag path-fear">Страх — угнетён</span>
+        </div>
+        <div class="card" data-path="Страх" data-state="угнетён">
+            <img src="portraits/gods/okuninushi.jpg" alt="Окунинуси" loading="lazy" />
+            <div class="name">Окунинуси</div>
+            <div class="archetype">Мастер земли, строительство, медицина, брак</div>
+            <span class="path-tag path-fear">Страх — угнетён</span>
+        </div>
+        <div class="card" data-path="Долг" data-state="угнетён">
+            <img src="portraits/gods/sarutahiko.jpg" alt="Сарутахико" loading="lazy" />
+            <div class="name">Сарутахико</div>
+            <div class="archetype">Путь, мастерство, наставничество, битва</div>
+            <span class="path-tag path-duty">Долг — угнетён</span>
+        </div>
+        <div class="card" data-path="Долг" data-state="угнетён">
+            <img src="portraits/gods/konohana.jpg" alt="Коноханасакуя-химэ" loading="lazy" />
+            <div class="name">Коноханасакуя-химэ</div>
+            <div class="archetype">Мимолётность жизни, верность красоте, сакура</div>
+            <span class="path-tag path-duty">Долг — угнетена</span>
+        </div>
+        <div class="card" data-path="Голод" data-state="угнетён">
+            <img src="portraits/gods/kannon.jpg" alt="Сэндзю Каннон" loading="lazy" />
+            <div class="name">Сэндзю Каннон</div>
+            <div class="archetype">Слепое сострадание, тысяча рук</div>
+            <span class="path-tag path-hunger">Голод — угнетена</span>
+        </div>
+        <div class="card" data-path="Голод" data-state="угнетён">
+            <img src="portraits/gods/toyouke.jpg" alt="Тоёукэ-Омиками" loading="lazy" />
+            <div class="name">Тоёукэ-Омиками</div>
+            <div class="archetype">Забота через дары, достойная жизнь</div>
+            <span class="path-tag path-hunger">Голод — угнетена</span>
+        </div>
+        <div class="card" data-path="?" data-state="потенциал">
+            <img src="portraits/gods/amaterasu.jpg" alt="Та что была Аматерасу" loading="lazy" />
+            <div class="name">Та что была Аматерасу</div>
+            <span class="path-tag path-potential">потенциал</span>
+        </div>
+        <div class="card" data-path="?" data-state="потенциал">
+            <img src="portraits/gods/susanoo.jpg" alt="Тот что был Сусано" loading="lazy" />
+            <div class="name">Тот что был Сусано</div>
+            <span class="path-tag path-potential">потенциал</span>
+        </div>
+        <div class="card" data-path="?" data-state="потенциал">
+            <img src="portraits/gods/izanami.jpg" alt="Та что была Идзанами" loading="lazy" />
+            <div class="name">Та что была Идзанами</div>
+            <span class="path-tag path-potential">потенциал</span>
+        </div>
+        <div class="card" data-path="?" data-state="потенциал">
+            <img src="portraits/gods/inari.jpg" alt="Та что была Инари" loading="lazy" />
+            <div class="name">Та что была Инари</div>
+            <span class="path-tag path-potential">потенциал</span>
+        </div>
+        <div class="card" data-path="?" data-state="потенциал">
+            <img src="portraits/gods/ryujin.jpg" alt="Тот что был Рюдзин" loading="lazy" />
+            <div class="name">Тот что был Рюдзин</div>
+            <span class="path-tag path-potential">потенциал</span>
+        </div>
+        <div class="card" data-path="?" data-state="потенциал">
+            <img src="portraits/gods/oyamatsumi.jpg" alt="Тот что был О-Ямацуми" loading="lazy" />
+            <div class="name">Тот что был О-Ямацуми</div>
+            <span class="path-tag path-potential">потенциал</span>
+        </div>
+        <div class="card" data-path="?" data-state="потенциал">
+            <img src="portraits/gods/hachiman.jpg" alt="Тот что был Хатиман" loading="lazy" />
+            <div class="name">Тот что был Хатиман</div>
+            <span class="path-tag path-potential">потенциал</span>
+        </div>
+        <div class="card" data-path="?" data-state="потенциал">
+            <img src="portraits/gods/uzume.jpg" alt="Та что была Амэ-но Удзумэ" loading="lazy" />
+            <div class="name">Та что была Удзумэ</div>
+            <span class="path-tag path-potential">потенциал</span>
+        </div>
+        <div class="card" data-path="?" data-state="потенциал">
+            <img src="portraits/gods/orochi.jpg" alt="Тот кто был Ямато-но Орочи" loading="lazy" />
+            <div class="name">Тот кто был Орочи</div>
+            <span class="path-tag path-potential">потенциал</span>
+        </div>
+    </div>
+</div>
+<div class="footer">LARP &laquo;Невидимый монах&raquo; &middot; 1 &mdash; 3 мая 2026, Сербия</div>
+<script>
+var activeFilters = { path: '', state: '' };
+function applyFilters() {
+    document.querySelectorAll('.card').forEach(function(card) {
+        var visible = true;
+        if (activeFilters.path && card.getAttribute('data-path') !== activeFilters.path) visible = false;
+        if (activeFilters.state && card.getAttribute('data-state') !== activeFilters.state) visible = false;
+        card.style.display = visible ? '' : 'none';
+    });
+    var params = new URLSearchParams();
+    if (activeFilters.path) params.set('path', activeFilters.path);
+    if (activeFilters.state) params.set('state', activeFilters.state);
+    var q = params.toString();
+    window.history.replaceState(null, '', window.location.pathname + (q ? '?' + q : ''));
+}
+function resetFilters() {
+    activeFilters.path = ''; activeFilters.state = '';
+    document.querySelectorAll('.tag-chip').forEach(function(c) { c.classList.remove('active'); });
+    applyFilters();
+}
+document.addEventListener('DOMContentLoaded', function() {
+    var params = new URLSearchParams(window.location.search);
+    if (params.has('path')) activeFilters.path = params.get('path');
+    if (params.has('state')) activeFilters.state = params.get('state');
+    document.querySelectorAll('.tag-chip').forEach(function(chip) {
+        var type = chip.getAttribute('data-tag-type');
+        var tag = chip.getAttribute('data-tag');
+        if (activeFilters[type] === tag) chip.classList.add('active');
+        chip.addEventListener('click', function() {
+            document.querySelectorAll('.tag-chip[data-tag-type="' + type + '"]').forEach(function(c) {
+                if (c !== chip) c.classList.remove('active');
+            });
+            if (chip.classList.contains('active')) { chip.classList.remove('active'); activeFilters[type] = ''; }
+            else { chip.classList.add('active'); activeFilters[type] = tag; }
+            applyFilters();
+        });
+    });
+    applyFilters();
+});
+</script>
+</body>
+</html>
