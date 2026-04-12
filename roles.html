@@ -105,6 +105,11 @@ h1 { font-size: 2.2rem; font-weight: 400; text-align: center; margin-bottom: 0.5
             <button class="tag-chip" data-tag-type="src" data-tag="Расёмон">Расёмон</button>
             <button class="tag-chip" data-tag-type="src" data-tag="Кимоно и Ваза">Кимоно и Ваза</button>
             <button class="tag-chip" data-tag-type="src" data-tag="Собственное">Собственное</button>
+        </div>
+        <div class="tag-group">
+            <span class="tag-group-label">Статус</span>
+            <button class="tag-chip" data-tag-type="taken" data-tag="free">Свободные</button>
+            <button class="tag-chip" data-tag-type="taken" data-tag="taken">Занятые</button>
             <button class="tag-reset" onclick="resetTagFilters()">Сбросить</button>
         </div>
     </div>
@@ -151,7 +156,6 @@ h1 { font-size: 2.2rem; font-weight: 400; text-align: center; margin-bottom: 0.5
                 <div class="name">Ситиродзи Ито</div>
                 <div class="archetype">Самурай-стратег</div>
                 <div class="badge player">Артем Харламов</div>
-                <div class="status-reserved">забронировано</div>
             </a>
         </div>
         <div class="card" data-gender="m">
@@ -189,7 +193,6 @@ h1 { font-size: 2.2rem; font-weight: 400; text-align: center; margin-bottom: 0.5
                 <div class="name">Нуи, жена Ёхэя</div>
                 <div class="archetype">Поднявшаяся при дворе крестьянка</div>
                 <div class="badge player">Птица</div>
-                <div class="status-reserved">забронировано</div>
             </a>
         </div>
         <div class="card" data-gender="m">
@@ -438,11 +441,14 @@ function applyTagsToCards() {
         if (tags.cls)  card.setAttribute('data-cls',  tags.cls);
         if (tags.path) card.setAttribute('data-path', tags.path);
         if (tags.src)  card.setAttribute('data-src',  tags.src);
+        // Mark taken/free based on presence of .badge.player
+        var hasBadge = card.querySelector('.badge.player');
+        card.setAttribute('data-taken', hasBadge ? 'taken' : 'free');
     });
 }
 
 // Активные фильтры
-var activeFilters = { gender: 'all', loc: '', cls: '', path: '', src: '' };
+var activeFilters = { gender: 'all', loc: '', cls: '', path: '', src: '', taken: '' };
 
 function applyAllFilters() {
     document.querySelectorAll('.card').forEach(function(card) {
@@ -452,6 +458,7 @@ function applyAllFilters() {
         if (visible && activeFilters.cls  && card.getAttribute('data-cls')  !== activeFilters.cls)  visible = false;
         if (visible && activeFilters.path && card.getAttribute('data-path') !== activeFilters.path) visible = false;
         if (visible && activeFilters.src  && card.getAttribute('data-src')  !== activeFilters.src)  visible = false;
+        if (visible && activeFilters.taken && card.getAttribute('data-taken') !== activeFilters.taken) visible = false;
         card.style.display = visible ? '' : 'none';
     });
     syncUrl();
@@ -464,6 +471,7 @@ function syncUrl() {
     if (activeFilters.cls)  params.set('cls',  activeFilters.cls);
     if (activeFilters.path) params.set('path', activeFilters.path);
     if (activeFilters.src)  params.set('src',  activeFilters.src);
+    if (activeFilters.taken) params.set('taken', activeFilters.taken);
     var q = params.toString();
     var newUrl = window.location.pathname + (q ? '?' + q : '');
     window.history.replaceState(null, '', newUrl);
@@ -476,6 +484,7 @@ function loadFiltersFromUrl() {
     if (params.has('cls'))    activeFilters.cls    = params.get('cls');
     if (params.has('path'))   activeFilters.path   = params.get('path');
     if (params.has('src'))    activeFilters.src    = params.get('src');
+    if (params.has('taken'))  activeFilters.taken  = params.get('taken');
 
     // Применяем состояние к кнопкам gender
     document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
