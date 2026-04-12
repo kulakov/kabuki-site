@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="logo.png">
+<title>Онлайн-игра — Невидимый монах</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root { --bg: #080806; --text: #d4c5a9; --accent: #c49a6c; --dim: #666; --toho-red: #8b1a1a; }
+body { background: var(--bg); color: var(--text); font-family: "Cormorant Garamond", Georgia, serif; min-height: 100vh; }
+.grain { position: fixed; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; z-index: 50; opacity: 0.03; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); background-size: 256px 256px; }
+.header { width: 100%; background: linear-gradient(to bottom, var(--toho-red) 0%, #5a1010 100%); border-bottom: 2px solid #3a0808; padding: 0.8rem 2rem; display: flex; align-items: center; justify-content: space-between; }
+.toho-logo { font-family: "Noto Serif JP", serif; font-size: 0.9rem; }
+.toho-logo a { color: inherit; text-decoration: none; }
+.header-nav { display: flex; gap: 1.5rem; }
+.header-nav a { font-size: 0.7rem; color: #f0d4a8; text-decoration: none; text-transform: uppercase; letter-spacing: 0.15em; opacity: 0.7; transition: opacity 0.2s; }
+.header-nav a:hover { opacity: 1; }
+.header-nav a.active { opacity: 1; border-bottom: 1px solid #f0d4a8; padding-bottom: 2px; }
+.content { max-width: 800px; margin: 0 auto; padding: 2rem 2rem 4rem; }
+h1 { font-size: 2.2rem; font-weight: 400; text-align: center; margin-bottom: 0.3rem; color: var(--accent); }
+.subtitle { text-align: center; color: var(--dim); font-size: 1.1rem; margin-bottom: 2rem; font-style: italic; }
+h2 { font-size: 1.1rem; font-weight: 600; color: var(--accent); margin: 2rem 0 0.8rem; border-bottom: 1px solid #1a1a18; padding-bottom: 0.3rem; }
+h3 { font-size: 1rem; font-weight: 600; color: var(--text); margin: 1.2rem 0 0.5rem; }
+p, li { font-size: 1rem; line-height: 1.7; margin-bottom: 0.8rem; }
+ul, ol { padding-left: 1.5rem; margin-bottom: 1rem; }
+strong { color: var(--text); }
+table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+th { text-align: left; color: var(--dim); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; padding: 0.5rem; border-bottom: 1px solid #2a2a26; }
+td { padding: 0.5rem; border-bottom: 1px solid #1a1a18; font-size: 0.95rem; }
+hr { border: none; border-top: 1px solid #1a1a18; margin: 2rem 0; }
+.cta { display: inline-block; margin-top: 1rem; padding: 10px 24px; background: var(--accent); color: var(--bg); text-decoration: none; border-radius: 4px; font-family: inherit; font-size: 0.9rem; transition: background 0.2s; }
+.cta:hover { background: #d4aa7c; }
+.footer { text-align: center; padding: 2rem; color: var(--dim); font-size: 0.85rem; border-top: 1px solid #1a1a18; margin-top: 3rem; }
+@media (max-width: 480px) { .header { flex-direction: column; gap: 0.5rem; } .header-nav { gap: 1rem; } .header-nav a { font-size: 0.6rem; } .content { padding: 1rem; } }
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<header class="header">
+    <div class="toho-logo"><a href="index.html">東宝株式会社</a></div>
+    <nav class="header-nav">
+        <a href="index.html">Игра</a>
+        <a href="rules.html">Правила</a>
+        <a href="roles.html">Персонажи</a>
+        <a href="venue.html">База</a>
+        <a href="news.html">Новости</a>
+    </nav>
+</header>
+<div class="content">
+
+<h1>Онлайн-игра</h1>
+<p class="subtitle">Боги и чиновники небес</p>
+
+<h2>Общая конструкция</h2>
+<p>Каждый онлайн-игрок имеет <strong>две роли</strong>: <strong>бог</strong> и <strong>чиновник этого бога</strong>.</p>
+<p>Бог — это трактовка пути, бинарная позиция, которая реализуется через действия героев на полигоне. Например: страх это противостояние статуса и позора, голод противостояние заботы и контроля, долг это противостояние верности и фанатизма. Чтобы богу что-то сделать на небесах, нужно чтобы ведомый им герой что-то сделал на земле. Бог может влиять на героя, но существенно важные для бога события связаны с тем, что его герои идут по своему пути.</p>
+<p><strong>Двойная рамка:</strong> мы рассказываем про два связанных путешествия героя — <strong>путешествие бога</strong> и <strong>путешествие героя-человека</strong>.</p>
+
+<p><a class="cta" href="gods.html">Смотреть роли богов &rarr;</a></p>
+
+<hr>
+
+<h2>Три престола</h2>
+<p>Есть <strong>три правящих престола</strong> — они воюют между собой за первенство:</p>
+<ul>
+<li><strong>Престол Голода</strong></li>
+<li><strong>Престол Долга</strong></li>
+<li><strong>Престол Страха</strong></li>
+</ul>
+<p>На каждом престоле в данный момент сидит какой-то бог. Сейчас главный — <strong>Престол Страха</strong> (на нём <strong>Цукиёми</strong>).</p>
+
+<h3>Что значит "бог сидит на престоле"</h3>
+<p>Это значит, что есть <strong>трактовка пути</strong> — конкретным богом. На умном: дискурс, понимаемый как бинарная позиция.</p>
+<p><strong>Пример со страхом:</strong> сейчас страх понимается как противопоставление <strong>статуса и позора</strong>. Люди боятся потерять положение в обществе. Сначала стремятся приобрести положение, потом — больше всего боятся его потерять.</p>
+
+<h3>Бинарные пары путей</h3>
+<table>
+<tr><th>Путь</th><th>Дуальность</th></tr>
+<tr><td><strong>Страх</strong></td><td>статус / позор</td></tr>
+<tr><td><strong>Голод</strong></td><td>забота / контроль</td></tr>
+<tr><td><strong>Долг</strong></td><td>верность / фанатизм</td></tr>
+</table>
+<p>Эти трактовки — господствующие сейчас. Конструкты, которые заставляют людей жертвовать.</p>
+
+<h3>Конфликты внутри престола</h3>
+<p>Кроме правящего бога на каждом пути есть ещё по 2 бога, которые <strong>не правят, но хотели бы</strong>: "мы бы вместо тебя на престол сели, у нас другая трактовка страха".</p>
+
+<hr>
+
+<h2>Четвёртый престол</h2>
+<p>Есть ещё один тип божественного конфликта — борьба за <strong>новый тип престола</strong>. Такого давно не было. Но есть боги, которые говорят: "почему мы уперлись в страх/долг/голод, ведь путь это (например) эстетика или эффективность".</p>
+<p>Верхнеуровневый сюжет игры — <strong>попытка сменить один из престолов</strong>. Которая увенчается или не увенчается успехом.</p>
+
+<hr>
+
+<h2>Путешествие бога</h2>
+<p>Бог может быть в одном из трёх состояний:</p>
+<p><strong>1. Я правлю.</strong> Бог сидит на своём престоле. Его путь реализован в мире. Люди понимают свою жизнь через то, как он её трактует.</p>
+<p><strong>2. Я угнетён.</strong> Бог понимает, в чём его путь, хотел бы его реализовать, но на троне сидит другой.</p>
+<p><strong>3. У меня есть потенциал, но я не знаю своего пути.</strong> Бога "свалили" с трона, или он сильно потратил силы. Теперь он ходит среди людей и ищет в их поведении себя.</p>
+
+<h3>Переходы между состояниями</h3>
+<ul>
+<li><strong>Потенциал &rarr; Угнетённое</strong> ("я нашёл свой путь, но трон занят")</li>
+<li><strong>Угнетённое &rarr; Правящее</strong> ("я свалил текущего правителя и сел на трон")</li>
+<li><strong>Правящее &rarr; Потенциал</strong> ("я реализовался, мне нужен новый цикл")</li>
+</ul>
+<p>Чтобы совершить переход, нужно чтобы история твоего чемпиона <strong>свершилась на полигоне и закончилась на сцене Кабуки</strong>.</p>
+
+<hr>
+
+<h2>Связь с Кабуки</h2>
+<p>Кабуки — это сцена, на которой весь полигон собирается и разыгрывает конфликт трёх версий одного события. Факты известны заранее и не меняются, но значение этих фактов оспаривается тремя сторонами. Зрители голосуют за ту версию, которую "запомнят" — победившая становится правдой этого мира.</p>
+<p>Если на сцене выступал чемпион бога и победил — <strong>бог может из динамиков объявить</strong>: "Теперь мир вот такой". Это превращает действия чемпиона в <strong>правило мира</strong>.</p>
+
+<hr>
+
+<h2>Зачем это нужно</h2>
+<p>Мы хотим, чтобы <strong>боги помогали игрокам прожить драматические истории</strong> и помогали смотреть на то, что с ними происходит, из какого-то дискурса. Через богов мы делаем это значимым для большого мира.</p>
+<p>Поскольку мы играем в маленькую деревню, у этого возникает <strong>эпический масштаб</strong>: "вроде бы просто крестьянин разбирается с юреем жены, которая зачем-то залезла в горящий амбар. Потом выясняется, что это реализация космического принципа, и теперь вся страна переворачивается".</p>
+
+<hr>
+
+<h2>Связь с полигоном</h2>
+<p>Мы связываемся с игроком на полигоне по аудио-каналу (у каждого на полигоне есть телефон и наушник в ухе). Игрок на полигоне <strong>никогда ничего не делает с экраном</strong>.</p>
+
+<h3>Советы vs право приказа</h3>
+<p>В огромном большинстве случаев бог может только <strong>что-то советовать</strong>. У богов <strong>нет права приказа</strong> кроме случая, когда в руки бога попал осколок души этого человека.</p>
+<ul>
+<li>Если у бога осколок долга — можешь разговаривать про клятвы</li>
+<li>Если осколок голода — про заботу</li>
+<li>Если осколок страха — про статус и стыд</li>
+</ul>
+
+<h3>Пустые сосуды (монахи ямабуси)</h3>
+<p>Какое-то количество игроков полигона будут "пустым сосудом" — монахи, посвятившие тело богам. Бог может <strong>войти в этого человека</strong> и говорить его голосом, смотреть его глазами.</p>
+
+<hr>
+
+<h2>Политическая реальность</h2>
+<p>Наша политическая реальность = <strong>реальность фильма "Ран" Куросавы</strong>. Был правитель, свергнут сыновьями. Страна в гражданской войне. Три наследника: долга, страха, голода.</p>
+
+<h3>Уровни реальности</h3>
+<ol>
+<li><strong>Реальность богов</strong> (онлайн)</li>
+<li><strong>Реальность маленькой деревни</strong> (полигон)</li>
+<li><strong>Реальность всей остальной страны</strong> (фон, новости)</li>
+</ol>
+<p>Когда вы (боги) что-то решаете — это отражается на стране. Драматические события деревни превращаются в <strong>новости из большого мира</strong>.</p>
+
+<hr>
+
+<h2>Временные рамки</h2>
+<ul>
+<li><strong>Начало:</strong> пятница, 1 мая</li>
+<li>Полные сутки + две ночи + половина дня утром</li>
+<li><strong>Конец:</strong> воскресенье, около 13:00</li>
+</ul>
+
+<h3>Ключевые точки</h3>
+<ul>
+<li>Первая ночь: 00:00 -- 01:00 (Кабуки)</li>
+<li>Вторая ночь: 22:00 -- 23:00 (Кабуки)</li>
+<li>Финал: 13:00 воскресенья</li>
+</ul>
+<p><strong>В идеале:</strong> постоянный аудиоконтакт. Реалистично: несколько часов сна. Обязательные точки (Кабуки, синхроны), между ними — по желанию.</p>
+
+<hr>
+
+<h2>Визуал и техника</h2>
+<p><strong>Нет жёстких требований.</strong> Тёмная одежда без ярких элементов. Будут видеозадники. Камеры на Кабуки.</p>
+
+<hr>
+
+<h2>Важные принципы</h2>
+<p><strong>Игра диегетическая.</strong> Почти вся механика остаётся в рамках игрового мира и понимаема персонажами. Осколки души — это штуки, которые известны персонажам.</p>
+<p>Онлайн-игроков с игроками полигона <strong>познакомят заранее</strong>.</p>
+
+<p style="text-align:center; margin-top: 2rem;"><a class="cta" href="gods.html">Смотреть роли богов &rarr;</a></p>
+
+</div>
+<div class="footer">LARP &laquo;Невидимый монах&raquo; &middot; 1 &mdash; 3 мая 2026, Сербия</div>
+</body>
+</html>
