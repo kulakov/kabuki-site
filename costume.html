@@ -33,6 +33,11 @@ hr { border: none; border-top: 1px solid #1a1a18; margin: 2rem 0; }
 .fig figcaption { text-align: center; font-style: italic; color: var(--dim); font-size: 0.9rem; margin-top: 0.5rem; }
 .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 1.5rem 0; }
 .gallery .fig { margin: 0; }
+.photo-group { display: grid; gap: 1rem; margin: 1.5rem 0 2rem; }
+.photo-group.pair { grid-template-columns: repeat(2, 1fr); }
+.photo-group.triple { grid-template-columns: repeat(3, 1fr); }
+.photo-group img { width: 100%; height: 100%; object-fit: cover; display: block; border: 1px solid #222; aspect-ratio: 16 / 10; }
+@media (max-width: 640px) { .photo-group.pair, .photo-group.triple { grid-template-columns: 1fr; } }
 .footer { text-align: center; padding: 2rem; color: var(--dim); font-size: 0.85rem; border-top: 1px solid #1a1a18; margin-top: 3rem; }
 blockquote { border-left: 2px solid var(--accent); padding: 0.3rem 0 0.3rem 1rem; margin: 1rem 0; color: var(--dim); font-style: italic; }
 @media (max-width: 480px) { .header { flex-direction: column; gap: 0.5rem; } .header-nav { gap: 1rem; } .header-nav a { font-size: 0.6rem; } }
@@ -57,6 +62,11 @@ blockquote { border-left: 2px solid var(--accent); padding: 0.3rem 0 0.3rem 1rem
 <h1>Философия костюма</h1>
 <p class="subtitle">Имитация и история &mdash; в духе фильмов Акиры Куросавы</p>
 
+<div class="photo-group pair">
+    <img src="portraits/costumes-real/k01.jpg" alt="Кадр из фильма Куросавы" />
+    <img src="portraits/costumes-real/k02.jpg" alt="Ёдзимбо — кадр из фильма Куросавы" />
+</div>
+
 <p>Мы не требуем полной исторической аутентичности. Наша цель &mdash; создать живой, кинематографичный образ в духе фильмов Акиры Куросавы, где функциональность и характер важнее музейной точности.</p>
 
 <hr>
@@ -67,6 +77,11 @@ blockquote { border-left: 2px solid var(--accent); padding: 0.3rem 0 0.3rem 1rem
     <li><strong>Западничество:</strong> допускается (элементы формы, кепи, ботинки), но в меру. Помните, что вы в глуши, а не в портовом Иокогаме.</li>
     <li><strong>Одежда как паспорт:</strong> по вашему виду должно быть понятно, кто вы &mdash; крестьянин, монах или чиновник.</li>
 </ul>
+
+<div class="photo-group pair">
+    <img src="portraits/costumes-real/k03.jpg" alt="Кадр из фильма Куросавы — время и стиль" />
+    <img src="portraits/costumes-real/k04.jpg" alt="Кадр из фильма Куросавы — время и стиль" />
+</div>
 
 <hr>
 
@@ -86,6 +101,11 @@ blockquote { border-left: 2px solid var(--accent); padding: 0.3rem 0 0.3rem 1rem
     <li><strong>База:</strong> приветствуются природные, приглушённые тона &mdash; индиго, серый, коричневый, оливковый.</li>
 </ul>
 
+<div class="photo-group pair">
+    <img src="portraits/costumes-real/k05.jpg" alt="Кадр из фильма Куросавы — цвет и сословия" />
+    <img src="portraits/costumes-real/k06.jpg" alt="Кадр из фильма Куросавы — цвет и сословия" />
+</div>
+
 <hr>
 
 <h2>4. Материалы и фактура</h2>
@@ -93,6 +113,12 @@ blockquote { border-left: 2px solid var(--accent); padding: 0.3rem 0 0.3rem 1rem
     <li><strong>Ткани:</strong> бязь, поплин, габардин, мешковина, войлок &mdash; или вообще не париться и использовать любой подвернувшийся материал.</li>
     <li><strong>Вид:</strong> костюм должен выглядеть &laquo;обжитым&raquo; (пятна чая, извалять в пыли, замятый в рюкзаке костюм). Свежие краски и вид &laquo;только из магазина&raquo; подходят для высшей знати. Заплатки, следы дорожной пыли, пота или чернил сделают ваш образ глубже и интереснее.</li>
 </ul>
+
+<div class="photo-group triple">
+    <img src="portraits/costumes-real/k07.jpg" alt="Кадр из фильма Куросавы — материалы и фактура" />
+    <img src="portraits/costumes-real/k08.jpg" alt="Кадр из фильма Куросавы — материалы и фактура" />
+    <img src="portraits/costumes-real/k09.jpg" alt="Кадр из фильма Куросавы — материалы и фактура" />
+</div>
 
 <hr>
 
@@ -102,11 +128,6 @@ blockquote { border-left: 2px solid var(--accent); padding: 0.3rem 0 0.3rem 1rem
     <li><strong>Условие для кед:</strong> тёмные цвета. Очень желательно замотать их сверху тряпьём или эластичными бинтами для создания нужного силуэта.</li>
 </ul>
 
-<figure class="fig">
-    <img src="portraits/costumes/hat-kasa.jpg" alt="Соломенная шляпа каса" />
-    <figcaption>Соломенная шляпа каса &mdash; функциональный элемент костюма для любого сословия</figcaption>
-</figure>
-
 <hr>
 
 <h2>6. Игровые предметы и &laquo;Осколки&raquo; <span style="color:var(--toho-red)">(ВАЖНО)</span></h2>
@@ -114,6 +135,11 @@ blockquote { border-left: 2px solid var(--accent); padding: 0.3rem 0 0.3rem 1rem
     <li><strong>Осколки души:</strong> каждому игроку нужно иметь при себе минимум 3 мелких личных предмета. Это могут быть веера, нэцкэ, памятные безделушки, памятные монеты. И вам должно быть не жалко потерять эти предметы или отдать другому.</li>
     <li><strong>Мандаты:</strong> именно на эти предметы будут вешаться игровые мандаты. Эти вещи должны быть частью вашего облика, а не лежать на дне сумки.</li>
 </ul>
+
+<div class="photo-group pair">
+    <img src="portraits/costumes-real/k10.jpg" alt="Кадр из фильма Куросавы — игровые предметы" />
+    <img src="portraits/costumes-real/k11.jpg" alt="Кадр из фильма Куросавы — игровые предметы" />
+</div>
 
 <hr>
 
@@ -124,50 +150,6 @@ blockquote { border-left: 2px solid var(--accent); padding: 0.3rem 0 0.3rem 1rem
     <li><strong>Верхняя одежда:</strong> жилетка (дзимбаори) из грубого материала. Для военных &mdash; клановый знак на спине (можно нарисовать краской, не обязательно вышивать).</li>
     <li><strong>Защита:</strong> плащи из рогожи или их имитация из грубой шерсти.</li>
 </ol>
-
-<hr>
-
-<h2>Сословия: образы</h2>
-
-<div class="gallery">
-    <figure class="fig">
-        <img src="portraits/costumes/samurai.jpg" alt="Самурай" />
-        <figcaption><strong>Самурай</strong> &mdash; хаори с мон, два меча, хакама, пучок волос</figcaption>
-    </figure>
-    <figure class="fig">
-        <img src="portraits/costumes/ronin.jpg" alt="Ронин" />
-        <figcaption><strong>Ронин</strong> &mdash; тот же силуэт, но заплатки, драные хакама, стёртая рукоять меча</figcaption>
-    </figure>
-</div>
-
-<div class="gallery">
-    <figure class="fig">
-        <img src="portraits/costumes/peasant.jpg" alt="Крестьянин" />
-        <figcaption><strong>Крестьянин</strong> &mdash; короткое кимоно, каса, варадзи, рабочий инструмент</figcaption>
-    </figure>
-    <figure class="fig">
-        <img src="portraits/costumes/official.jpg" alt="Чиновник" />
-        <figcaption><strong>Чиновник</strong> &mdash; формальное кимоно, хакама, свиток или кисть</figcaption>
-    </figure>
-</div>
-
-<div class="gallery">
-    <figure class="fig">
-        <img src="portraits/costumes/monk.jpg" alt="Монах" />
-        <figcaption><strong>Монах</strong> &mdash; чётки, посох, соломенная шляпа, бритая голова</figcaption>
-    </figure>
-    <figure class="fig">
-        <img src="portraits/costumes/bandit.jpg" alt="Бандит" />
-        <figcaption><strong>Бандит</strong> &mdash; смесь рваного, повязка на лбу, оружие наготове</figcaption>
-    </figure>
-</div>
-
-<div class="gallery">
-    <figure class="fig">
-        <img src="portraits/costumes/ghost.jpg" alt="Юрей" />
-        <figcaption><strong>Юрей (дух)</strong> &mdash; белое кимоно, запах направо, ног не видно</figcaption>
-    </figure>
-</div>
 
 <hr>
 
