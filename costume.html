@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="logo.png">
+<title>Костюм — Невидимый монах</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root { --bg: #080806; --card-bg: #0e0e0c; --text: #d4c5a9; --accent: #c49a6c; --dim: #666; --toho-red: #8b1a1a; }
+body { background: var(--bg); color: var(--text); font-family: "Cormorant Garamond", Georgia, serif; min-height: 100vh; }
+.grain { position: fixed; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; z-index: 50; opacity: 0.03; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); background-size: 256px 256px; }
+.header { width: 100%; background: linear-gradient(to bottom, var(--toho-red) 0%, #5a1010 100%); border-bottom: 2px solid #3a0808; padding: 0.8rem 2rem; display: flex; align-items: center; justify-content: space-between; }
+.toho-logo { font-family: "Noto Serif JP", serif; font-size: 0.9rem; }
+.toho-logo a { color: inherit; text-decoration: none; }
+.header-nav { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+.header-nav a { font-size: 0.7rem; color: #f0d4a8; text-decoration: none; text-transform: uppercase; letter-spacing: 0.15em; opacity: 0.7; transition: opacity 0.2s; }
+.header-nav a:hover { opacity: 1; }
+.header-nav a.active { opacity: 1; border-bottom: 1px solid #f0d4a8; padding-bottom: 2px; }
+.content { max-width: 900px; margin: 0 auto; padding: 2rem 2rem 4rem; }
+h1 { font-size: 2.4rem; font-weight: 400; text-align: center; margin-bottom: 0.3rem; color: var(--accent); }
+.subtitle { text-align: center; color: var(--dim); font-size: 1.1rem; margin-bottom: 2rem; font-style: italic; }
+h2 { font-size: 1.3rem; font-weight: 600; color: var(--accent); margin: 2.5rem 0 0.8rem; border-bottom: 1px solid #1a1a18; padding-bottom: 0.3rem; }
+h3 { font-size: 1.05rem; font-weight: 600; color: var(--text); margin: 1.5rem 0 0.5rem; }
+p, li { font-size: 1rem; line-height: 1.7; margin-bottom: 0.8rem; }
+ul, ol { padding-left: 1.5rem; margin-bottom: 1rem; }
+strong { color: var(--text); }
+hr { border: none; border-top: 1px solid #1a1a18; margin: 2rem 0; }
+.fig { margin: 1.5rem 0; }
+.fig img { width: 100%; display: block; border: 1px solid #222; }
+.fig figcaption { text-align: center; font-style: italic; color: var(--dim); font-size: 0.9rem; margin-top: 0.5rem; }
+.gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 1.5rem 0; }
+.gallery .fig { margin: 0; }
+.footer { text-align: center; padding: 2rem; color: var(--dim); font-size: 0.85rem; border-top: 1px solid #1a1a18; margin-top: 3rem; }
+blockquote { border-left: 2px solid var(--accent); padding: 0.3rem 0 0.3rem 1rem; margin: 1rem 0; color: var(--dim); font-style: italic; }
+@media (max-width: 480px) { .header { flex-direction: column; gap: 0.5rem; } .header-nav { gap: 1rem; } .header-nav a { font-size: 0.6rem; } }
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<header class="header">
+    <div class="toho-logo"><a href="index.html">東宝株式会社</a></div>
+    <nav class="header-nav">
+        <a href="index.html">Игра</a>
+        <a href="rules.html">Правила</a>
+        <a href="roles.html">Персонажи</a>
+        <a href="gods.html">Небеса</a>
+        <a href="gods-roles.html">Боги</a>
+        <a href="venue.html">Орг. информация</a>
+        <a href="news.html">Новости</a>
+    </nav>
+</header>
+<div class="content">
+
+<h1>Философия костюма</h1>
+<p class="subtitle">Имитация и история &mdash; в духе фильмов Акиры Куросавы</p>
+
+<p>Мы не требуем полной исторической аутентичности. Наша цель &mdash; создать живой, кинематографичный образ в духе фильмов Акиры Куросавы, где функциональность и характер важнее музейной точности.</p>
+
+<hr>
+
+<h2>1. Время и стиль</h2>
+<p>Мы играем условное историческое время, которое скорее задано фильмом &laquo;Ран&raquo;, чем каким-то конкретным временем. Но ближе всего &mdash; эпоха Бакумацу, закат самурайства и предчувствие перемен. Наша деревня небольшая и консервативная, поэтому основа стиля &mdash; традиционный крестьянский и рабочий костюм.</p>
+<ul>
+    <li><strong>Западничество:</strong> допускается (элементы формы, кепи, ботинки), но в меру. Помните, что вы в глуши, а не в портовом Иокогаме.</li>
+    <li><strong>Одежда как паспорт:</strong> по вашему виду должно быть понятно, кто вы &mdash; крестьянин, монах или чиновник.</li>
+</ul>
+
+<hr>
+
+<h2>2. Девиз: имитация, а не реконструкция</h2>
+<p>Не усложняйте там, где можно упростить.</p>
+<ul>
+    <li><strong>Оби (пояс):</strong> можно на липучках или крючках.</li>
+    <li><strong>Хакама:</strong> можно на резинке (чтобы не развязывать по полчаса в уборной).</li>
+    <li><strong>Кимоно:</strong> можно не традиционный крой, а нечто осовремененное, особенно для крестьян, которых у нас большинство.</li>
+</ul>
+
+<hr>
+
+<h2>3. Цвет и сословия</h2>
+<p>Мы не вводим строгую &laquo;цветовую дифференциацию штанов&raquo;, но просим соблюдать сословное приличие.</p>
+<ul>
+    <li><strong>База:</strong> приветствуются природные, приглушённые тона &mdash; индиго, серый, коричневый, оливковый.</li>
+</ul>
+
+<hr>
+
+<h2>4. Материалы и фактура</h2>
+<ul>
+    <li><strong>Ткани:</strong> бязь, поплин, габардин, мешковина, войлок &mdash; или вообще не париться и использовать любой подвернувшийся материал.</li>
+    <li><strong>Вид:</strong> костюм должен выглядеть &laquo;обжитым&raquo; (пятна чая, извалять в пыли, замятый в рюкзаке костюм). Свежие краски и вид &laquo;только из магазина&raquo; подходят для высшей знати. Заплатки, следы дорожной пыли, пота или чернил сделают ваш образ глубже и интереснее.</li>
+</ul>
+
+<hr>
+
+<h2>5. Обувь</h2>
+<p>Допустимо всё: от традиционных гэта и варадзи (с носками таби) до обычных кед.</p>
+<ul>
+    <li><strong>Условие для кед:</strong> тёмные цвета. Очень желательно замотать их сверху тряпьём или эластичными бинтами для создания нужного силуэта.</li>
+</ul>
+
+<figure class="fig">
+    <img src="portraits/costumes/hat-kasa.jpg" alt="Соломенная шляпа каса" />
+    <figcaption>Соломенная шляпа каса &mdash; функциональный элемент костюма для любого сословия</figcaption>
+</figure>
+
+<hr>
+
+<h2>6. Игровые предметы и &laquo;Осколки&raquo; <span style="color:var(--toho-red)">(ВАЖНО)</span></h2>
+<ul>
+    <li><strong>Осколки души:</strong> каждому игроку нужно иметь при себе минимум 3 мелких личных предмета. Это могут быть веера, нэцкэ, памятные безделушки, памятные монеты. И вам должно быть не жалко потерять эти предметы или отдать другому.</li>
+    <li><strong>Мандаты:</strong> именно на эти предметы будут вешаться игровые мандаты. Эти вещи должны быть частью вашего облика, а не лежать на дне сумки.</li>
+</ul>
+
+<hr>
+
+<h2>Базовый гардероб (шпаргалка)</h2>
+<ol>
+    <li><strong>Верх:</strong> кимоно / косодэ / юката / хаори. Запах всегда налево (направо &mdash; только у покойников!). Рукав для всех делаем упрощённый, без жёстких гендерных различий.</li>
+    <li><strong>Низ:</strong> штаны момохики или упрощённые хакама.</li>
+    <li><strong>Верхняя одежда:</strong> жилетка (дзимбаори) из грубого материала. Для военных &mdash; клановый знак на спине (можно нарисовать краской, не обязательно вышивать).</li>
+    <li><strong>Защита:</strong> плащи из рогожи или их имитация из грубой шерсти.</li>
+</ol>
+
+<hr>
+
+<h2>Сословия: образы</h2>
+
+<div class="gallery">
+    <figure class="fig">
+        <img src="portraits/costumes/samurai.jpg" alt="Самурай" />
+        <figcaption><strong>Самурай</strong> &mdash; хаори с мон, два меча, хакама, пучок волос</figcaption>
+    </figure>
+    <figure class="fig">
+        <img src="portraits/costumes/ronin.jpg" alt="Ронин" />
+        <figcaption><strong>Ронин</strong> &mdash; тот же силуэт, но заплатки, драные хакама, стёртая рукоять меча</figcaption>
+    </figure>
+</div>
+
+<div class="gallery">
+    <figure class="fig">
+        <img src="portraits/costumes/peasant.jpg" alt="Крестьянин" />
+        <figcaption><strong>Крестьянин</strong> &mdash; короткое кимоно, каса, варадзи, рабочий инструмент</figcaption>
+    </figure>
+    <figure class="fig">
+        <img src="portraits/costumes/official.jpg" alt="Чиновник" />
+        <figcaption><strong>Чиновник</strong> &mdash; формальное кимоно, хакама, свиток или кисть</figcaption>
+    </figure>
+</div>
+
+<div class="gallery">
+    <figure class="fig">
+        <img src="portraits/costumes/monk.jpg" alt="Монах" />
+        <figcaption><strong>Монах</strong> &mdash; чётки, посох, соломенная шляпа, бритая голова</figcaption>
+    </figure>
+    <figure class="fig">
+        <img src="portraits/costumes/bandit.jpg" alt="Бандит" />
+        <figcaption><strong>Бандит</strong> &mdash; смесь рваного, повязка на лбу, оружие наготове</figcaption>
+    </figure>
+</div>
+
+<div class="gallery">
+    <figure class="fig">
+        <img src="portraits/costumes/ghost.jpg" alt="Юрей" />
+        <figcaption><strong>Юрей (дух)</strong> &mdash; белое кимоно, запах направо, ног не видно</figcaption>
+    </figure>
+</div>
+
+<hr>
+
+<h2>Маркеры и атрибуты</h2>
+<ul>
+    <li><strong>2 меча за поясом</strong> &mdash; самурай или ронин</li>
+    <li><strong>Хакама</strong> &mdash; самурай или ронин</li>
+    <li><strong>1 меч</strong> &mdash; скорее чей-то охранник</li>
+    <li><strong>Ног не видно</strong> (прикрыта полами одежды), <strong>кимоно на запах направо</strong> &mdash; призрак / дух / нежить</li>
+    <li><strong>Чётки, шляпа, посох</strong> &mdash; монах</li>
+</ul>
+
+<blockquote>
+Если вы достаточно упороты чтобы шиться, вот ссылка на видео:<br>
+<a href="http://www.ru-jp.org/hovanchuk-jp-odezhda-01.htm" style="color:var(--accent);">www.ru-jp.org/hovanchuk-jp-odezhda-01.htm</a>
+</blockquote>
+
+</div>
+<div class="footer">LARP &laquo;Невидимый монах&raquo; &middot; 1 &mdash; 3 мая 2026, Сербия</div>
+</body>
+</html>
