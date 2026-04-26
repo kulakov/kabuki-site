@@ -56,6 +56,10 @@ h1 { font-size: 2.2rem; font-weight: 400; text-align: center; margin-bottom: 0.5
 .path-duty { background: #8b2020; color: #f0d4d4; }
 .path-hunger { background: #8b7a20; color: #f0e8c0; }
 .path-potential { background: #3a3a3a; color: #999; }
+.card .badge-player { display:inline-block; font-size:0.65rem; color:#c49a6c; margin-top:4px; padding:2px 8px; border:1px solid rgba(196,154,108,0.4); border-radius:10px; }
+.modal .badge-player { display:inline-block; font-size:0.8rem; color:#c49a6c; margin:6px 0 0; padding:3px 10px; border:1px solid rgba(196,154,108,0.5); border-radius:12px; }
+.modal .jp { font-family:"Noto Serif JP",serif; font-size:0.85rem; color:#888; text-align:center; margin-bottom:0.4rem; }
+.modal .domains { color:#c49a6c; font-style:italic; text-align:center; font-size:0.9rem; margin-bottom:1rem; line-height:1.5; }
 .footer { text-align: center; padding: 2rem; color: var(--dim); font-size: 0.85rem; border-top: 1px solid #1a1a18; margin-top: 3rem; }
 @media (max-width: 480px) { .header { flex-direction: column; gap: 0.5rem; padding: 0.6rem 1rem; } .header-nav { gap: 1rem; } .header-nav a { font-size: 0.6rem; } }
 </style>
@@ -105,12 +109,14 @@ h1 { font-size: 2.2rem; font-weight: 400; text-align: center; margin-bottom: 0.5
             <div class="name">Цукиёми</div>
             <div class="archetype">Луна, приливы, утончённость, статус по рождению</div>
             <span class="path-tag path-fear">Страх — правит</span>
+            <div class="badge-player">Тара</div>
         </div>
         <div class="card" data-path="Долг" data-state="столп">
             <img src="portraits/gods/fujin.jpg" alt="Фудзин" loading="lazy" />
             <div class="name">Фудзин</div>
             <div class="archetype">Ветер, буря, непреклонность, верность, кара</div>
             <span class="path-tag path-duty">Долг — столп</span>
+            <div class="badge-player">Кагирова</div>
         </div>
         <div class="card" data-path="Голод" data-state="столп">
             <img src="portraits/gods/shichifukujin.jpg" alt="Ситифукудзин" loading="lazy" />
@@ -147,6 +153,7 @@ h1 { font-size: 2.2rem; font-weight: 400; text-align: center; margin-bottom: 0.5
             <div class="name">Сэндзю Каннон</div>
             <div class="archetype">Слепое сострадание, тысяча рук</div>
             <span class="path-tag path-hunger">Голод — угнетена</span>
+            <div class="badge-player">София</div>
         </div>
         <div class="card" data-path="Голод" data-state="угнетён">
             <img src="portraits/gods/toyouke.jpg" alt="Тоёукэ-Омиками" loading="lazy" />
@@ -158,16 +165,19 @@ h1 { font-size: 2.2rem; font-weight: 400; text-align: center; margin-bottom: 0.5
             <img src="portraits/gods/amaterasu.jpg" alt="Та что была Аматерасу" loading="lazy" />
             <div class="name">Та что была Аматерасу</div>
             <span class="path-tag path-potential">потенциал</span>
+            <div class="badge-player">Наринэ</div>
         </div>
-        <div class="card" data-path="?" data-state="потенциал">
+        <div class="card" data-path="Голод" data-state="столп">
             <img src="portraits/gods/susanoo.jpg" alt="Тот что был Сусано" loading="lazy" />
             <div class="name">Тот что был Сусано</div>
-            <span class="path-tag path-potential">потенциал</span>
+            <span class="path-tag path-hunger">Голод — столп</span>
+            <div class="badge-player">Шамара</div>
         </div>
-        <div class="card" data-path="?" data-state="потенциал">
+        <div class="card" data-path="Долг" data-state="угнетён">
             <img src="portraits/gods/izanami.jpg" alt="Та что была Идзанами" loading="lazy" />
             <div class="name">Та что была Идзанами</div>
-            <span class="path-tag path-potential">потенциал</span>
+            <span class="path-tag path-duty">Долг — угнетена</span>
+            <div class="badge-player">Мельникова</div>
         </div>
         <div class="card" data-path="?" data-state="потенциал">
             <img src="portraits/gods/inari.jpg" alt="Та что была Инари" loading="lazy" />
@@ -189,10 +199,11 @@ h1 { font-size: 2.2rem; font-weight: 400; text-align: center; margin-bottom: 0.5
             <div class="name">Тот что был Хатиман</div>
             <span class="path-tag path-potential">потенциал</span>
         </div>
-        <div class="card" data-path="?" data-state="потенциал">
+        <div class="card" data-path="Голод" data-state="угнетён">
             <img src="portraits/gods/uzume.jpg" alt="Та что была Амэ-но Удзумэ" loading="lazy" />
             <div class="name">Та что была Удзумэ</div>
-            <span class="path-tag path-potential">потенциал</span>
+            <span class="path-tag path-hunger">Голод — угнетена</span>
+            <div class="badge-player">Арет</div>
         </div>
         <div class="card" data-path="?" data-state="потенциал">
             <img src="portraits/gods/orochi.jpg" alt="Тот кто был Ямато-но Орочи" loading="lazy" />
@@ -208,45 +219,122 @@ h1 { font-size: 2.2rem; font-weight: 400; text-align: center; margin-bottom: 0.5
     <button class="modal-close" onclick="closeModal()">&times;</button>
     <img id="mImg" src="" alt="" />
     <h2 id="mName"></h2>
-    <div class="arch" id="mArch"></div>
+    <div class="jp" id="mJp"></div>
+    <div class="domains" id="mDomains"></div>
     <div class="tag" id="mTag"></div>
     <div class="desc" id="mDesc"></div>
+    <div style="text-align:center" id="mPlayer"></div>
   </div>
 </div>
 
 <script>
-var godDescriptions = {
-  'Цукиёми': '<p><strong>Лунный бог.</strong> Сейчас занимает <strong>Престол Страха</strong> — главный из трёх правящих престолов. Трактовка страха через статус: люди боятся потерять положение в обществе.</p><p>Утончённый, презирает грубость и плебейскую жизнь. Ставит ритуал и иерархию выше человеческого тепла.</p>',
-  'Фудзин': '<p><strong>Бог ветра и бури.</strong> Сейчас столп <strong>Престола Долга</strong>. Понимает долг как непреклонную верность и беспощадную кару нарушителям клятв.</p><p>Не различает оттенков — есть слово, есть его исполнение, всё остальное малодушие.</p>',
-  'Ситифукудзин': '<p><strong>Бог удачного улова, торговли и любви.</strong> Сейчас столп <strong>Престола Голода</strong>. Понимает голод как заботу о ближнем и щедрое разделение даров.</p><p>В нём смешались семь богов счастья — отсюда мудрость, торговая хватка и нежность сразу.</p>',
-  'Ниниги-но Микото': '<p><strong>Первый Император, внук Аматэрасу.</strong> Угнетён по пути <strong>Страха</strong> — претендует на престол с трактовкой статуса как покровительства и достоинства, а не как страха перед позором.</p>',
-  'Окунинуси': '<p><strong>Мастер земли, бог строительства, медицины и брака.</strong> Угнетён по пути <strong>Страха</strong> — его трактовка статуса через мастерство, ремесло, реальный труд.</p>',
-  'Сарутахико': '<p><strong>Бог дорог и наставничества.</strong> Угнетён по пути <strong>Долга</strong> — его трактовка долга как пути и мастерства, передаваемого ученику.</p>',
-  'Коноханасакуя-химэ': '<p><strong>Богиня цветущей сакуры.</strong> Угнетена по пути <strong>Долга</strong> — её трактовка долга как мимолётности и красоты, верности красоте, а не клятве.</p>',
-  'Сэндзю Каннон': '<p><strong>Тысячерукая богиня сострадания.</strong> Угнетена по пути <strong>Голода</strong> — её трактовка заботы как слепого, безусловного сострадания всем.</p>',
-  'Тоёукэ-Омиками': '<p><strong>Богиня плодородия и пищи.</strong> Угнетена по пути <strong>Голода</strong> — её трактовка заботы через дары и обеспечение достойной жизни.</p>',
-  'Та что была Аматерасу': '<p><strong>Прежняя солнечная богиня.</strong> Сошла с престола Долга — теперь в потенциале. Ищет себя заново, не знает, на каком пути воплотиться. Тот, кто найдёт её принцип, поднимет её на новый престол.</p>',
-  'Тот что был Сусано': '<p><strong>Прежний бог бури и моря.</strong> Изгнан давно, в потенциале. Залихватская, первобытная жажда жизни.</p>',
-  'Та что была Идзанами': '<p><strong>Прежняя богиня-творец.</strong> Создательница островов и первая хозяйка мира мёртвых. В потенциале — может вернуться через нового мессию.</p>',
-  'Та что была Инари': '<p><strong>Богиня риса, лис и плодородия.</strong> В потенциале. Хитрая, оборотистая, хранительница границ.</p>',
-  'Тот что был Рюдзин': '<p><strong>Бог моря и драконов.</strong> В потенциале. Древний, медленный, владыка бурь.</p>',
-  'Тот что был О-Ямацуми': '<p><strong>Бог гор.</strong> В потенциале. Тяжёлый, молчаливый, основа мира.</p>',
-  'Тот что был Хатиман': '<p><strong>Бог войны и лука.</strong> В потенциале. Защитник простого народа, покровитель воинов.</p>',
-  'Та что была Удзумэ': '<p><strong>Богиня рассвета, веселья и танца.</strong> В потенциале. Та, что выманила Аматэрасу из пещеры.</p>',
-  'Тот кто был Орочи': '<p><strong>Восьмиглавый змей.</strong> В потенциале. Древнее зло, побеждённое Сусаноо.</p>'
+var godData = {
+  'Цукиёми': {
+    jp: '月読命',
+    domains: 'луна, приливы, утончённость, странствия, статус по рождению',
+    desc: '<p>Аматерасу и Сусано потеряли свои престолы, и наконец настало время «сиять» андрогинному божеству луны. Мягко, но настойчиво ведёт свою линию, действуя скорее убеждением и уговорами, нежели силой.</p><p><strong>Сейчас правит — занимает Престол Страха.</strong> Трактовка страха через статус: люди боятся потерять положение в обществе.</p>'
+  },
+  'Фудзин': {
+    jp: '風神',
+    domains: 'ветер, буря, непреклонность, верность, сокрушительная сила кары, лучник',
+    desc: '<p>Бывший демон, просветлённый Буддой. Несёт бурю как кару и очищение. Связан с Райдзином.</p><p><strong>Столп Престола Долга.</strong> Понимает долг как непреклонную верность и беспощадную кару нарушителям клятв. Не различает оттенков — есть слово, есть его исполнение, всё остальное малодушие.</p>'
+  },
+  'Ситифукудзин': {
+    jp: '七福神',
+    domains: 'улов, торговля, любовь и красноречие, защита веры, забота, мудрость',
+    desc: '<p>Все семь богов счастья в одном. Многоликое божество с разными оттенками привлекательности для смертных. Поворачивается той стороной, которая выгодна сейчас.</p><p><strong>Столп Престола Голода.</strong></p>'
+  },
+  'Ниниги-но Микото': {
+    jp: '邇邇芸命',
+    domains: 'Первый Император, покровительство, благородство, достоинство',
+    desc: '<p>Внук Аматерасу, спустившийся в Японию править ею. Свергнут новым престолом.</p><p><strong>Угнетён по пути Страха</strong> — претендует на престол с трактовкой статуса как покровительства и достоинства, а не как страха перед позором.</p>'
+  },
+  'Окунинуси': {
+    jp: '大国主',
+    domains: 'великий мастер земли, строительство, медицина, институт брака',
+    desc: '<p>Основал страну тростниковых равнин, чтобы передать богам неба. Отдал то, что построил.</p><p><strong>Угнетён по пути Страха</strong> — его трактовка статуса через мастерство, ремесло и реальный труд.</p>'
+  },
+  'Сарутахико': {
+    jp: '猿田彦',
+    domains: 'путь, мастерство, наставничество, благородная битва',
+    desc: '<p>Бог-проводник, защищающий идущих по пути. Направляет дела в нужное русло. Встречал, охранял и служил Первому Императору.</p><p><strong>Угнетён по пути Долга</strong> — его трактовка долга как пути и мастерства, передаваемого ученику.</p>'
+  },
+  'Коноханасакуя-химэ': {
+    jp: '木花咲耶姫',
+    domains: 'мимолётность земной жизни, верность возрождающейся красоте, верность принцессы',
+    desc: '<p>Богиня цветения сакуры, защитница брачной гармонии. Верна как своей стране, так и своему мужу.</p><p><strong>Угнетена по пути Долга</strong> — её трактовка долга как мимолётности и красоты, верности красоте, а не клятве.</p>'
+  },
+  'Сэндзю Каннон': {
+    jp: '千手観音',
+    domains: 'слепое сострадание',
+    desc: '<p>Богиня милосердия с тысячей рук, готовых помочь каждому.</p><p><strong>Угнетена по пути Голода</strong> — её трактовка заботы как слепого, безусловного сострадания всем.</p>'
+  },
+  'Тоёукэ-Омиками': {
+    jp: '豊受大御神',
+    domains: 'забота через дары, чествование жизненных потребностей, достойная жизнь',
+    desc: '<p>Отвечала за священную пищу Аматерасу. Приносит дары природы для человечества. Не только выживание, но достойная жизнь.</p><p><strong>Угнетена по пути Голода.</strong></p>'
+  },
+  'Та что была Аматерасу': {
+    jp: '天照大御神',
+    domains: 'солнце, верховное сияние, прежняя владычица Долга',
+    desc: '<p>Прежняя солнечная богиня, сошла с престола Долга — теперь в потенциале. Ищет себя заново, не знает, на каком пути воплотиться. Тот, кто найдёт её принцип, поднимет её на новый престол.</p>'
+  },
+  'Тот что был Сусано': {
+    jp: '須佐之男命',
+    domains: 'буря, море, залихватская жажда жизни, первобытное чувство',
+    desc: '<p>Бог бури и ветров, бог сакея, малодетской удали. Был изгнан давно — за то, что бросил коровью голову в постель Аматэрасу. Залихватская, первобытная жажда жизни.</p><p><strong>Сейчас столп.</strong> Голод как первобытная жажда удовлетворения — иная трактовка, чем у Ситифукудзина.</p>'
+  },
+  'Та что была Идзанами': {
+    jp: '伊邪那美命',
+    domains: 'творение, мать-прародительница, первая владычица мира мёртвых',
+    desc: '<p>Прежняя богиня-творец. Создательница островов и первая хозяйка мира мёртвых.</p><p><strong>Угнетена по пути Долга</strong> — может вернуться через нового мессию.</p>'
+  },
+  'Та что была Инари': {
+    jp: '稲荷神',
+    domains: 'рис, лисы, плодородие, границы',
+    desc: '<p>Богиня риса, лис и плодородия. В потенциале. Хитрая, оборотистая, хранительница границ.</p>'
+  },
+  'Тот что был Рюдзин': {
+    jp: '龍神',
+    domains: 'море, драконы, древняя сила бурь',
+    desc: '<p>Бог моря и драконов. В потенциале. Древний, медленный, владыка бурь.</p>'
+  },
+  'Тот что был О-Ямацуми': {
+    jp: '大山祇',
+    domains: 'горы, тяжесть, основа мира',
+    desc: '<p>Бог гор. В потенциале. Тяжёлый, молчаливый, основа мира.</p>'
+  },
+  'Тот что был Хатиман': {
+    jp: '八幡神',
+    domains: 'война, лук, защита простого народа',
+    desc: '<p>Бог войны и лука. В потенциале. Защитник простого народа, покровитель воинов.</p>'
+  },
+  'Та что была Удзумэ': {
+    jp: '天宇受賣命',
+    domains: 'рассвет, веселье, танец, та, что выманила Аматэрасу из пещеры',
+    desc: '<p>Богиня рассвета, веселья и танца. Та, что выманила Аматэрасу из пещеры.</p><p><strong>Угнетена по пути Голода</strong> — забота через радость и общее веселье.</p>'
+  },
+  'Тот кто был Орочи': {
+    jp: '八岐大蛇',
+    domains: 'восьмиглавый змей, древнее зло',
+    desc: '<p>Восьмиглавый змей. В потенциале. Древнее зло, побеждённое Сусаноо.</p>'
+  }
 };
 
 function openModal(card) {
   var name = card.querySelector('.name').textContent;
   var img = card.querySelector('img').src;
-  var arch = card.querySelector('.archetype');
   var tag = card.querySelector('.path-tag');
+  var player = card.querySelector('.badge-player');
+  var data = godData[name] || {};
   document.getElementById('mImg').src = img;
   document.getElementById('mImg').alt = name;
   document.getElementById('mName').textContent = name;
-  document.getElementById('mArch').textContent = arch ? arch.textContent : '';
+  document.getElementById('mJp').textContent = data.jp || '';
+  document.getElementById('mDomains').textContent = data.domains || '';
   document.getElementById('mTag').innerHTML = tag ? tag.outerHTML : '';
-  document.getElementById('mDesc').innerHTML = godDescriptions[name] || '<p style="color:var(--dim); font-style:italic;">Подробное описание появится позже.</p>';
+  document.getElementById('mDesc').innerHTML = data.desc || '<p style="color:var(--dim); font-style:italic;">Подробное описание появится позже.</p>';
+  document.getElementById('mPlayer').innerHTML = player ? '<span class="badge-player">Играет: ' + player.textContent + '</span>' : '';
   document.getElementById('modalBg').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
