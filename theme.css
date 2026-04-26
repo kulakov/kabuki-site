@@ -1,0 +1,55 @@
+/* Light theme overrides — applied when body.light-theme */
+body.light-theme {
+  background: #f5efe2 !important;
+  color: #2a2218 !important;
+}
+body.light-theme .grain { opacity: 0.015 !important; }
+
+/* Header stays Toho red, but tone slightly down */
+body.light-theme .header,
+body.light-theme .toho-header {
+  background: linear-gradient(to bottom, #6b1414 0%, #4a0a0a 100%) !important;
+  border-bottom-color: #2a0606 !important;
+}
+body.light-theme .header-nav a { color: #f5d8a8 !important; }
+body.light-theme .header-nav a.active { border-bottom-color: #f5d8a8 !important; }
+
+/* Body text and panels */
+body.light-theme .content,
+body.light-theme .main { color: #2a2218 !important; }
+body.light-theme .card,
+body.light-theme .data-card,
+body.light-theme .mandate-side,
+body.light-theme .modal { background: #faf5e8 !important; border-color: #d8c8a4 !important; color: #2a2218 !important; }
+body.light-theme .name { color: #2a2218 !important; }
+body.light-theme .archetype,
+body.light-theme .subtitle,
+body.light-theme .disclaimer { color: #6a5a3a !important; }
+body.light-theme h1, body.light-theme h2 { color: #8b1a1a !important; }
+body.light-theme .section__title,
+body.light-theme .section__text strong,
+body.light-theme .data-card strong { color: #8b4513 !important; }
+
+/* Tables */
+body.light-theme th { background: rgba(139,69,19,.08) !important; color: #8b4513 !important; border-bottom-color: #d8c8a4 !important; }
+body.light-theme td { border-bottom-color: #e8d8b4 !important; }
+body.light-theme tr:hover td { background: rgba(139,69,19,.04) !important; }
+
+/* Filters */
+body.light-theme .tag-filters { background: rgba(232,216,180,.4) !important; border-color: #d8c8a4 !important; }
+body.light-theme .tag-chip { border-color: #c8b894 !important; color: #6a5a3a !important; }
+body.light-theme .tag-chip:hover { color: #2a2218 !important; }
+body.light-theme .tag-chip.active { background: #8b4513 !important; color: #faf5e8 !important; border-color: #8b4513 !important; }
+
+/* Modal */
+body.light-theme .modal-bg { background: rgba(245,239,226,.9) !important; }
+
+/* Card portraits in light mode — less grayscale */
+body.light-theme .card img { filter: grayscale(10%) !important; }
+
+/* Theme button itself in light mode */
+body.light-theme #theme-toggle-btn { background: rgba(250,245,232,.9) !important; color: #8b4513 !important; border-color: #8b4513 !important; }
+
+/* Footer */
+body.light-theme .footer { color: #8a7a5a !important; border-top-color: #d8c8a4 !important; }
+body.light-theme .footer a { color: #8b4513 !important; }
