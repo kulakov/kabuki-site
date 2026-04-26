@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
-:root { --bg: #080806; --card-bg: #0e0e0c; --text: #d4c5a9; --accent: #c49a6c; --dim: #666; --toho-red: #8b1a1a; }
+:root { --bg: #080806; --card-bg: #0e0e0c; --text: #d4c5a9; --accent: #c49a6c; --dim: #666; --toho-red: #8b1a1a; --fear: #6b3a3a; --duty: #3a4a6b; --hunger: #3a6b4a; --potential: #4a4a4a; }
 body { background: var(--bg); color: var(--text); font-family: "Cormorant Garamond", Georgia, serif; min-height: 100vh; }
 .grain { position: fixed; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; z-index: 50; opacity: 0.03; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); background-size: 256px 256px; }
 .header { width: 100%; background: linear-gradient(to bottom, var(--toho-red) 0%, #5a1010 100%); border-bottom: 2px solid #3a0808; padding: 0.8rem 2rem; display: flex; align-items: center; justify-content: space-between; }
@@ -19,49 +19,34 @@ body { background: var(--bg); color: var(--text); font-family: "Cormorant Garamo
 .header-nav a { font-size: 0.7rem; color: #f0d4a8; text-decoration: none; text-transform: uppercase; letter-spacing: 0.15em; opacity: 0.7; transition: opacity 0.2s; border-bottom: 1px solid transparent; padding-bottom: 2px; }
 .header-nav a:hover { opacity: 1; }
 .header-nav a.active { opacity: 1; border-bottom: 1px solid #f0d4a8; padding-bottom: 2px; }
-.content { max-width: 1200px; margin: 0 auto; padding: 2rem; }
-h1 { font-size: 2.2rem; font-weight: 400; text-align: center; margin-bottom: 0.5rem; color: var(--accent); }
-.subtitle { text-align: center; color: var(--dim); font-size: 1.1rem; margin-bottom: 1.5rem; font-style: italic; }
-.tag-filters { max-width: 900px; margin: 0 auto 1.5rem; padding: 1rem; border: 1px solid #1a1a18; border-radius: 4px; background: rgba(20,20,18,0.4); }
-.tag-group { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
-.tag-group:last-child { margin-bottom: 0; }
-.tag-group-label { font-size: 0.7rem; color: var(--dim); text-transform: uppercase; letter-spacing: 0.1em; min-width: 80px; }
-.tag-chip { background: transparent; border: 1px solid #2a2a26; color: var(--dim); padding: 3px 10px; border-radius: 12px; cursor: pointer; font-family: inherit; font-size: 0.75rem; transition: all 0.15s; }
-.tag-chip:hover { border-color: var(--accent); color: var(--text); }
-.tag-chip.active { background: var(--accent); color: var(--bg); border-color: var(--accent); }
-.tag-reset { background: transparent; border: 1px dashed #444; color: var(--dim); padding: 3px 10px; border-radius: 4px; cursor: pointer; font-family: inherit; font-size: 0.7rem; margin-left: auto; }
-.tag-reset:hover { color: var(--text); border-color: var(--accent); }
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 20px; }
-.card { text-align: center; transition: transform 0.2s; cursor: pointer; }
-.card:hover { transform: translateY(-4px); }
-.modal-bg { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); z-index: 100; align-items: center; justify-content: center; padding: 1rem; }
-.modal-bg.open { display: flex; }
-.modal { background: var(--card-bg); border: 1px solid var(--accent); max-width: 500px; width: 100%; padding: 2rem; max-height: 90vh; overflow-y: auto; position: relative; }
-.modal-close { position: absolute; top: 8px; right: 12px; background: none; border: none; color: var(--dim); font-size: 1.6rem; cursor: pointer; line-height: 1; padding: 4px 8px; }
-.modal-close:hover { color: var(--accent); }
-.modal img { display: block; width: 200px; height: 200px; object-fit: cover; border-radius: 50%; border: 2px solid #2a2a26; margin: 0 auto 1rem; }
-.modal h2 { font-size: 1.6rem; color: var(--accent); text-align: center; font-weight: 400; margin-bottom: 0.3rem; }
-.modal .arch { text-align: center; color: var(--dim); font-style: italic; margin-bottom: 1rem; }
-.modal .tag { text-align: center; margin-bottom: 1.2rem; }
-.modal .tag .path-tag { display: inline-block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; }
-.modal .desc { font-size: 0.95rem; line-height: 1.6; color: var(--text); }
-.modal .desc p { margin-bottom: 0.8rem; }
-.modal .desc strong { color: var(--accent); }
-.card img { width: 140px; height: 140px; object-fit: cover; border-radius: 50%; border: 2px solid #222; filter: grayscale(30%); transition: filter 0.2s, border-color 0.2s; }
-.card:hover img { filter: grayscale(0%); border-color: var(--accent); }
-.card .name { font-size: 0.9rem; margin-top: 8px; line-height: 1.3; }
-.card .archetype { font-size: 0.8rem; color: #a89878; margin-top: 2px; font-style: italic; }
-.card .path-tag { display: inline-block; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.1em; padding: 2px 8px; margin-top: 4px; border-radius: 2px; }
-.path-fear { background: #e8e0d0; color: #1a1a18; }
-.path-duty { background: #8b2020; color: #f0d4d4; }
-.path-hunger { background: #8b7a20; color: #f0e8c0; }
-.path-potential { background: #3a3a3a; color: #999; }
-.card .badge-player { display:inline-block; font-size:0.65rem; color:#c49a6c; margin-top:4px; padding:2px 8px; border:1px solid rgba(196,154,108,0.4); border-radius:10px; }
-.modal .badge-player { display:inline-block; font-size:0.8rem; color:#c49a6c; margin:6px 0 0; padding:3px 10px; border:1px solid rgba(196,154,108,0.5); border-radius:12px; }
-.modal .jp { font-family:"Noto Serif JP",serif; font-size:0.85rem; color:#888; text-align:center; margin-bottom:0.4rem; }
-.modal .domains { color:#c49a6c; font-style:italic; text-align:center; font-size:0.9rem; margin-bottom:1rem; line-height:1.5; }
+.content { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+h1 { font-size: 2.2rem; font-weight: 400; text-align: center; margin-bottom: 0.3rem; color: var(--accent); }
+.subtitle { text-align: center; color: var(--dim); font-size: 1.1rem; margin-bottom: 2rem; font-style: italic; }
+.section { margin-bottom: 2.5rem; }
+.section-title { font-size: 1rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--dim); margin-bottom: 0.3rem; }
+.section-subtitle { font-size: 0.85rem; color: var(--dim); font-style: italic; margin-bottom: 1rem; }
+.path-label { display: inline-block; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.12em; padding: 2px 10px; border-radius: 2px; margin-bottom: 0.5rem; }
+.path-fear { background: var(--fear); color: #e8c4c4; }
+.path-duty { background: var(--duty); color: #c4d0e8; }
+.path-hunger { background: var(--hunger); color: #c4e8d0; }
+.path-potential { background: var(--potential); color: #b0b0b0; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 24px; }
+.grid-wide { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); }
+.god-card { text-align: center; padding: 1rem; border: 1px solid #1a1a18; border-radius: 4px; background: rgba(14,14,12,0.6); transition: border-color 0.2s, transform 0.2s; }
+.god-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+.god-card.ruling { border-color: var(--accent); background: rgba(196,154,108,0.05); }
+.god-card img { width: 140px; height: 140px; object-fit: cover; border-radius: 50%; border: 2px solid #222; filter: grayscale(20%); transition: filter 0.2s, border-color 0.2s; margin-bottom: 0.8rem; }
+.god-card:hover img { filter: grayscale(0%); border-color: var(--accent); }
+.god-card .god-name { font-size: 1.1rem; margin-bottom: 0.2rem; color: var(--text); }
+.god-card .god-jp { font-family: "Noto Serif JP", serif; font-size: 0.8rem; color: var(--dim); margin-bottom: 0.4rem; }
+.god-card .god-domains { font-size: 0.8rem; color: var(--accent); font-style: italic; margin-bottom: 0.5rem; line-height: 1.4; }
+.god-card .god-desc { font-size: 0.85rem; color: var(--text); opacity:0.9; line-height: 1.55; margin-bottom: 0.6rem; }
+.god-card .god-state { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--dim); margin-top: 0.4rem; }
+.god-card .player { display:inline-block; font-size:0.75rem; color:#c49a6c; margin-top:0.4rem; padding:3px 10px; border:1px solid rgba(196,154,108,0.5); border-radius:12px; }
+.god-card .reserved { display:inline-block; font-size:0.7rem; color:var(--dim); margin-top:0.4rem; padding:3px 10px; border:1px dashed #444; border-radius:12px; }
+.divider { border: none; border-top: 1px solid #1a1a18; margin: 2rem 0; }
 .footer { text-align: center; padding: 2rem; color: var(--dim); font-size: 0.85rem; border-top: 1px solid #1a1a18; margin-top: 3rem; }
-@media (max-width: 480px) { .header { flex-direction: column; gap: 0.5rem; padding: 0.6rem 1rem; } .header-nav { gap: 1rem; } .header-nav a { font-size: 0.6rem; } }
+@media (max-width: 480px) { .header { flex-direction: column; gap: 0.5rem; padding: 0.6rem 1rem; } .header-nav { gap: 1rem; } .header-nav a { font-size: 0.6rem; } .grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; } }
 </style>
 <link rel="stylesheet" href="theme.css">
 <script src="theme.js" defer></script>
@@ -82,309 +67,210 @@ h1 { font-size: 2.2rem; font-weight: 400; text-align: center; margin-bottom: 0.5
     </nav>
 </header>
 <div class="content">
-    <h1>Роли богов</h1>
+    <h1>Боги и чиновники небес</h1>
     <p class="subtitle">18 божеств японского пантеона &middot; <a href="gods.html" style="color:var(--accent);">&larr; Как устроена онлайн-игра</a></p>
-    <!-- text removed, only cards below -->
 
-    <div class="tag-filters">
-        <div class="tag-group">
-            <span class="tag-group-label">Путь</span>
-            <button class="tag-chip" data-tag-type="path" data-tag="Страх">Страх</button>
-            <button class="tag-chip" data-tag-type="path" data-tag="Долг">Долг</button>
-            <button class="tag-chip" data-tag-type="path" data-tag="Голод">Голод</button>
-            <button class="tag-chip" data-tag-type="path" data-tag="?">Потенциал</button>
-        </div>
-        <div class="tag-group">
-            <span class="tag-group-label">Состояние</span>
-            <button class="tag-chip" data-tag-type="state" data-tag="правит">Правит</button>
-            <button class="tag-chip" data-tag-type="state" data-tag="столп">Столп</button>
-            <button class="tag-chip" data-tag-type="state" data-tag="угнетён">Угнетён</button>
-            <button class="tag-chip" data-tag-type="state" data-tag="потенциал">Потенциал</button>
-            <button class="tag-reset" onclick="resetFilters()">Сбросить</button>
+    <!-- ПРАВЯЩИЙ ПРЕСТОЛ -->
+    <div class="section">
+        <div class="section-title">Правящий престол</div>
+        <div class="section-subtitle">Тот, чей дискурс сейчас определяет мир</div>
+        <div class="grid">
+            <div class="god-card ruling">
+                <span class="path-label path-fear">Страх</span>
+                <img src="portraits/gods/tsukuyomi.jpg" alt="Цукиёми" loading="lazy" />
+                <div class="god-name">Цукиёми</div>
+                <div class="god-jp">月読命</div>
+                <div class="god-domains">луна, приливы, утончённость, странствия, статус по рождению</div>
+                <div class="god-desc">Аматерасу и Сусано потеряли свои престолы, и наконец настало время «сиять» андрогинному божеству луны. Мягко, но настойчиво ведёт свою линию, действуя скорее убеждением и уговорами, нежели силой.</div>
+                <div class="god-state">правит</div>
+                <div class="player">Тара</div>
+            </div>
         </div>
     </div>
-    <div class="grid">
-        <div class="card" data-path="Страх" data-state="правит">
-            <img src="portraits/gods/tsukuyomi.jpg" alt="Цукиёми" loading="lazy" />
-            <div class="name">Цукиёми</div>
-            <div class="archetype">Луна, приливы, утончённость, статус по рождению</div>
-            <span class="path-tag path-fear">Страх — правит</span>
-            <div class="badge-player">Тара</div>
+
+    <!-- СТОЛПЫ -->
+    <div class="section">
+        <div class="section-title">Столпы</div>
+        <div class="section-subtitle">Опоры правящего престола</div>
+        <div class="grid">
+            <div class="god-card">
+                <span class="path-label path-duty">Долг</span>
+                <img src="portraits/gods/fujin.jpg" alt="Фудзин" loading="lazy" />
+                <div class="god-name">Фудзин</div>
+                <div class="god-jp">風神</div>
+                <div class="god-domains">ветер, буря, непреклонность, верность, сокрушительная сила кары, лучник</div>
+                <div class="god-desc">Бывший демон, просветлённый Буддой. Несёт бурю как кару и очищение. Связан с Райдзином.</div>
+                <div class="god-state">столп</div>
+                <div class="player">Кагирова</div>
+            </div>
+            <div class="god-card">
+                <span class="path-label path-hunger">Голод</span>
+                <img src="portraits/gods/shichifukujin.jpg" alt="Ситифукудзин" loading="lazy" />
+                <div class="god-name">Ситифукудзин</div>
+                <div class="god-jp">七福神</div>
+                <div class="god-domains">улов, торговля, любовь и красноречие, защита веры, забота, мудрость</div>
+                <div class="god-desc">Все семь богов счастья в одном. Многоликое божество с разными оттенками привлекательности для смертных. Поворачивается той стороной, которая выгодна сейчас.</div>
+                <div class="god-state">столп</div>
+            </div>
+            <div class="god-card">
+                <span class="path-label path-hunger">Голод</span>
+                <img src="portraits/gods/susanoo.jpg" alt="Сусаноо" loading="lazy" />
+                <div class="god-name">Сусаноо</div>
+                <div class="god-jp">須佐之男命</div>
+                <div class="god-domains">буря, море, залихватская жажда жизни, первобытное чувство</div>
+                <div class="god-desc">Бог бури и ветров, бог сакея, малодетской удали. Был изгнан давно — за то, что бросил коровью голову в постель Аматэрасу. Залихватская, первобытная жажда жизни. Голод как первобытная жажда удовлетворения — иная трактовка, чем у Ситифукудзина.</div>
+                <div class="god-state">столп</div>
+                <div class="reserved">Забронировано</div>
+            </div>
         </div>
-        <div class="card" data-path="Долг" data-state="столп">
-            <img src="portraits/gods/fujin.jpg" alt="Фудзин" loading="lazy" />
-            <div class="name">Фудзин</div>
-            <div class="archetype">Ветер, буря, непреклонность, верность, кара</div>
-            <span class="path-tag path-duty">Долг — столп</span>
-            <div class="badge-player">Кагирова</div>
+    </div>
+
+    <hr class="divider" />
+
+    <!-- УГНЕТЁННЫЕ -->
+    <div class="section">
+        <div class="section-title">Боги в угнетённом состоянии</div>
+        <div class="section-subtitle">Знают свой путь, но трон занят другим</div>
+
+        <span class="path-label path-fear" style="margin-bottom: 1rem; display: inline-block;">Страх</span>
+        <div class="grid" style="margin-bottom: 1.5rem;">
+            <div class="god-card">
+                <img src="portraits/gods/ninigi.jpg" alt="Ниниги-но Микото" loading="lazy" />
+                <div class="god-name">Ниниги-но Микото</div>
+                <div class="god-jp">邇邇芸命</div>
+                <div class="god-domains">Первый Император, покровительство, благородство, достоинство</div>
+                <div class="god-desc">Внук Аматерасу, спустившийся в Японию править ею. Свергнут новым престолом.</div>
+                <div class="god-state">угнетён</div>
+            </div>
+            <div class="god-card">
+                <img src="portraits/gods/okuninushi.jpg" alt="Окунинуси" loading="lazy" />
+                <div class="god-name">Окунинуси</div>
+                <div class="god-jp">大国主</div>
+                <div class="god-domains">великий мастер земли, строительство, медицина, институт брака</div>
+                <div class="god-desc">Основал страну тростниковых равнин, чтобы передать богам неба. Отдал то, что построил.</div>
+                <div class="god-state">угнетён</div>
+            </div>
         </div>
-        <div class="card" data-path="Голод" data-state="столп">
-            <img src="portraits/gods/shichifukujin.jpg" alt="Ситифукудзин" loading="lazy" />
-            <div class="name">Ситифукудзин</div>
-            <div class="archetype">Улов, торговля, любовь, забота, мудрость</div>
-            <span class="path-tag path-hunger">Голод — столп</span>
+
+        <span class="path-label path-duty" style="margin-bottom: 1rem; display: inline-block;">Долг</span>
+        <div class="grid" style="margin-bottom: 1.5rem;">
+            <div class="god-card">
+                <img src="portraits/gods/sarutahiko.jpg" alt="Сарутахико" loading="lazy" />
+                <div class="god-name">Сарутахико</div>
+                <div class="god-jp">猿田彦</div>
+                <div class="god-domains">путь, мастерство, наставничество, благородная битва</div>
+                <div class="god-desc">Бог-проводник, защищающий идущих по пути. Направляет дела в нужное русло. Встречал, охранял и служил Первому Императору.</div>
+                <div class="god-state">угнетён</div>
+            </div>
+            <div class="god-card">
+                <img src="portraits/gods/konohana.jpg" alt="Коноханасакуя-химэ" loading="lazy" />
+                <div class="god-name">Коноханасакуя-химэ</div>
+                <div class="god-jp">木花咲耶姫</div>
+                <div class="god-domains">мимолётность земной жизни, верность возрождающейся красоте, верность принцессы</div>
+                <div class="god-desc">Богиня цветения сакуры, защитница брачной гармонии. Верна как своей стране, так и своему мужу.</div>
+                <div class="god-state">угнетена</div>
+            </div>
+            <div class="god-card">
+                <img src="portraits/gods/izanami.jpg" alt="Та что была Идзанами" loading="lazy" />
+                <div class="god-name">Та что была Идзанами</div>
+                <div class="god-jp">伊邪那美命</div>
+                <div class="god-domains">творение, мать-прародительница, первая владычица мира мёртвых</div>
+                <div class="god-desc">Прежняя богиня-творец. Создательница островов и первая хозяйка мира мёртвых. Может вернуться через нового мессию.</div>
+                <div class="god-state">угнетена</div>
+                <div class="player">Мельникова</div>
+            </div>
         </div>
-        <div class="card" data-path="Страх" data-state="угнетён">
-            <img src="portraits/gods/ninigi.jpg" alt="Ниниги-но Микото" loading="lazy" />
-            <div class="name">Ниниги-но Микото</div>
-            <div class="archetype">Первый Император, покровительство, достоинство</div>
-            <span class="path-tag path-fear">Страх — угнетён</span>
+
+        <span class="path-label path-hunger" style="margin-bottom: 1rem; display: inline-block;">Голод</span>
+        <div class="grid">
+            <div class="god-card">
+                <img src="portraits/gods/kannon.jpg" alt="Сэндзю Каннон" loading="lazy" />
+                <div class="god-name">Сэндзю Каннон</div>
+                <div class="god-jp">千手観音</div>
+                <div class="god-domains">слепое сострадание</div>
+                <div class="god-desc">Богиня милосердия с тысячей рук, готовых помочь каждому.</div>
+                <div class="god-state">угнетена</div>
+                <div class="player">София</div>
+            </div>
+            <div class="god-card">
+                <img src="portraits/gods/toyouke.jpg" alt="Тоёукэ-Омиками" loading="lazy" />
+                <div class="god-name">Тоёукэ-Омиками</div>
+                <div class="god-jp">豊受大御神</div>
+                <div class="god-domains">забота через дары, чествование жизненных потребностей, достойная жизнь</div>
+                <div class="god-desc">Отвечала за священную пищу Аматерасу. Приносит дары природы для человечества. Не только выживание, но достойная жизнь.</div>
+                <div class="god-state">угнетена</div>
+            </div>
+            <div class="god-card">
+                <img src="portraits/gods/uzume.jpg" alt="Та что была Удзумэ" loading="lazy" />
+                <div class="god-name">Та что была Удзумэ</div>
+                <div class="god-jp">天宇受賣命</div>
+                <div class="god-domains">рассвет, веселье, танец, та, что выманила Аматэрасу из пещеры</div>
+                <div class="god-desc">Богиня рассвета, веселья и танца. Та, что выманила Аматэрасу из пещеры. Забота через радость и общее веселье.</div>
+                <div class="god-state">угнетена</div>
+                <div class="player">Арет</div>
+            </div>
         </div>
-        <div class="card" data-path="Страх" data-state="угнетён">
-            <img src="portraits/gods/okuninushi.jpg" alt="Окунинуси" loading="lazy" />
-            <div class="name">Окунинуси</div>
-            <div class="archetype">Мастер земли, строительство, медицина, брак</div>
-            <span class="path-tag path-fear">Страх — угнетён</span>
-        </div>
-        <div class="card" data-path="Долг" data-state="угнетён">
-            <img src="portraits/gods/sarutahiko.jpg" alt="Сарутахико" loading="lazy" />
-            <div class="name">Сарутахико</div>
-            <div class="archetype">Путь, мастерство, наставничество, битва</div>
-            <span class="path-tag path-duty">Долг — угнетён</span>
-        </div>
-        <div class="card" data-path="Долг" data-state="угнетён">
-            <img src="portraits/gods/konohana.jpg" alt="Коноханасакуя-химэ" loading="lazy" />
-            <div class="name">Коноханасакуя-химэ</div>
-            <div class="archetype">Мимолётность жизни, верность красоте, сакура</div>
-            <span class="path-tag path-duty">Долг — угнетена</span>
-        </div>
-        <div class="card" data-path="Голод" data-state="угнетён">
-            <img src="portraits/gods/kannon.jpg" alt="Сэндзю Каннон" loading="lazy" />
-            <div class="name">Сэндзю Каннон</div>
-            <div class="archetype">Слепое сострадание, тысяча рук</div>
-            <span class="path-tag path-hunger">Голод — угнетена</span>
-            <div class="badge-player">София</div>
-        </div>
-        <div class="card" data-path="Голод" data-state="угнетён">
-            <img src="portraits/gods/toyouke.jpg" alt="Тоёукэ-Омиками" loading="lazy" />
-            <div class="name">Тоёукэ-Омиками</div>
-            <div class="archetype">Забота через дары, достойная жизнь</div>
-            <span class="path-tag path-hunger">Голод — угнетена</span>
-        </div>
-        <div class="card" data-path="?" data-state="потенциал">
-            <img src="portraits/gods/amaterasu.jpg" alt="Та что была Аматерасу" loading="lazy" />
-            <div class="name">Та что была Аматерасу</div>
-            <span class="path-tag path-potential">потенциал</span>
-            <div class="badge-player">Наринэ</div>
-        </div>
-        <div class="card" data-path="Голод" data-state="столп">
-            <img src="portraits/gods/susanoo.jpg" alt="Тот что был Сусано" loading="lazy" />
-            <div class="name">Тот что был Сусано</div>
-            <span class="path-tag path-hunger">Голод — столп</span>
-            <div class="badge-player">Шамара</div>
-        </div>
-        <div class="card" data-path="Долг" data-state="угнетён">
-            <img src="portraits/gods/izanami.jpg" alt="Та что была Идзанами" loading="lazy" />
-            <div class="name">Та что была Идзанами</div>
-            <span class="path-tag path-duty">Долг — угнетена</span>
-            <div class="badge-player">Мельникова</div>
-        </div>
-        <div class="card" data-path="?" data-state="потенциал">
-            <img src="portraits/gods/inari.jpg" alt="Та что была Инари" loading="lazy" />
-            <div class="name">Та что была Инари</div>
-            <span class="path-tag path-potential">потенциал</span>
-        </div>
-        <div class="card" data-path="?" data-state="потенциал">
-            <img src="portraits/gods/ryujin.jpg" alt="Тот что был Рюдзин" loading="lazy" />
-            <div class="name">Тот что был Рюдзин</div>
-            <span class="path-tag path-potential">потенциал</span>
-        </div>
-        <div class="card" data-path="?" data-state="потенциал">
-            <img src="portraits/gods/oyamatsumi.jpg" alt="Тот что был О-Ямацуми" loading="lazy" />
-            <div class="name">Тот что был О-Ямацуми</div>
-            <span class="path-tag path-potential">потенциал</span>
-        </div>
-        <div class="card" data-path="?" data-state="потенциал">
-            <img src="portraits/gods/hachiman.jpg" alt="Тот что был Хатиман" loading="lazy" />
-            <div class="name">Тот что был Хатиман</div>
-            <span class="path-tag path-potential">потенциал</span>
-        </div>
-        <div class="card" data-path="Голод" data-state="угнетён">
-            <img src="portraits/gods/uzume.jpg" alt="Та что была Амэ-но Удзумэ" loading="lazy" />
-            <div class="name">Та что была Удзумэ</div>
-            <span class="path-tag path-hunger">Голод — угнетена</span>
-            <div class="badge-player">Арет</div>
-        </div>
-        <div class="card" data-path="?" data-state="потенциал">
-            <img src="portraits/gods/orochi.jpg" alt="Тот кто был Ямато-но Орочи" loading="lazy" />
-            <div class="name">Тот кто был Орочи</div>
-            <span class="path-tag path-potential">потенциал</span>
+    </div>
+
+    <hr class="divider" />
+
+    <!-- ПОТЕНЦИАЛ -->
+    <div class="section">
+        <div class="section-title">Потенциал богов</div>
+        <div class="section-subtitle">Что умерло. Ходят среди людей и ищут в их поведении себя</div>
+        <div class="grid grid-wide">
+            <div class="god-card">
+                <span class="path-label path-potential">?</span>
+                <img src="portraits/gods/amaterasu.jpg" alt="Та что была Аматерасу" loading="lazy" />
+                <div class="god-name">Та что была Аматерасу</div>
+                <div class="god-jp">天照大御神</div>
+                <div class="god-desc">Прежняя солнечная богиня, сошла с престола Долга. Ищет себя заново — кто найдёт её принцип, поднимет на новый престол.</div>
+                <div class="god-state">потенциал</div>
+                <div class="player">Наринэ</div>
+            </div>
+            <div class="god-card">
+                <span class="path-label path-potential">?</span>
+                <img src="portraits/gods/inari.jpg" alt="Та что была Инари" loading="lazy" />
+                <div class="god-name">Та что была Инари</div>
+                <div class="god-jp">稲荷神</div>
+                <div class="god-desc">Богиня риса, лис и плодородия. Хитрая, оборотистая, хранительница границ.</div>
+                <div class="god-state">потенциал</div>
+            </div>
+            <div class="god-card">
+                <span class="path-label path-potential">?</span>
+                <img src="portraits/gods/ryujin.jpg" alt="Тот что был Рюдзин" loading="lazy" />
+                <div class="god-name">Тот что был Рюдзин</div>
+                <div class="god-jp">龍神</div>
+                <div class="god-desc">Бог моря и драконов. Древний, медленный, владыка бурь.</div>
+                <div class="god-state">потенциал</div>
+            </div>
+            <div class="god-card">
+                <span class="path-label path-potential">?</span>
+                <img src="portraits/gods/oyamatsumi.jpg" alt="Тот что был О-Ямацуми" loading="lazy" />
+                <div class="god-name">Тот что был О-Ямацуми</div>
+                <div class="god-jp">大山祇</div>
+                <div class="god-desc">Бог гор. Тяжёлый, молчаливый, основа мира.</div>
+                <div class="god-state">потенциал</div>
+            </div>
+            <div class="god-card">
+                <span class="path-label path-potential">?</span>
+                <img src="portraits/gods/hachiman.jpg" alt="Тот что был Хатиман" loading="lazy" />
+                <div class="god-name">Тот что был Хатиман</div>
+                <div class="god-jp">八幡神</div>
+                <div class="god-desc">Бог войны и лука. Защитник простого народа, покровитель воинов.</div>
+                <div class="god-state">потенциал</div>
+            </div>
+            <div class="god-card">
+                <span class="path-label path-potential">?</span>
+                <img src="portraits/gods/orochi.jpg" alt="Тот кто был Ямато-но Орочи" loading="lazy" />
+                <div class="god-name">Тот кто был Ямато-но Орочи</div>
+                <div class="god-jp">八岐大蛇</div>
+                <div class="god-desc">Восьмиглавый змей. Древнее зло, побеждённое Сусаноо.</div>
+                <div class="god-state">потенциал</div>
+            </div>
         </div>
     </div>
 </div>
 <div class="footer">LARP &laquo;Невидимый монах&raquo; &middot; 1 &mdash; 3 мая 2026, Сербия</div>
-
-<div class="modal-bg" id="modalBg" onclick="if(event.target===this)closeModal()">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal()">&times;</button>
-    <img id="mImg" src="" alt="" />
-    <h2 id="mName"></h2>
-    <div class="jp" id="mJp"></div>
-    <div class="domains" id="mDomains"></div>
-    <div class="tag" id="mTag"></div>
-    <div class="desc" id="mDesc"></div>
-    <div style="text-align:center" id="mPlayer"></div>
-  </div>
-</div>
-
-<script>
-var godData = {
-  'Цукиёми': {
-    jp: '月読命',
-    domains: 'луна, приливы, утончённость, странствия, статус по рождению',
-    desc: '<p>Аматерасу и Сусано потеряли свои престолы, и наконец настало время «сиять» андрогинному божеству луны. Мягко, но настойчиво ведёт свою линию, действуя скорее убеждением и уговорами, нежели силой.</p><p><strong>Сейчас правит — занимает Престол Страха.</strong> Трактовка страха через статус: люди боятся потерять положение в обществе.</p>'
-  },
-  'Фудзин': {
-    jp: '風神',
-    domains: 'ветер, буря, непреклонность, верность, сокрушительная сила кары, лучник',
-    desc: '<p>Бывший демон, просветлённый Буддой. Несёт бурю как кару и очищение. Связан с Райдзином.</p><p><strong>Столп Престола Долга.</strong> Понимает долг как непреклонную верность и беспощадную кару нарушителям клятв. Не различает оттенков — есть слово, есть его исполнение, всё остальное малодушие.</p>'
-  },
-  'Ситифукудзин': {
-    jp: '七福神',
-    domains: 'улов, торговля, любовь и красноречие, защита веры, забота, мудрость',
-    desc: '<p>Все семь богов счастья в одном. Многоликое божество с разными оттенками привлекательности для смертных. Поворачивается той стороной, которая выгодна сейчас.</p><p><strong>Столп Престола Голода.</strong></p>'
-  },
-  'Ниниги-но Микото': {
-    jp: '邇邇芸命',
-    domains: 'Первый Император, покровительство, благородство, достоинство',
-    desc: '<p>Внук Аматерасу, спустившийся в Японию править ею. Свергнут новым престолом.</p><p><strong>Угнетён по пути Страха</strong> — претендует на престол с трактовкой статуса как покровительства и достоинства, а не как страха перед позором.</p>'
-  },
-  'Окунинуси': {
-    jp: '大国主',
-    domains: 'великий мастер земли, строительство, медицина, институт брака',
-    desc: '<p>Основал страну тростниковых равнин, чтобы передать богам неба. Отдал то, что построил.</p><p><strong>Угнетён по пути Страха</strong> — его трактовка статуса через мастерство, ремесло и реальный труд.</p>'
-  },
-  'Сарутахико': {
-    jp: '猿田彦',
-    domains: 'путь, мастерство, наставничество, благородная битва',
-    desc: '<p>Бог-проводник, защищающий идущих по пути. Направляет дела в нужное русло. Встречал, охранял и служил Первому Императору.</p><p><strong>Угнетён по пути Долга</strong> — его трактовка долга как пути и мастерства, передаваемого ученику.</p>'
-  },
-  'Коноханасакуя-химэ': {
-    jp: '木花咲耶姫',
-    domains: 'мимолётность земной жизни, верность возрождающейся красоте, верность принцессы',
-    desc: '<p>Богиня цветения сакуры, защитница брачной гармонии. Верна как своей стране, так и своему мужу.</p><p><strong>Угнетена по пути Долга</strong> — её трактовка долга как мимолётности и красоты, верности красоте, а не клятве.</p>'
-  },
-  'Сэндзю Каннон': {
-    jp: '千手観音',
-    domains: 'слепое сострадание',
-    desc: '<p>Богиня милосердия с тысячей рук, готовых помочь каждому.</p><p><strong>Угнетена по пути Голода</strong> — её трактовка заботы как слепого, безусловного сострадания всем.</p>'
-  },
-  'Тоёукэ-Омиками': {
-    jp: '豊受大御神',
-    domains: 'забота через дары, чествование жизненных потребностей, достойная жизнь',
-    desc: '<p>Отвечала за священную пищу Аматерасу. Приносит дары природы для человечества. Не только выживание, но достойная жизнь.</p><p><strong>Угнетена по пути Голода.</strong></p>'
-  },
-  'Та что была Аматерасу': {
-    jp: '天照大御神',
-    domains: 'солнце, верховное сияние, прежняя владычица Долга',
-    desc: '<p>Прежняя солнечная богиня, сошла с престола Долга — теперь в потенциале. Ищет себя заново, не знает, на каком пути воплотиться. Тот, кто найдёт её принцип, поднимет её на новый престол.</p>'
-  },
-  'Тот что был Сусано': {
-    jp: '須佐之男命',
-    domains: 'буря, море, залихватская жажда жизни, первобытное чувство',
-    desc: '<p>Бог бури и ветров, бог сакея, малодетской удали. Был изгнан давно — за то, что бросил коровью голову в постель Аматэрасу. Залихватская, первобытная жажда жизни.</p><p><strong>Сейчас столп.</strong> Голод как первобытная жажда удовлетворения — иная трактовка, чем у Ситифукудзина.</p>'
-  },
-  'Та что была Идзанами': {
-    jp: '伊邪那美命',
-    domains: 'творение, мать-прародительница, первая владычица мира мёртвых',
-    desc: '<p>Прежняя богиня-творец. Создательница островов и первая хозяйка мира мёртвых.</p><p><strong>Угнетена по пути Долга</strong> — может вернуться через нового мессию.</p>'
-  },
-  'Та что была Инари': {
-    jp: '稲荷神',
-    domains: 'рис, лисы, плодородие, границы',
-    desc: '<p>Богиня риса, лис и плодородия. В потенциале. Хитрая, оборотистая, хранительница границ.</p>'
-  },
-  'Тот что был Рюдзин': {
-    jp: '龍神',
-    domains: 'море, драконы, древняя сила бурь',
-    desc: '<p>Бог моря и драконов. В потенциале. Древний, медленный, владыка бурь.</p>'
-  },
-  'Тот что был О-Ямацуми': {
-    jp: '大山祇',
-    domains: 'горы, тяжесть, основа мира',
-    desc: '<p>Бог гор. В потенциале. Тяжёлый, молчаливый, основа мира.</p>'
-  },
-  'Тот что был Хатиман': {
-    jp: '八幡神',
-    domains: 'война, лук, защита простого народа',
-    desc: '<p>Бог войны и лука. В потенциале. Защитник простого народа, покровитель воинов.</p>'
-  },
-  'Та что была Удзумэ': {
-    jp: '天宇受賣命',
-    domains: 'рассвет, веселье, танец, та, что выманила Аматэрасу из пещеры',
-    desc: '<p>Богиня рассвета, веселья и танца. Та, что выманила Аматэрасу из пещеры.</p><p><strong>Угнетена по пути Голода</strong> — забота через радость и общее веселье.</p>'
-  },
-  'Тот кто был Орочи': {
-    jp: '八岐大蛇',
-    domains: 'восьмиглавый змей, древнее зло',
-    desc: '<p>Восьмиглавый змей. В потенциале. Древнее зло, побеждённое Сусаноо.</p>'
-  }
-};
-
-function openModal(card) {
-  var name = card.querySelector('.name').textContent;
-  var img = card.querySelector('img').src;
-  var tag = card.querySelector('.path-tag');
-  var player = card.querySelector('.badge-player');
-  var data = godData[name] || {};
-  document.getElementById('mImg').src = img;
-  document.getElementById('mImg').alt = name;
-  document.getElementById('mName').textContent = name;
-  document.getElementById('mJp').textContent = data.jp || '';
-  document.getElementById('mDomains').textContent = data.domains || '';
-  document.getElementById('mTag').innerHTML = tag ? tag.outerHTML : '';
-  document.getElementById('mDesc').innerHTML = data.desc || '<p style="color:var(--dim); font-style:italic;">Подробное описание появится позже.</p>';
-  document.getElementById('mPlayer').innerHTML = player ? '<span class="badge-player">Играет: ' + player.textContent + '</span>' : '';
-  document.getElementById('modalBg').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-function closeModal() {
-  document.getElementById('modalBg').classList.remove('open');
-  document.body.style.overflow = '';
-}
-document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
-
-var activeFilters = { path: '', state: '' };
-function applyFilters() {
-    document.querySelectorAll('.card').forEach(function(card) {
-        var visible = true;
-        if (activeFilters.path && card.getAttribute('data-path') !== activeFilters.path) visible = false;
-        if (activeFilters.state && card.getAttribute('data-state') !== activeFilters.state) visible = false;
-        card.style.display = visible ? '' : 'none';
-    });
-    var params = new URLSearchParams();
-    if (activeFilters.path) params.set('path', activeFilters.path);
-    if (activeFilters.state) params.set('state', activeFilters.state);
-    var q = params.toString();
-    window.history.replaceState(null, '', window.location.pathname + (q ? '?' + q : ''));
-}
-function resetFilters() {
-    activeFilters.path = ''; activeFilters.state = '';
-    document.querySelectorAll('.tag-chip').forEach(function(c) { c.classList.remove('active'); });
-    applyFilters();
-}
-document.addEventListener('DOMContentLoaded', function() {
-    var params = new URLSearchParams(window.location.search);
-    if (params.has('path')) activeFilters.path = params.get('path');
-    if (params.has('state')) activeFilters.state = params.get('state');
-    document.querySelectorAll('.tag-chip').forEach(function(chip) {
-        var type = chip.getAttribute('data-tag-type');
-        var tag = chip.getAttribute('data-tag');
-        if (activeFilters[type] === tag) chip.classList.add('active');
-        chip.addEventListener('click', function() {
-            document.querySelectorAll('.tag-chip[data-tag-type="' + type + '"]').forEach(function(c) {
-                if (c !== chip) c.classList.remove('active');
-            });
-            if (chip.classList.contains('active')) { chip.classList.remove('active'); activeFilters[type] = ''; }
-            else { chip.classList.add('active'); activeFilters[type] = tag; }
-            applyFilters();
-        });
-    });
-    document.querySelectorAll('.card').forEach(function(card) {
-        card.addEventListener('click', function() { openModal(card); });
-    });
-    applyFilters();
-});
-</script>
 </body>
 </html>
