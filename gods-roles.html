@@ -32,8 +32,21 @@ h1 { font-size: 2.2rem; font-weight: 400; text-align: center; margin-bottom: 0.5
 .tag-reset { background: transparent; border: 1px dashed #444; color: var(--dim); padding: 3px 10px; border-radius: 4px; cursor: pointer; font-family: inherit; font-size: 0.7rem; margin-left: auto; }
 .tag-reset:hover { color: var(--text); border-color: var(--accent); }
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 20px; }
-.card { text-align: center; transition: transform 0.2s; }
+.card { text-align: center; transition: transform 0.2s; cursor: pointer; }
 .card:hover { transform: translateY(-4px); }
+.modal-bg { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); z-index: 100; align-items: center; justify-content: center; padding: 1rem; }
+.modal-bg.open { display: flex; }
+.modal { background: var(--card-bg); border: 1px solid var(--accent); max-width: 500px; width: 100%; padding: 2rem; max-height: 90vh; overflow-y: auto; position: relative; }
+.modal-close { position: absolute; top: 8px; right: 12px; background: none; border: none; color: var(--dim); font-size: 1.6rem; cursor: pointer; line-height: 1; padding: 4px 8px; }
+.modal-close:hover { color: var(--accent); }
+.modal img { display: block; width: 200px; height: 200px; object-fit: cover; border-radius: 50%; border: 2px solid #2a2a26; margin: 0 auto 1rem; }
+.modal h2 { font-size: 1.6rem; color: var(--accent); text-align: center; font-weight: 400; margin-bottom: 0.3rem; }
+.modal .arch { text-align: center; color: var(--dim); font-style: italic; margin-bottom: 1rem; }
+.modal .tag { text-align: center; margin-bottom: 1.2rem; }
+.modal .tag .path-tag { display: inline-block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 2px; }
+.modal .desc { font-size: 0.95rem; line-height: 1.6; color: var(--text); }
+.modal .desc p { margin-bottom: 0.8rem; }
+.modal .desc strong { color: var(--accent); }
 .card img { width: 140px; height: 140px; object-fit: cover; border-radius: 50%; border: 2px solid #222; filter: grayscale(30%); transition: filter 0.2s, border-color 0.2s; }
 .card:hover img { filter: grayscale(0%); border-color: var(--accent); }
 .card .name { font-size: 0.9rem; margin-top: 8px; line-height: 1.3; }
@@ -187,7 +200,60 @@ h1 { font-size: 2.2rem; font-weight: 400; text-align: center; margin-bottom: 0.5
     </div>
 </div>
 <div class="footer">LARP &laquo;Невидимый монах&raquo; &middot; 1 &mdash; 3 мая 2026, Сербия</div>
+
+<div class="modal-bg" id="modalBg" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <img id="mImg" src="" alt="" />
+    <h2 id="mName"></h2>
+    <div class="arch" id="mArch"></div>
+    <div class="tag" id="mTag"></div>
+    <div class="desc" id="mDesc"></div>
+  </div>
+</div>
+
 <script>
+var godDescriptions = {
+  'Цукиёми': '<p><strong>Лунный бог.</strong> Сейчас занимает <strong>Престол Страха</strong> — главный из трёх правящих престолов. Трактовка страха через статус: люди боятся потерять положение в обществе.</p><p>Утончённый, презирает грубость и плебейскую жизнь. Ставит ритуал и иерархию выше человеческого тепла.</p>',
+  'Фудзин': '<p><strong>Бог ветра и бури.</strong> Сейчас столп <strong>Престола Долга</strong>. Понимает долг как непреклонную верность и беспощадную кару нарушителям клятв.</p><p>Не различает оттенков — есть слово, есть его исполнение, всё остальное малодушие.</p>',
+  'Ситифукудзин': '<p><strong>Бог удачного улова, торговли и любви.</strong> Сейчас столп <strong>Престола Голода</strong>. Понимает голод как заботу о ближнем и щедрое разделение даров.</p><p>В нём смешались семь богов счастья — отсюда мудрость, торговая хватка и нежность сразу.</p>',
+  'Ниниги-но Микото': '<p><strong>Первый Император, внук Аматэрасу.</strong> Угнетён по пути <strong>Страха</strong> — претендует на престол с трактовкой статуса как покровительства и достоинства, а не как страха перед позором.</p>',
+  'Окунинуси': '<p><strong>Мастер земли, бог строительства, медицины и брака.</strong> Угнетён по пути <strong>Страха</strong> — его трактовка статуса через мастерство, ремесло, реальный труд.</p>',
+  'Сарутахико': '<p><strong>Бог дорог и наставничества.</strong> Угнетён по пути <strong>Долга</strong> — его трактовка долга как пути и мастерства, передаваемого ученику.</p>',
+  'Коноханасакуя-химэ': '<p><strong>Богиня цветущей сакуры.</strong> Угнетена по пути <strong>Долга</strong> — её трактовка долга как мимолётности и красоты, верности красоте, а не клятве.</p>',
+  'Сэндзю Каннон': '<p><strong>Тысячерукая богиня сострадания.</strong> Угнетена по пути <strong>Голода</strong> — её трактовка заботы как слепого, безусловного сострадания всем.</p>',
+  'Тоёукэ-Омиками': '<p><strong>Богиня плодородия и пищи.</strong> Угнетена по пути <strong>Голода</strong> — её трактовка заботы через дары и обеспечение достойной жизни.</p>',
+  'Та что была Аматерасу': '<p><strong>Прежняя солнечная богиня.</strong> Сошла с престола Долга — теперь в потенциале. Ищет себя заново, не знает, на каком пути воплотиться. Тот, кто найдёт её принцип, поднимет её на новый престол.</p>',
+  'Тот что был Сусано': '<p><strong>Прежний бог бури и моря.</strong> Изгнан давно, в потенциале. Залихватская, первобытная жажда жизни.</p>',
+  'Та что была Идзанами': '<p><strong>Прежняя богиня-творец.</strong> Создательница островов и первая хозяйка мира мёртвых. В потенциале — может вернуться через нового мессию.</p>',
+  'Та что была Инари': '<p><strong>Богиня риса, лис и плодородия.</strong> В потенциале. Хитрая, оборотистая, хранительница границ.</p>',
+  'Тот что был Рюдзин': '<p><strong>Бог моря и драконов.</strong> В потенциале. Древний, медленный, владыка бурь.</p>',
+  'Тот что был О-Ямацуми': '<p><strong>Бог гор.</strong> В потенциале. Тяжёлый, молчаливый, основа мира.</p>',
+  'Тот что был Хатиман': '<p><strong>Бог войны и лука.</strong> В потенциале. Защитник простого народа, покровитель воинов.</p>',
+  'Та что была Удзумэ': '<p><strong>Богиня рассвета, веселья и танца.</strong> В потенциале. Та, что выманила Аматэрасу из пещеры.</p>',
+  'Тот кто был Орочи': '<p><strong>Восьмиглавый змей.</strong> В потенциале. Древнее зло, побеждённое Сусаноо.</p>'
+};
+
+function openModal(card) {
+  var name = card.querySelector('.name').textContent;
+  var img = card.querySelector('img').src;
+  var arch = card.querySelector('.archetype');
+  var tag = card.querySelector('.path-tag');
+  document.getElementById('mImg').src = img;
+  document.getElementById('mImg').alt = name;
+  document.getElementById('mName').textContent = name;
+  document.getElementById('mArch').textContent = arch ? arch.textContent : '';
+  document.getElementById('mTag').innerHTML = tag ? tag.outerHTML : '';
+  document.getElementById('mDesc').innerHTML = godDescriptions[name] || '<p style="color:var(--dim); font-style:italic;">Подробное описание появится позже.</p>';
+  document.getElementById('modalBg').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('modalBg').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+
 var activeFilters = { path: '', state: '' };
 function applyFilters() {
     document.querySelectorAll('.card').forEach(function(card) {
@@ -223,6 +289,9 @@ document.addEventListener('DOMContentLoaded', function() {
             else { chip.classList.add('active'); activeFilters[type] = tag; }
             applyFilters();
         });
+    });
+    document.querySelectorAll('.card').forEach(function(card) {
+        card.addEventListener('click', function() { openModal(card); });
     });
     applyFilters();
 });
