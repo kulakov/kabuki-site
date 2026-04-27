@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="../logo.png">
+<title>Окунинуси — Невидимый монах</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+<style>*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#080806;--text:#d4c5a9;--accent:#c49a6c;--dim:#666;--toho-red:#8b1a1a;--fear:#6b3a3a;--duty:#3a4a6b;--hunger:#3a6b4a;--potential:#4a4a4a}
+body{background:var(--bg);color:var(--text);font-family:"Cormorant Garamond",Georgia,serif;min-height:100vh}
+.header{width:100%;background:linear-gradient(to bottom,var(--toho-red) 0%,#5a1010 100%);border-bottom:2px solid #3a0808;padding:.8rem 2rem;display:flex;align-items:center;justify-content:space-between}
+.toho-logo{font-family:"Noto Serif JP",serif;font-size:.9rem}.toho-logo a{color:inherit;text-decoration:none}
+.header-nav{display:flex;gap:1.5rem}.header-nav a{font-size:.7rem;color:#f0d4a8;text-decoration:none;text-transform:uppercase;letter-spacing:.15em;opacity:.7;transition:opacity .2s;border-bottom:1px solid transparent;padding-bottom:2px}.header-nav a:hover{opacity:1}.header-nav a.active{opacity:1;border-bottom:1px solid #f0d4a8;padding-bottom:2px}
+.content{max-width:760px;margin:0 auto;padding:2rem 2rem 4rem}
+.back{display:inline-block;margin-bottom:1.5rem;color:var(--dim);text-decoration:none;font-size:.85rem}.back:hover{color:var(--accent)}
+.portrait{display:block;max-width:280px;border-radius:50%;border:2px solid #222;margin:0 auto 1rem}
+h1{font-size:2rem;font-weight:400;text-align:center;color:var(--accent);margin-bottom:.2rem}
+.jp{font-family:"Noto Serif JP",serif;text-align:center;color:var(--dim);margin-bottom:.6rem;font-size:1rem}
+.tags{text-align:center;margin-bottom:1rem;display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
+.path-tag{display:inline-block;font-size:.7rem;text-transform:uppercase;letter-spacing:.12em;padding:3px 10px;border-radius:2px}
+.path-fear{background:var(--fear);color:#e8c4c4}.path-duty{background:var(--duty);color:#c4d0e8}.path-hunger{background:var(--hunger);color:#c4e8d0}.path-potential{background:var(--potential);color:#b0b0b0}
+.state{display:inline-block;font-size:.7rem;text-transform:uppercase;letter-spacing:.12em;padding:3px 10px;border-radius:2px;color:var(--dim);border:1px solid #333}
+.state-ruling{background:rgba(196,154,108,.15);color:var(--accent);border-color:var(--accent)}
+.player{text-align:center;margin-bottom:1.5rem}.player::before{content:"Играет: ";color:var(--dim);font-size:.85rem}.player{color:var(--accent);font-size:1rem}
+.section{margin-bottom:1.5rem;border-top:1px solid #1a1a18;padding-top:1rem}.section h2{font-size:.7rem;text-transform:uppercase;letter-spacing:.15em;color:var(--dim);margin-bottom:.5rem}.section p{font-size:1rem;line-height:1.7;margin-bottom:.6rem}
+.disclaimer{font-style:italic;color:var(--dim);font-size:.9rem;margin-top:2rem;text-align:center}
+.nav-arrows{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}.nav-arrows a{color:var(--dim);text-decoration:none;font-size:.85rem;transition:color .2s;display:flex;align-items:center;gap:6px}.nav-arrows a:hover{color:var(--accent)}.nav-arrows .arrow{font-size:1.2rem}
+@media(max-width:480px){.header{flex-direction:column;gap:.5rem}.header-nav{gap:1rem}.header-nav a{font-size:.6rem}}
+</style>
+<link rel="stylesheet" href="../theme.css">
+<script src="../theme.js" defer></script>
+</head><body>
+<header class="header"><div class="toho-logo"><a href="../index.html">東宝株式会社</a></div>
+<nav class="header-nav">
+    <a href="../index.html">Игра</a>
+    <a href="../rules.html">Правила</a>
+    <a href="../costume.html">Костюм</a>
+    <a href="../roles.html">Персонажи</a>
+    <a href="../gods.html">Небеса</a>
+    <a href="../gods-roles.html" class="active">Боги</a>
+    <a href="../venue.html">Орг. информация</a>
+    <a href="../news.html">Новости</a>
+</nav></header>
+<div class="content">
+<a class="back" href="../gods-roles.html">&larr; Все боги</a>
+<div class="nav-arrows"><a href="Ниниги.html" id="prev"><span class="arrow">&larr;</span> Ниниги-но Микото</a><a href="Сарутахико.html" id="next">Сарутахико <span class="arrow">&rarr;</span></a></div>
+<img class="portrait" src="../portraits/gods/okuninushi.jpg" alt="Окунинуси" />
+<h1>Окунинуси</h1>
+<div class="jp">大国主</div>
+<div class="tags"><span class="path-tag path-fear">Страх</span><span class="state state-oppressed">угнетён</span></div>
+
+<div class="section"><h2>Описание</h2><p>Мастер земли, строительство, медицина, брак</p></div>
+<div class="section"><h2>Архетип</h2><p>Администратор, который наводит порядок в путанице; человек, который разбирает бардак, раскладывает всё по полкам и делает так, чтобы стало понятно, что произошло</p></div>
+<div class="section"><h2>Прототип</h2><p>Рэйкон-Кокусе, прадед Ямито из Кимоно и вазы. Высший чиновник в префектуре Мекан. Бывший хранитель вазы, который за свою прижизненную верность закону был поставлен его охранять и после смерти. Он легист, который считает что люди по умолчанию злы, и потому мировой закон должен быть более суров чем сейчас.</p></div>
+<div class="section"><h2>Во что играет</h2><p>Порядок — безупречный разбиратель бардака, который умеет всё назвать, классифицировать и вернуть на место. Хаос — легист, который считает людей по умолчанию злыми и потому отвечает на любую сложность ужесточением, душа живой мир схемой, бумагой и суровым законом.</p></div>
+<div class="section"><h2>Трактовка пути</h2><p>Страх это путь между Порядком и Хаосом. Понятность мира. Боюсь краха правил: когда завтра не похоже на вчера</p></div>
+<div class="section"><h2>Что известно из первоисточников</h2><p>Ōкунинуси — «Владыка Великой Земли», центральный герой мифов Идзумо; он проходит испытания, помогает Белому зайцу Инабы, получает Сусэри-химэ и вместе со Сукунахиконой строит мир, развивает медицину и способы борьбы с бедствиями. Позже он уступает политическую власть Ниниги, сохраняя религиозную сферу, и почитается как покровитель брака и исцеления. Через вашу трактовку это очень чистый бог устроенности мира: земли, лечения, союза и понятного порядка.</p></div>
+<p class="disclaimer">Полная мастерская версия доступна онлайн-игроку.</p>
+</div></body></html>

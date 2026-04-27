@@ -33,6 +33,7 @@ h1 { font-size: 2.2rem; font-weight: 400; text-align: center; margin-bottom: 0.3
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 24px; }
 .grid-wide { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); }
 .god-card { text-align: center; padding: 1rem; border: 1px solid #1a1a18; border-radius: 4px; background: rgba(14,14,12,0.6); transition: border-color 0.2s, transform 0.2s; }
+.god-card a { color: inherit; text-decoration: none; display: block; }
 .god-card:hover { border-color: var(--accent); transform: translateY(-3px); }
 .god-card.ruling { border-color: var(--accent); background: rgba(196,154,108,0.05); }
 .god-card img { width: 140px; height: 140px; object-fit: cover; border-radius: 50%; border: 2px solid #222; filter: grayscale(20%); transition: filter 0.2s, border-color 0.2s; margin-bottom: 0.8rem; }
@@ -40,7 +41,7 @@ h1 { font-size: 2.2rem; font-weight: 400; text-align: center; margin-bottom: 0.3
 .god-card .god-name { font-size: 1.1rem; margin-bottom: 0.2rem; color: var(--text); }
 .god-card .god-jp { font-family: "Noto Serif JP", serif; font-size: 0.8rem; color: var(--dim); margin-bottom: 0.4rem; }
 .god-card .god-domains { font-size: 0.8rem; color: var(--accent); font-style: italic; margin-bottom: 0.5rem; line-height: 1.4; }
-.god-card .god-desc { font-size: 0.85rem; color: var(--text); opacity:0.9; line-height: 1.55; margin-bottom: 0.6rem; }
+.god-card .god-archetype { font-size: 0.85rem; color: var(--text); opacity: 0.9; line-height: 1.55; margin-bottom: 0.6rem; }
 .god-card .god-state { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--dim); margin-top: 0.4rem; }
 .god-card .player { display:inline-block; font-size:0.75rem; color:#c49a6c; margin-top:0.4rem; padding:3px 10px; border:1px solid rgba(196,154,108,0.5); border-radius:12px; }
 .god-card .reserved { display:inline-block; font-size:0.7rem; color:var(--dim); margin-top:0.4rem; padding:3px 10px; border:1px dashed #444; border-radius:12px; }
@@ -75,16 +76,16 @@ h1 { font-size: 2.2rem; font-weight: 400; text-align: center; margin-bottom: 0.3
         <div class="section-title">Правящий престол</div>
         <div class="section-subtitle">Тот, чей дискурс сейчас определяет мир</div>
         <div class="grid">
-            <div class="god-card ruling">
+            <div class="god-card ruling"><a href="gods/Цукиёми.html">
                 <span class="path-label path-fear">Страх</span>
                 <img src="portraits/gods/tsukuyomi.jpg" alt="Цукиёми" loading="lazy" />
                 <div class="god-name">Цукиёми</div>
                 <div class="god-jp">月読命</div>
-                <div class="god-domains">луна, приливы, утончённость, странствия, статус по рождению</div>
-                <div class="god-desc">Аматерасу и Сусано потеряли свои престолы, и наконец настало время «сиять» андрогинному божеству луны. Мягко, но настойчиво ведёт свою линию, действуя скорее убеждением и уговорами, нежели силой.</div>
+                <div class="god-domains">луна, приливы, утончённость, статус по рождению</div>
+                <div class="god-archetype">Хранитель протокола, рангов и правильного унижения. Не судья по существу, а распорядитель формы.</div>
                 <div class="god-state">правит</div>
                 <div class="player">Тара</div>
-            </div>
+            </a></div>
         </div>
     </div>
 
@@ -93,35 +94,25 @@ h1 { font-size: 2.2rem; font-weight: 400; text-align: center; margin-bottom: 0.3
         <div class="section-title">Столпы</div>
         <div class="section-subtitle">Опоры правящего престола</div>
         <div class="grid">
-            <div class="god-card">
+            <div class="god-card"><a href="gods/Фудзин.html">
                 <span class="path-label path-duty">Долг</span>
                 <img src="portraits/gods/fujin.jpg" alt="Фудзин" loading="lazy" />
                 <div class="god-name">Фудзин</div>
                 <div class="god-jp">風神</div>
-                <div class="god-domains">ветер, буря, непреклонность, верность, сокрушительная сила кары, лучник</div>
-                <div class="god-desc">Бывший демон, просветлённый Буддой. Несёт бурю как кару и очищение. Связан с Райдзином.</div>
+                <div class="god-domains">ветер, буря, непреклонность, верность, кара</div>
+                <div class="god-archetype">Инспектор лояльности, внутренний сыщик, прокурор чистоты линии.</div>
                 <div class="god-state">столп</div>
                 <div class="player">Кагирова</div>
-            </div>
-            <div class="god-card">
+            </a></div>
+            <div class="god-card"><a href="gods/Ситифукудзин.html">
                 <span class="path-label path-hunger">Голод</span>
                 <img src="portraits/gods/shichifukujin.jpg" alt="Ситифукудзин" loading="lazy" />
                 <div class="god-name">Ситифукудзин</div>
                 <div class="god-jp">七福神</div>
-                <div class="god-domains">улов, торговля, любовь и красноречие, защита веры, забота, мудрость</div>
-                <div class="god-desc">Все семь богов счастья в одном. Многоликое божество с разными оттенками привлекательности для смертных. Поворачивается той стороной, которая выгодна сейчас.</div>
+                <div class="god-domains">улов, торговля, любовь, забота, мудрость</div>
+                <div class="god-archetype">Небесный переписчик судеб; хранитель книги имён, который ведает допусками к рождению, связями между людьми и правильностью жизненных путей.</div>
                 <div class="god-state">столп</div>
-            </div>
-            <div class="god-card">
-                <span class="path-label path-hunger">Голод</span>
-                <img src="portraits/gods/susanoo.jpg" alt="Сусаноо" loading="lazy" />
-                <div class="god-name">Сусаноо</div>
-                <div class="god-jp">須佐之男命</div>
-                <div class="god-domains">буря, море, залихватская жажда жизни, первобытное чувство</div>
-                <div class="god-desc">Бог бури и ветров, бог сакея, малодетской удали. Был изгнан давно — за то, что бросил коровью голову в постель Аматэрасу. Залихватская, первобытная жажда жизни. Голод как первобытная жажда удовлетворения — иная трактовка, чем у Ситифукудзина.</div>
-                <div class="god-state">столп</div>
-                <div class="reserved">Забронировано</div>
-            </div>
+            </a></div>
         </div>
     </div>
 
@@ -134,81 +125,63 @@ h1 { font-size: 2.2rem; font-weight: 400; text-align: center; margin-bottom: 0.3
 
         <span class="path-label path-fear" style="margin-bottom: 1rem; display: inline-block;">Страх</span>
         <div class="grid" style="margin-bottom: 1.5rem;">
-            <div class="god-card">
+            <div class="god-card"><a href="gods/Ниниги.html">
                 <img src="portraits/gods/ninigi.jpg" alt="Ниниги-но Микото" loading="lazy" />
                 <div class="god-name">Ниниги-но Микото</div>
                 <div class="god-jp">邇邇芸命</div>
-                <div class="god-domains">Первый Император, покровительство, благородство, достоинство</div>
-                <div class="god-desc">Внук Аматерасу, спустившийся в Японию править ею. Свергнут новым престолом.</div>
+                <div class="god-domains">Первый Император, покровительство, достоинство</div>
+                <div class="god-archetype">Регистратор имён, хронист, хранитель памяти и дворовой видимости.</div>
                 <div class="god-state">угнетён</div>
-            </div>
-            <div class="god-card">
+            </a></div>
+            <div class="god-card"><a href="gods/Окунинуси.html">
                 <img src="portraits/gods/okuninushi.jpg" alt="Окунинуси" loading="lazy" />
                 <div class="god-name">Окунинуси</div>
                 <div class="god-jp">大国主</div>
-                <div class="god-domains">великий мастер земли, строительство, медицина, институт брака</div>
-                <div class="god-desc">Основал страну тростниковых равнин, чтобы передать богам неба. Отдал то, что построил.</div>
+                <div class="god-domains">мастер земли, строительство, медицина, брак</div>
+                <div class="god-archetype">Администратор, который наводит порядок в путанице; разбирает бардак, раскладывает всё по полкам.</div>
                 <div class="god-state">угнетён</div>
-            </div>
+            </a></div>
         </div>
 
         <span class="path-label path-duty" style="margin-bottom: 1rem; display: inline-block;">Долг</span>
         <div class="grid" style="margin-bottom: 1.5rem;">
-            <div class="god-card">
+            <div class="god-card"><a href="gods/Сарутахико.html">
                 <img src="portraits/gods/sarutahiko.jpg" alt="Сарутахико" loading="lazy" />
                 <div class="god-name">Сарутахико</div>
                 <div class="god-jp">猿田彦</div>
-                <div class="god-domains">путь, мастерство, наставничество, благородная битва</div>
-                <div class="god-desc">Бог-проводник, защищающий идущих по пути. Направляет дела в нужное русло. Встречал, охранял и служил Первому Императору.</div>
+                <div class="god-domains">путь, мастерство, наставничество, битва</div>
+                <div class="god-archetype">Комиссар переходов — дорог, границ, мостов, пропусков, пересечений между мирами.</div>
                 <div class="god-state">угнетён</div>
-            </div>
-            <div class="god-card">
+            </a></div>
+            <div class="god-card"><a href="gods/Коноханасакуя.html">
                 <img src="portraits/gods/konohana.jpg" alt="Коноханасакуя-химэ" loading="lazy" />
                 <div class="god-name">Коноханасакуя-химэ</div>
                 <div class="god-jp">木花咲耶姫</div>
-                <div class="god-domains">мимолётность земной жизни, верность возрождающейся красоте, верность принцессы</div>
-                <div class="god-desc">Богиня цветения сакуры, защитница брачной гармонии. Верна как своей стране, так и своему мужу.</div>
+                <div class="god-domains">мимолётность жизни, верность красоте, сакура</div>
+                <div class="god-archetype">Секретарь-посланница, носительница частного долга внутри публичной службы.</div>
                 <div class="god-state">угнетена</div>
-            </div>
-            <div class="god-card">
-                <img src="portraits/gods/izanami.jpg" alt="Та что была Идзанами" loading="lazy" />
-                <div class="god-name">Та что была Идзанами</div>
-                <div class="god-jp">伊邪那美命</div>
-                <div class="god-domains">творение, мать-прародительница, первая владычица мира мёртвых</div>
-                <div class="god-desc">Прежняя богиня-творец. Создательница островов и первая хозяйка мира мёртвых. Может вернуться через нового мессию.</div>
-                <div class="god-state">угнетена</div>
-                <div class="player">Мельникова</div>
-            </div>
+            </a></div>
         </div>
 
         <span class="path-label path-hunger" style="margin-bottom: 1rem; display: inline-block;">Голод</span>
         <div class="grid">
-            <div class="god-card">
+            <div class="god-card"><a href="gods/Каннон.html">
                 <img src="portraits/gods/kannon.jpg" alt="Сэндзю Каннон" loading="lazy" />
                 <div class="god-name">Сэндзю Каннон</div>
                 <div class="god-jp">千手観音</div>
-                <div class="god-domains">слепое сострадание</div>
-                <div class="god-desc">Богиня милосердия с тысячей рук, готовых помочь каждому.</div>
+                <div class="god-domains">слепое сострадание, тысяча рук</div>
+                <div class="god-archetype">Храмовый распорядитель прошений и покаяний; аскетический администратор сострадания.</div>
                 <div class="god-state">угнетена</div>
                 <div class="player">София</div>
-            </div>
-            <div class="god-card">
+            </a></div>
+            <div class="god-card"><a href="gods/Тоёукэ.html">
                 <img src="portraits/gods/toyouke.jpg" alt="Тоёукэ-Омиками" loading="lazy" />
                 <div class="god-name">Тоёукэ-Омиками</div>
                 <div class="god-jp">豊受大御神</div>
-                <div class="god-domains">забота через дары, чествование жизненных потребностей, достойная жизнь</div>
-                <div class="god-desc">Отвечала за священную пищу Аматерасу. Приносит дары природы для человечества. Не только выживание, но достойная жизнь.</div>
+                <div class="god-domains">забота через дары, достойная жизнь</div>
+                <div class="god-archetype">Распорядитель потустороннего хозяйства; человек, который ведает запасами, подношениями, оплатой.</div>
                 <div class="god-state">угнетена</div>
-            </div>
-            <div class="god-card">
-                <img src="portraits/gods/uzume.jpg" alt="Та что была Удзумэ" loading="lazy" />
-                <div class="god-name">Та что была Удзумэ</div>
-                <div class="god-jp">天宇受賣命</div>
-                <div class="god-domains">рассвет, веселье, танец, та, что выманила Аматэрасу из пещеры</div>
-                <div class="god-desc">Богиня рассвета, веселья и танца. Та, что выманила Аматэрасу из пещеры. Забота через радость и общее веселье.</div>
-                <div class="god-state">угнетена</div>
-                <div class="player">Арет</div>
-            </div>
+            </a></div>
         </div>
     </div>
 
@@ -219,55 +192,91 @@ h1 { font-size: 2.2rem; font-weight: 400; text-align: center; margin-bottom: 0.3
         <div class="section-title">Потенциал богов</div>
         <div class="section-subtitle">Что умерло. Ходят среди людей и ищут в их поведении себя</div>
         <div class="grid grid-wide">
-            <div class="god-card">
-                <span class="path-label path-potential">?</span>
+            <div class="god-card"><a href="gods/Аматерасу.html">
+                <span class="path-label path-potential">Страх ←</span>
                 <img src="portraits/gods/amaterasu.jpg" alt="Та что была Аматерасу" loading="lazy" />
                 <div class="god-name">Та что была Аматерасу</div>
                 <div class="god-jp">天照大御神</div>
-                <div class="god-desc">Прежняя солнечная богиня, сошла с престола Долга. Ищет себя заново — кто найдёт её принцип, поднимет на новый престол.</div>
-                <div class="god-state">потенциал</div>
+                <div class="god-domains">свет, видимость, центральность</div>
+                <div class="god-archetype">Слепой хранитель маяка; больше не верит в своё право светить и управляет видимостью через сокрытие.</div>
+                <div class="god-state">потенциал · Просвещение</div>
                 <div class="player">Наринэ</div>
-            </div>
-            <div class="god-card">
-                <span class="path-label path-potential">?</span>
+            </a></div>
+            <div class="god-card"><a href="gods/Сусано.html">
+                <span class="path-label path-potential">Долг ←</span>
+                <img src="portraits/gods/susanoo.jpg" alt="Тот что был Сусано" loading="lazy" />
+                <div class="god-name">Тот что был Сусано</div>
+                <div class="god-jp">須佐之男命</div>
+                <div class="god-domains">буря, прорыв, ярость, свобода через силу</div>
+                <div class="god-archetype">Сломанный освободитель; больше не верит в чистоту прорыва и вмешивается силой.</div>
+                <div class="god-state">потенциал · Эффективность</div>
+                <div class="reserved">Забронировано</div>
+            </a></div>
+            <div class="god-card"><a href="gods/Идзанами.html">
+                <span class="path-label path-potential">Голод ←</span>
+                <img src="portraits/gods/izanami.jpg" alt="Та что была Идзанами" loading="lazy" />
+                <div class="god-name">Та что была Идзанами</div>
+                <div class="god-jp">伊邪那美命</div>
+                <div class="god-domains">рождение, материнство, смерть, невозврат</div>
+                <div class="god-archetype">Владычица удержанных мёртвых; забота, которая не умеет отпускать.</div>
+                <div class="god-state">потенциал · Регламент</div>
+                <div class="player">Мельникова</div>
+            </a></div>
+            <div class="god-card"><a href="gods/Инари.html">
+                <span class="path-label path-potential">Голод ←</span>
                 <img src="portraits/gods/inari.jpg" alt="Та что была Инари" loading="lazy" />
                 <div class="god-name">Та что была Инари</div>
                 <div class="god-jp">稲荷神</div>
-                <div class="god-desc">Богиня риса, лис и плодородия. Хитрая, оборотистая, хранительница границ.</div>
-                <div class="god-state">потенциал</div>
-            </div>
-            <div class="god-card">
-                <span class="path-label path-potential">?</span>
+                <div class="god-domains">рис, достаток, торговля, хитрость обмена</div>
+                <div class="god-archetype">Хозяйка дефицита; больше не кормит свободно, превращая ресурс в поводок.</div>
+                <div class="god-state">потенциал · Достаток</div>
+            </a></div>
+            <div class="god-card"><a href="gods/Рюдзин.html">
+                <span class="path-label path-potential">Долг ←</span>
                 <img src="portraits/gods/ryujin.jpg" alt="Тот что был Рюдзин" loading="lazy" />
                 <div class="god-name">Тот что был Рюдзин</div>
                 <div class="god-jp">龍神</div>
-                <div class="god-desc">Бог моря и драконов. Древний, медленный, владыка бурь.</div>
-                <div class="god-state">потенциал</div>
-            </div>
-            <div class="god-card">
-                <span class="path-label path-potential">?</span>
+                <div class="god-domains">море, глубина, обмен, сокровища</div>
+                <div class="god-archetype">Сборщик неуплаченных даров; превращает всякий подарок в обязательство с взысканием.</div>
+                <div class="god-state">потенциал · Цена</div>
+            </a></div>
+            <div class="god-card"><a href="gods/О-Ямацуми.html">
+                <span class="path-label path-potential">Страх ←</span>
                 <img src="portraits/gods/oyamatsumi.jpg" alt="Тот что был О-Ямацуми" loading="lazy" />
                 <div class="god-name">Тот что был О-Ямацуми</div>
                 <div class="god-jp">大山祇</div>
-                <div class="god-desc">Бог гор. Тяжёлый, молчаливый, основа мира.</div>
-                <div class="god-state">потенциал</div>
-            </div>
-            <div class="god-card">
-                <span class="path-label path-potential">?</span>
+                <div class="god-domains">гора, масса, устойчивость, граница</div>
+                <div class="god-archetype">Каменный хранитель предела; консервирует живое, чтобы оно не распадалось.</div>
+                <div class="god-state">потенциал · Государство</div>
+            </a></div>
+            <div class="god-card"><a href="gods/Хатиман.html">
+                <span class="path-label path-potential">Долг ←</span>
                 <img src="portraits/gods/hachiman.jpg" alt="Тот что был Хатиман" loading="lazy" />
                 <div class="god-name">Тот что был Хатиман</div>
                 <div class="god-jp">八幡神</div>
-                <div class="god-desc">Бог войны и лука. Защитник простого народа, покровитель воинов.</div>
-                <div class="god-state">потенциал</div>
-            </div>
-            <div class="god-card">
-                <span class="path-label path-potential">?</span>
-                <img src="portraits/gods/orochi.jpg" alt="Тот кто был Ямато-но Орочи" loading="lazy" />
-                <div class="god-name">Тот кто был Ямато-но Орочи</div>
+                <div class="god-domains">знамя, защита, война, правое дело</div>
+                <div class="god-archetype">Опущенное знамя; требует верности ради самой верности, подменяя защиту мобилизацией.</div>
+                <div class="god-state">потенциал · Империя</div>
+            </a></div>
+            <div class="god-card"><a href="gods/Удзумэ.html">
+                <span class="path-label path-potential">Голод ←</span>
+                <img src="portraits/gods/uzume.jpg" alt="Та что была Удзумэ" loading="lazy" />
+                <div class="god-name">Та что была Удзумэ</div>
+                <div class="god-jp">天宇受賣命</div>
+                <div class="god-domains">смех, пляска, эротическая дерзость, явление</div>
+                <div class="god-archetype">Жрица пустого представления; качается между истерическим спектаклем и сухой формой.</div>
+                <div class="god-state">потенциал · Эстетика</div>
+                <div class="player">Арет</div>
+            </a></div>
+            <div class="god-card"><a href="gods/Орочи.html">
+                <span class="path-label path-potential">Страх ←</span>
+                <img src="portraits/gods/orochi.jpg" alt="Тот кто был Орочи" loading="lazy" />
+                <div class="god-name">Тот кто был Орочи</div>
                 <div class="god-jp">八岐大蛇</div>
-                <div class="god-desc">Восьмиглавый змей. Древнее зло, побеждённое Сусаноо.</div>
-                <div class="god-state">потенциал</div>
-            </div>
+                <div class="god-domains">многоглавая сила, избыток, пожирание, ужас</div>
+                <div class="god-archetype">Униженный пожиратель; пытается вернуть вес через мелкое пожирание и демонстрацию.</div>
+                <div class="god-state">потенциал · Промышленность</div>
+            </a></div>
         </div>
     </div>
 </div>
